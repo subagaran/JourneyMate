@@ -72,7 +72,6 @@
 
 	<ItemGroup>
 	  <Folder Include="MVVM\Models\" />
-	  <Folder Include="MVVM\Views\OnBoarding\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -83,6 +82,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\Home\StartingPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\OnBoarding\OnBoardingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\User\LoginPage.xaml">

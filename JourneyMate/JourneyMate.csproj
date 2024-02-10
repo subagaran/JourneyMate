@@ -72,6 +72,7 @@
 
 	<ItemGroup>
 	  <Folder Include="MVVM\Models\" />
+	  <Folder Include="MVVM\Views\OnBoarding\" />
 	</ItemGroup>
 
 	<ItemGroup>

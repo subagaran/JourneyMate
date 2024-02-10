@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
 using JourneyMate.Database;
-using JourneyMate.MVVM.Views.Home;
+using JourneyMate.MVVM.Views.BRUS.Home;
 using JourneyMate.MVVM.Views.User;
 using JourneyMate.MVVM.ViewModels.User;
 using SkiaSharp.Views.Maui.Controls.Hosting;

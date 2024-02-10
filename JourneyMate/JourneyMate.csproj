@@ -72,16 +72,21 @@
 
 	<ItemGroup>
 	  <Folder Include="MVVM\Models\" />
+	  <Folder Include="MVVM\ViewModels\BRBO\" />
+	  <Folder Include="MVVM\ViewModels\BRUS\" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="Helper\LoadingIndicator\LoadingIndicatorView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\Home\HomePage.xaml">
+	  <MauiXaml Update="MVVM\Views\BRBO\Home\MerchantHomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\Home\StartingPage.xaml">
+	  <MauiXaml Update="MVVM\Views\BRUS\Home\HomePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\BRUS\Home\StartingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\OnBoarding\OnBoardingPage.xaml">

@@ -1,4 +1,4 @@
-﻿using JourneyMate.MVVM.Views.Home;
+﻿using JourneyMate.MVVM.Views.BRUS.Home;
 using JourneyMate.MVVM.Views.User;
 
 namespace JourneyMate

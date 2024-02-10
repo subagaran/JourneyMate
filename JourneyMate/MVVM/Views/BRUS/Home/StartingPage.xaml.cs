@@ -1,4 +1,4 @@
-namespace JourneyMate.MVVM.Views.Home;
+namespace JourneyMate.MVVM.Views.BRUS.Home;
 
 public partial class StartingPage : ContentPage
 {

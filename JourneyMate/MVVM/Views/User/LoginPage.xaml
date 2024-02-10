@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="JourneyMate.MVVM.Views.User.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.FlyoutItemIsVisible="False"
+    Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <Grid RowDefinitions="*,*">
+
+            <Frame
+                Grid.Row="0"
+                Margin="0,0,0,0"
+                Padding="0,0,0,0"
+                BackgroundColor="Transparent"
+                BorderColor="Transparent"
+                CornerRadius="10">
+                <Image
+                    Aspect="AspectFill"
+                    BackgroundColor="WhiteSmoke"
+                    MaximumHeightRequest="510"
+                    Source="loginbackground.png" />
+            </Frame>
+
+            <VerticalStackLayout
+                Grid.Row="1"
+                Padding="50,0,50,0"
+                Spacing="10"
+                VerticalOptions="Center">
+                <VerticalStackLayout Spacing="5">
+                    <Label
+                        Grid.Row="1"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        HorizontalOptions="Start"
+                        StyleClass="LblBlackR7"
+                        Text="Login"
+                        VerticalOptions="Start" />
+
+
+                    <Frame
+                        Margin="1"
+                        Padding="1"
+                        BorderColor="Gray"
+                        VerticalOptions="Center">
+
+                        <Entry
+                            HorizontalTextAlignment="Start"
+                            Placeholder="Username"
+                            StyleClass="LblBlackR3"
+                            Text="{Binding Username}"
+                            VerticalOptions="Start" />
+                    </Frame>
+
+                    <Frame
+                        Margin="1"
+                        Padding="1"
+                        BorderColor="Gray"
+                        VerticalOptions="Center">
+
+                        <Entry
+                            IsPassword="True"
+                            Placeholder="Password"
+                            StyleClass="PrimaryEntry"
+                            Text="{Binding Password}" />
+                    </Frame>
+
+
+                    <Label
+                        Grid.Row="2"
+                        HorizontalOptions="CenterAndExpand"
+                        StyleClass="LblBlackR1"
+                        Text="{Binding ShowMessage}"
+                        TextColor="Red"
+                        VerticalOptions="Center" />
+                </VerticalStackLayout>
+
+
+                <Button
+                    x:Name="Save"
+                    BackgroundColor="{StaticResource MainButtonColor}"
+                    Command="{Binding LoginCommand}"
+                    FontAttributes="Bold"
+                    StyleClass="PrimaryLgButton"
+                    Text="Log In"
+                    TextColor="{StaticResource MainButtonTextColor}" />
+
+
+
+
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Color x:Key="MainColor">#0E2954</Color>
+    <Color x:Key="PageBgColor">#EDF2F2</Color>
+
+    <Color x:Key="MainButtonColor">#279e97</Color>
+    <Color x:Key="InquiryButtonColor">#e4e4e4</Color>
+    <Color x:Key="SearchGrid">#f0faf9</Color>
+    <Color x:Key="MainButtonTextColor">#fff</Color>
+
+
+    <Color x:Key="MainLblColor">#fff</Color>
+
+    <Color x:Key="SuccesBtnColor">#2cda94</Color>
+    <Color x:Key="ErrorBtnColor">#ff6347</Color>
+    <Color x:Key="WarningBtnColor">#fcaa18</Color>
+    <Color x:Key="ActionBtnColor">#800060</Color>
+    <Color x:Key="SecondaryBtnColor">#279e97</Color>
+
+    <Color x:Key="TopRectangleColor">#1d3557</Color>
+    <Color x:Key="SecondaryColor">#3B75A9</Color>
+    <Color x:Key="LightBlueColor">#e5f2ff</Color>
+    <Color x:Key="LightColor">#F6F9FF</Color>
+
+
+
+    <OnPlatform x:Key="Material" x:TypeArguments="x:String">
+        <On Platform="iOS" Value="Material Design Icons" />
+        <On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
+    </OnPlatform>
+
+    <Style x:Key="MaterialIcons" TargetType="{x:Type Label}">
+        <Setter Property="FontFamily" Value="{DynamicResource Material}" />
+        <Setter Property="FontSize" Value="100" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="TextColor" Value="{DynamicResource MainButtonColor}" />
+        <Setter Property="FontSize" Value="Large" />
+    </Style>
+
+    <Style TargetType="Grid">
+        <Setter Property="ColumnSpacing" Value="0" />
+        <Setter Property="RowSpacing" Value="0" />
+    </Style>
+
+    <Style Class="TopRectangle" TargetType="RoundRectangle">
+        <Setter Property="Margin" Value="-5" />
+        <Setter Property="CornerRadius" Value="0,0,0,0" />
+        <Setter Property="Fill" Value="{StaticResource TopRectangleColor}" />
+    </Style>
+
+
+    <Style Class="Header" TargetType="VerticalStackLayout">
+        <Setter Property="Margin" Value="15" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style Class="BalanceGrid" TargetType="Grid">
+        <Setter Property="Margin" Value="15" />
+    </Style>
+
+    <Shadow
+        x:Key="shadow"
+        Brush="{StaticResource Gray400}"
+        Opacity="0.10"
+        Radius="15"
+        Offset="0,15" />
+
+    <Style Class="BalanceRectangle" TargetType="RoundRectangle">
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="Shadow" Value="{StaticResource shadow}" />
+    </Style>
+
+    <Style Class="BalanceRectangle2" TargetType="RoundRectangle">
+        <Setter Property="CornerRadius" Value="1" />
+        <Setter Property="Fill" Value="{StaticResource White}" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="Shadow" Value="{StaticResource shadow}" />
+    </Style>
+
+    <Style
+        ApplyToDerivedTypes="True"
+        Class="Padding25"
+        TargetType="Layout">
+        <Setter Property="Padding" Value="25" />
+    </Style>
+
+    <Style
+        ApplyToDerivedTypes="True"
+        Class="MarginT15"
+        TargetType="View">
+        <Setter Property="Margin" Value="0,15,0,0" />
+    </Style>
+
+    <Style Class="FrameBorder" TargetType="Frame">
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="Padding" Value="10,5" />
+        <Setter Property="BorderColor" Value="{StaticResource SecondaryColor}" />
+    </Style>
+
+    <!--  //////////////////////////////////  -->
+
+    <Shadow
+        x:Key="shadowItemFrame"
+        Brush="{StaticResource Gray400}"
+        Opacity="0.6"
+        Radius="15"
+        Offset="0,15" />
+
+    <Style Class="CollectionItemFrame" TargetType="Frame">
+        <Setter Property="CornerRadius" Value="1" />
+        <Setter Property="IsClippedToBounds" Value="True" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderColor" Value="#f4f4f4" />
+    </Style>
+
+    <Style Class="CollectionStockItemFrame" TargetType="Frame">
+        <Setter Property="BorderColor" Value="#f4f4f4" />
+        <Setter Property="CornerRadius" Value="2" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Shadow" Value="{StaticResource shadowItemFrame}" />
+        <!--<Setter Property="BorderColor" Value="#94ABE1" />-->
+    </Style>
+
+    <EllipseGeometry
+        x:Key="circle"
+        Center="50,50"
+        RadiusX="30"
+        RadiusY="30" />
+
+    <!--  CU Button  -->
+
+    <Style Class="CircularButton" TargetType="Button">
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="Large" />
+        <Setter Property="HeightRequest" Value="100" />
+        <Setter Property="WidthRequest" Value="100" />
+        <Setter Property="Margin" Value="0,0,0,-35" />
+        <Setter Property="VerticalOptions" Value="End" />
+        <Setter Property="HorizontalOptions" Value="End" />
+        <Setter Property="BackgroundColor" Value="{StaticResource MainColor}" />
+        <Setter Property="Clip" Value="{StaticResource circle}" />
+    </Style>
+
+    <Style
+        ApplyToDerivedTypes="True"
+        Class="PrimaryLgButton"
+        TargetType="Button">
+        <Setter Property="Margin" Value="0,10,0,0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource MainColor}" />
+    </Style>
+
+    <Style
+        ApplyToDerivedTypes="True"
+        Class="PrimaryLgButtonOut"
+        TargetType="Button">
+        <Setter Property="Margin" Value="0,10,0,0" />
+        <Setter Property="TextColor" Value="{StaticResource MainColor}" />
+        <Setter Property="BorderColor" Value="{StaticResource MainColor}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
+
+    <Style Class="btnLable" TargetType="Button">
+        <Setter Property="TextColor" Value="Black" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontFamily" Value="LBold" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
+
+    <!--  Control color  -->
+
+    <Style
+        ApplyToDerivedTypes="True"
+        Class="RedControl"
+        TargetType="View">
+        <Setter Property="BackgroundColor" Value="DarkRed" />
+    </Style>
+
+    <Style
+        ApplyToDerivedTypes="True"
+        Class="PrimaryControl"
+        TargetType="View">
+        <Setter Property="BackgroundColor" Value="{StaticResource MainColor}" />
+    </Style>
+
+    <Style
+        ApplyToDerivedTypes="True"
+        Class="BlackControl"
+        TargetType="View">
+        <Setter Property="BackgroundColor" Value="Black" />
+    </Style>
+
+
+    <!--  Custom Entry  -->
+
+    <Style
+        ApplyToDerivedTypes="True"
+        Class="PrimaryEntry"
+        TargetType="Entry">
+        <Setter Property="Margin" Value="0,10,0,0" />
+    </Style>
+
+    <!--  Custom Frame CU UX  -->
+    <Shadow
+        x:Key="shadowfrm"
+        Brush="{StaticResource Gray300}"
+        Opacity="0.5"
+        Radius="20"
+        Offset="0,0" />
+
+    <Shadow
+        x:Key="shadowfrmButtom"
+        Brush="{StaticResource Gray400}"
+        Opacity="0.6"
+        Radius="10"
+        Offset="0,20" />
+
+    <Style Class="FrameRectangle" TargetType="RoundRectangle">
+        <Setter Property="Fill" Value="{StaticResource White}" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="Shadow" Value="{StaticResource shadowfrm}" />
+    </Style>
+
+
+    <Style Class="RectangleBottomShadowHome" TargetType="RoundRectangle">
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Fill" Value="{StaticResource White}" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="Shadow" Value="{StaticResource shadowfrm}" />
+    </Style>
+
+    <Style Class="CustomerGridcolor" TargetType="Frame">
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="IsClippedToBounds" Value="True" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderColor" Value="{StaticResource Gray100}" />
+    </Style>
+
+    <Style Class="CustomerFramecolor" TargetType="Frame">
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="IsClippedToBounds" Value="True" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="Shadow" Value="{StaticResource shadowfrm}" />
+    </Style>
+
+    <!--  Custom Menu  -->
+
+    <Shadow
+        x:Key="shadowfrmForMenu"
+        Brush="{StaticResource Gray100}"
+        Opacity="0.10"
+        Radius="20"
+        Offset="0,0" />
+
+    <Style Class="RectangleBottomShadow" TargetType="RoundRectangle">
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Fill" Value="{StaticResource MainButtonColor}" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="Shadow" Value="{StaticResource shadowfrmForMenu}" />
+    </Style>
+
+    <Style Class="FrameRectangleForMenu" TargetType="RoundRectangle">
+        <Setter Property="Fill" Value="{StaticResource White}" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Shadow" Value="{StaticResource shadowfrmForMenu}" />
+    </Style>
+
+    <Style Class="lblForMenu" TargetType="Label">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontFamily" Value="PoppinsLight" />
+        <Setter Property="TextColor" Value="{StaticResource Gray600}" />
+    </Style>
+
+    <!--  Custom Frame Summary  -->
+
+    <Style Class="PayablesFrame" TargetType="Frame">
+        <Setter Property="BorderColor" Value="{StaticResource LightBlueColor}" />
+        <Setter Property="HeightRequest" Value="60" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="HasShadow" Value="True" />
+        <Setter Property="CornerRadius" Value="10" />
+    </Style>
+
+</ResourceDictionary>

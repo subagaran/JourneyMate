@@ -11,7 +11,7 @@ namespace JourneyMate.Database
 
     public class DatabaseContext
     {
-        private const string DbName = "NewApp.db3";
+        private const string DbName = "JourneyMate.db3";
         private static readonly Lazy<string> DbPath = new Lazy<string>(() => Path.Combine(FileSystem.AppDataDirectory, DbName));
 
         private readonly SQLiteAsyncConnection _connection;

@@ -11,6 +11,7 @@ namespace JourneyMate
 
             Routing.RegisterRoute(nameof(StartingPage), typeof(StartingPage));
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+            Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
 
         }
 

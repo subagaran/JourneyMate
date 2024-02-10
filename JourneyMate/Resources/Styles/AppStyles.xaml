@@ -5,7 +5,7 @@
     <Color x:Key="MainColor">#0E2954</Color>
     <Color x:Key="PageBgColor">#EDF2F2</Color>
 
-    <Color x:Key="MainButtonColor">#279e97</Color>
+    <Color x:Key="MainButtonColor">#0E2954</Color>
     <Color x:Key="InquiryButtonColor">#e4e4e4</Color>
     <Color x:Key="SearchGrid">#f0faf9</Color>
     <Color x:Key="MainButtonTextColor">#fff</Color>
@@ -17,7 +17,7 @@
     <Color x:Key="ErrorBtnColor">#ff6347</Color>
     <Color x:Key="WarningBtnColor">#fcaa18</Color>
     <Color x:Key="ActionBtnColor">#800060</Color>
-    <Color x:Key="SecondaryBtnColor">#279e97</Color>
+    <Color x:Key="SecondaryBtnColor">#0E2954</Color>
 
     <Color x:Key="TopRectangleColor">#1d3557</Color>
     <Color x:Key="SecondaryColor">#3B75A9</Color>

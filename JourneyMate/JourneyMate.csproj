@@ -53,7 +53,13 @@
 	  <None Remove="Resources\Fonts\Kanit-Bold.ttf" />
 	  <None Remove="Resources\Fonts\Kanit-Regular.ttf" />
 	  <None Remove="Resources\Images\backgroundimage.png" />
+	  <None Remove="Resources\Images\bookforfriend.png" />
+	  <None Remove="Resources\Images\homebackgroundimage.png" />
+	  <None Remove="Resources\Images\hotel.png" />
 	  <None Remove="Resources\Images\loginbackground.png" />
+	  <None Remove="Resources\Images\place.png" />
+	  <None Remove="Resources\Images\vehiclebooking.png" />
+	  <None Remove="Resources\Raw\loading1.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -69,6 +75,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Helper\LoadingIndicator\LoadingIndicatorView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\Home\HomePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\Home\StartingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

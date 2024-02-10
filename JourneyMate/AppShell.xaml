@@ -6,84 +6,9 @@
     xmlns:local="clr-namespace:JourneyMate.MVVM.Views.User"
     Shell.FlyoutBehavior="Disabled">
 
-    <Shell.FlyoutIcon>
-        <FileImageSource File="menu2.png" />
-    </Shell.FlyoutIcon>
-
-    <Shell.ItemTemplate>
-
-        <DataTemplate>
-            <Grid
-                ColumnDefinitions="Auto,*"
-                ColumnSpacing="50"
-                HeightRequest="60"
-                RowSpacing="0">
-                <Image
-                    Grid.Column="0"
-                    Margin="50,0,0,0"
-                    HeightRequest="30"
-                    HorizontalOptions="Start"
-                    Source="{Binding FlyoutIcon}"
-                    VerticalOptions="Center" />
-                <Label
-                    Grid.Column="1"
-                    HorizontalOptions="Start"
-                    HorizontalTextAlignment="Start"
-                    StyleClass="LblBlackR3"
-                    Text="{Binding Title}"
-                    TextColor="Black"
-                    VerticalOptions="Center" />
-                <Rectangle
-                    x:Name="background"
-                    Grid.ColumnSpan="2"
-                    Fill="#50bba3"
-                    Opacity=".1" />
-
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter TargetName="background" Property="Rectangle.Fill" Value="White" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Selected">
-                                <VisualState.Setters>
-                                    <Setter TargetName="background" Property="Rectangle.Fill" Value="Black" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </VisualStateManager.VisualStateGroups>
-            </Grid>
-
-        </DataTemplate>
-    </Shell.ItemTemplate>
-
-
-
     <ShellContent
         Title="Loading"
         ContentTemplate="{DataTemplate local:LoginPage}"
         Route="LoginPage" />
-
-
-    <Shell.FlyoutFooter>
-        <StackLayout>
-
-            <Button
-                Margin="30,10,30,10"
-                Clicked="Button_Clicked"
-                Text="Log Out" />
-
-            <Label
-                Padding="0,10"
-                BackgroundColor="#248999"
-                HorizontalTextAlignment="Center"
-                Text="Copyright | Glenzoft"
-                TextColor="White" />
-        </StackLayout>
-    </Shell.FlyoutFooter>
-
 
 </Shell>

@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using JourneyMate.MVVM.Views.Home;
+using JourneyMate.MVVM.Views.BRUS.Home;
 using System;
 using System.Collections.Generic;
 using System.Linq;

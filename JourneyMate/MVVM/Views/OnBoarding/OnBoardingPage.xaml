@@ -3,11 +3,77 @@
     x:Class="JourneyMate.MVVM.Views.OnBoarding.OnBoardingPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="OnBoardingPage">
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+   BackgroundColor="White" 
+     NavigationPage.HasNavigationBar="False"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.FlyoutItemIsVisible="False"
+    Shell.NavBarIsVisible="False">
+
+
+    <ContentPage.Content>
+        <Grid>
+            <!-- Background Image -->
+            <Image Source="boardingpage1.png" Aspect="AspectFill" 
+                   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+
+            <!-- Main Content StackLayout -->
+            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <!-- Your existing content goes here -->
+            </StackLayout>
+
+            <!-- Next Page Button -->
+            <Button Text="Next Page" Clicked="OnNextPageClicked"
+                    VerticalOptions="End" HorizontalOptions="Center"/>
+        </Grid>
+    </ContentPage.Content>
+  
+
+    <!--<CarouselView ItemsSource="{Binding OnBoardings}" BackgroundColor="White">
+        <CarouselView.ItemTemplate>
+            <DataTemplate>
+                <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                    <Image Source="onboaarding1.jpg"
+                       Aspect="AspectFill"
+                       HeightRequest="200"
+                       WidthRequest="100"
+                       VerticalOptions="FillAndExpand"
+                       HorizontalOptions="FillAndExpand"/>
+
+                    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                        <Frame HasShadow="True"
+                           BackgroundColor="Transparent"
+                           CornerRadius="15"
+                           Margin="20"
+                           HeightRequest="400"
+                           HorizontalOptions="Center"
+                           VerticalOptions="CenterAndExpand">
+
+                            <StackLayout>
+                                <Image Source="{Binding ImageUrl}" 
+                                   Aspect="AspectFill"
+                                   HeightRequest="200"
+                                   WidthRequest="200"
+                                   HorizontalOptions="Center" />
+
+                                <Label Text="{Binding Location}"
+                                   FontSize="16"
+                                   TextColor="White"
+                                   HorizontalOptions="Center" />
+
+                                <Label Text="{Binding Details}"
+                                   FontAttributes="Italic"
+                                   FontSize="14"
+                                   TextColor="White"
+                                   HorizontalOptions="Center"
+                                   MaxLines="5"
+                                   LineBreakMode="TailTruncation" />
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </StackLayout>
+            </DataTemplate>
+        </CarouselView.ItemTemplate>
+    </CarouselView>-->
+
+
 </ContentPage>

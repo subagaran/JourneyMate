@@ -54,25 +54,29 @@
 	  <None Remove="Resources\Fonts\Kanit-Regular.ttf" />
 	  <None Remove="Resources\Images\backgroundimage.png" />
 	  <None Remove="Resources\Images\bookforfriend.png" />
+	  <None Remove="Resources\Images\curvedrectangle.png" />
+	  <None Remove="Resources\Images\curvedrectangle1.png" />
 	  <None Remove="Resources\Images\homebackgroundimage.png" />
 	  <None Remove="Resources\Images\hotel.png" />
+	  <None Remove="Resources\Images\journeymate.png" />
 	  <None Remove="Resources\Images\loginbackground.png" />
 	  <None Remove="Resources\Images\place.png" />
 	  <None Remove="Resources\Images\vehiclebooking.png" />
 	  <None Remove="Resources\Raw\loading1.json" />
+	  <None Remove="Resources\Raw\no_internet_lottie.json" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.86" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.141-beta" />
+		<PackageReference Include="UraniumUI.Material" Version="2.5.4" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="MVVM\Models\" />
-	  <Folder Include="MVVM\ViewModels\BRBO\" />
 	  <Folder Include="MVVM\ViewModels\BRUS\" />
 	</ItemGroup>
 
@@ -80,7 +84,31 @@
 	  <MauiXaml Update="Helper\LoadingIndicator\LoadingIndicatorView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Helper\NoInternetConnectionIndicator\NoInternetConnectionIndicatorView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Helper\PopupMessages\ErrorMgs.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Helper\PopupMessages\SuccessMgs.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Helper\PopupMessages\SureMgs.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Helper\PopupMessages\WarningMgs.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\BRBO\Home\MerchantHomePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\BRBO\Hotel\AddHotelsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\BRBO\Vehicle\VehiclePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\BRUS\Bookings\PaymentPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\BRUS\Home\HomePage.xaml">
@@ -93,6 +121,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\User\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\User\RegistrationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\AppStyles.xaml">

@@ -1,12 +1,265 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="JourneyMate.MVVM.Views.BRBO.Home.MerchantHomePage"
-             Title="MerchantHomePage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="JourneyMate.MVVM.Views.BRBO.Home.MerchantHomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Merchant Home Page">
+
+    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,*,Auto,*">
+
+        <Image
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Aspect="AspectFit"
+            Source="homebackgroundimage.png" />
+        <VerticalStackLayout
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            VerticalOptions="Center">
+            <Label
+                HorizontalOptions="Start"
+                StyleClass="LblWhiteR7"
+                Text="WELCOME"
+                VerticalOptions="Center" />
+            <Label
+                HorizontalOptions="Center"
+                StyleClass="LblWhiteR7"
+                Text="MR.ALAN"
+                VerticalOptions="Center" />
+        </VerticalStackLayout>
+
+
+        <Grid
+            Grid.Row="1"
+            Margin="10,10,10,0"
+            ColumnDefinitions="*,*"
+            ColumnSpacing="10"
+            HorizontalOptions="Center"
+            RowDefinitions="110,110,110"
+            RowSpacing="5"
+            VerticalOptions="Start">
+
+
+            <Grid
+                Grid.Row="0"
+                Grid.Column="0"
+                Shadow="{StaticResource shadowItemFrame}"
+                StyleClass="CustomerGridcolor"
+                VerticalOptions="Center">
+
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GotoHotelPageCommand}" />
+                </Grid.GestureRecognizers>
+
+                <RoundRectangle StyleClass="FrameRectangleForMenu" />
+
+                <Frame
+                    BackgroundColor="{StaticResource Primary}"
+                    CornerRadius="10"
+                    Shadow="{StaticResource shadowfrm}">
+
+                    <Grid
+                        Grid.Row="0"
+                        Padding="0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Start">
+                        <VerticalStackLayout>
+                            <ImageButton
+                                Grid.Row="0"
+                                Command="{Binding GotoHotelPageCommand}"
+                                MaximumHeightRequest="50"
+                                Source="hotel.png" />
+
+                            <Label
+                                Grid.Row="1"
+                                HorizontalTextAlignment="Center"
+                                StyleClass="LblWhiteR3"
+                                Text="Hotels" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                </Frame>
+            </Grid>
+
+            <Grid
+                Grid.Row="0"
+                Grid.Column="1"
+                Shadow="{StaticResource shadowItemFrame}"
+                StyleClass="CustomerGridcolor"
+                VerticalOptions="Center">
+
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GotoPlacesPageCommand}" />
+                </Grid.GestureRecognizers>
+
+                <RoundRectangle StyleClass="FrameRectangleForMenu" />
+
+                <Frame
+                    BackgroundColor="{StaticResource Primary}"
+                    CornerRadius="10"
+                    Shadow="{StaticResource shadowfrm}"
+                    VerticalOptions="Center">
+
+                    <Grid
+                        Grid.Row="0"
+                        Padding="0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                        <VerticalStackLayout>
+                            <ImageButton
+                                Grid.Row="0"
+                                Command="{Binding GotoPlacesPageCommand}"
+                                MaximumHeightRequest="50"
+                                Source="place.png" />
+
+                            <Label
+                                Grid.Row="1"
+                                HorizontalTextAlignment="Center"
+                                StyleClass="LblWhiteR3"
+                                Text="Vehicles" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                </Frame>
+            </Grid>
+
+            <Grid
+                Grid.Row="1"
+                Grid.Column="0"
+                Shadow="{StaticResource shadowItemFrame}"
+                StyleClass="CustomerGridcolor"
+                VerticalOptions="Center">
+
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GotoVehicleBookingPageCommand}" />
+                </Grid.GestureRecognizers>
+
+                <RoundRectangle StyleClass="FrameRectangleForMenu" />
+
+                <Frame
+                    BackgroundColor="{StaticResource Primary}"
+                    CornerRadius="10"
+                    Shadow="{StaticResource shadowfrm}">
+
+                    <Grid
+                        Grid.Row="0"
+                        Padding="0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Start">
+                        <VerticalStackLayout>
+                            <ImageButton
+                                Grid.Row="0"
+                                Command="{Binding GotoVehicleBookingPageCommand}"
+                                MaximumHeightRequest="50"
+                                Source="vehiclebooking.png" />
+
+                            <Label
+                                Grid.Row="1"
+                                HorizontalTextAlignment="Center"
+                                StyleClass="LblWhiteR3"
+                                Text="View Booking" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                </Frame>
+            </Grid>
+
+            <Grid
+                Grid.Row="1"
+                Grid.Column="1"
+                Shadow="{StaticResource shadowItemFrame}"
+                StyleClass="CustomerGridcolor"
+                VerticalOptions="Center">
+
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GotoBookForFriendPageCommand}" />
+                </Grid.GestureRecognizers>
+
+                <RoundRectangle StyleClass="FrameRectangleForMenu" />
+
+                <Frame
+                    BackgroundColor="{StaticResource Primary}"
+                    CornerRadius="10"
+                    Shadow="{StaticResource shadowfrm}">
+
+                    <Grid
+                        Grid.Row="0"
+                        Padding="0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Start">
+                        <VerticalStackLayout>
+                            <ImageButton
+                                Grid.Row="0"
+                                Command="{Binding GotoBookForFriendPageCommand}"
+                                MaximumHeightRequest="50"
+                                Source="bookforfriend.png" />
+
+                            <Label
+                                Grid.Row="1"
+                                HorizontalTextAlignment="Center"
+                                StyleClass="LblWhiteR3"
+                                Text="View Vehicles" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                </Frame>
+            </Grid>
+
+            <Grid
+                Grid.Row="3"
+                Grid.Column="0"
+                Shadow="{StaticResource shadowItemFrame}"
+                StyleClass="CustomerGridcolor"
+                VerticalOptions="Center">
+
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GotoBookForFriendPageCommand}" />
+                </Grid.GestureRecognizers>
+
+                <RoundRectangle StyleClass="FrameRectangleForMenu" />
+
+                <Frame
+                    BackgroundColor="{StaticResource Primary}"
+                    CornerRadius="10"
+                    Shadow="{StaticResource shadowfrm}">
+
+                    <Grid
+                        Grid.Row="0"
+                        Padding="0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Start">
+                        <VerticalStackLayout>
+                            <ImageButton
+                                Grid.Row="0"
+                                Command="{Binding GotoBookForFriendPageCommand}"
+                                MaximumHeightRequest="50"
+                                Source="bookforfriend.png" />
+
+                            <Label
+                                Grid.Row="1"
+                                HorizontalTextAlignment="Center"
+                                StyleClass="LblWhiteR3"
+                                Text="Guides" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                </Frame>
+            </Grid>
+
+
+
+        </Grid>
+
+
+
+
+    </Grid>
+
+
+
 </ContentPage>

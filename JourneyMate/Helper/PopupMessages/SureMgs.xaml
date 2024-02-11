@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="JourneyMate.Helper.PopupMessages.SureMgs"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dt="clr-namespace:JourneyMate.MVVM.Models"
+    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:DataType="dt:PopUpMessagesLocalModel"
+    CanBeDismissedByTappingOutsideOfPopup="False"
+    Color="Transparent">
+
+    <Frame HeightRequest="350" WidthRequest="400">
+        <VerticalStackLayout
+            HorizontalOptions="CenterAndExpand"
+            Spacing="10"
+            VerticalOptions="CenterAndExpand">
+            <skia:SKLottieView
+                Grid.Row="0"
+                HeightRequest="100"
+                HorizontalOptions="Center"
+                RepeatCount="0"
+                Source="warning_lottie.json"
+                VerticalOptions="Center"
+                WidthRequest="100" />
+            <Label
+                FontAttributes="Bold"
+                FontSize="Large"
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center"
+                Text="{Binding Tile}"
+                VerticalOptions="CenterAndExpand"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                FontSize="Body"
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center"
+                Text="{Binding Mgs}"
+                VerticalOptions="CenterAndExpand"
+                VerticalTextAlignment="Center" />
+
+            <Grid
+                Margin="20"
+                ColumnDefinitions="Auto,*"
+                HorizontalOptions="End">
+                <Button
+                    Grid.Column="0"
+                    Padding="20,15"
+                    BackgroundColor="{StaticResource MainButtonTextColor}"
+                    Clicked="OnClickedClosebtn"
+                    FontAttributes="Bold"
+                    FontSize="Body"
+                    HorizontalOptions="End"
+                    Text="No"
+                    TextColor="{StaticResource WarningBtnColor}" />
+                <Button
+                    Grid.Column="1"
+                    Padding="20,15"
+                    BackgroundColor="{StaticResource WarningBtnColor}"
+                    Clicked="OnClickedYesBtn"
+                    FontAttributes="Bold"
+                    FontSize="Body"
+                    HorizontalOptions="End"
+                    Text="Yes"
+                    TextColor="{StaticResource MainButtonTextColor}"
+                    WidthRequest="120" />
+            </Grid>
+
+        </VerticalStackLayout>
+    </Frame>
+</toolkit:Popup>

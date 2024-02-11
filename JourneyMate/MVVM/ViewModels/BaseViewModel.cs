@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
+using JourneyMate.Helper.NoInternetConnectionIndicator;
 using JourneyMate.Helpers;
 using System;
 using System.Collections.Generic;
@@ -10,15 +12,19 @@ namespace JourneyMate.MVVM.ViewModels
 {
     public partial class BaseViewModel : ObservableObject
     {
+
         [ObservableProperty]
         string showMessage;
 
         [ObservableProperty]
         bool isBusy;
 
+        [ObservableProperty]
+        bool isInternet;
+
         public BaseViewModel()
         {
-                
+           
         }
 
         partial void OnIsBusyChanged(bool value)
@@ -34,6 +40,22 @@ namespace JourneyMate.MVVM.ViewModels
                     LoadingIndicator.CloseLoading();
                 }
             });
+        }
+
+        public static Task<bool> CheckInternetConnection()
+        {
+            var current = Connectivity.NetworkAccess;
+
+            if (current == NetworkAccess.Internet)
+            {
+                // Internet connection is available
+                return Task.FromResult(true);
+            }
+            else
+            {
+                return Task.FromResult(false);
+
+            }
         }
     }
 }

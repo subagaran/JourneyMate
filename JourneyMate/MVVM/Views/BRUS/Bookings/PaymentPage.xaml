@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="JourneyMate.MVVM.Views.BRUS.Bookings.PaymentPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+    xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+    Title="PaymentPage">
+
+    <ScrollView>
+        <Grid
+            ColumnDefinitions="*,*,*"
+            ColumnSpacing="20"
+            HorizontalOptions="FillAndExpand"
+            RowDefinitions="*,Auto,Auto,Auto,Auto,Auto"
+            VerticalOptions="FillAndExpand">
+
+            <Image
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Aspect="AspectFill"
+                HeightRequest="380"
+                Source="curvedrectangle.png"
+                VerticalOptions="Start" />
+
+            <Label
+                Grid.Row="0"
+                Grid.ColumnSpan="3"
+                HorizontalOptions="Center"
+                StyleClass="LblWhiteR7"
+                Text="Payment"
+                VerticalOptions="Center" />
+
+
+            <VerticalStackLayout
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="30,0,30,10">
+                <ur:TextField
+                    Title="Name"
+                    HorizontalOptions="FillAndExpand"
+                    Keyboard="Chat"
+                    Text="{Binding Name}"
+                    TextColor="{StaticResource Black}"
+                    Visual="Custom" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="30,0,30,10">
+                <StackLayout Orientation="Horizontal" Spacing="20">
+
+                    <ur:TextField
+                        Title="Card Number"
+                        HorizontalOptions="FillAndExpand"
+                        Keyboard="Numeric"
+                        Text="{Binding CardNumber, Mode=TwoWay}"
+                        TextColor="{StaticResource Black}"
+                        Visual="Custom" />
+                </StackLayout>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="30,0,0,0">
+
+                <StackLayout Orientation="Horizontal">
+                    <!--  Month Picker  -->
+                    <ur:PickerField
+                        x:Name="MonthPicker"
+                        Title="Month"
+                        TextColor="Black"
+                        VerticalOptions="CenterAndExpand">
+                        <ur:PickerField.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Jan</x:String>
+                                <x:String>Feb</x:String>
+                                <x:String>March</x:String>
+                                <x:String>Apr</x:String>
+                                <x:String>May</x:String>
+                                <x:String>Jun</x:String>
+                                <x:String>Jul</x:String>
+                                <x:String>Aug</x:String>
+                                <x:String>Sept</x:String>
+                                <x:String>Oct</x:String>
+                                <x:String>Nov</x:String>
+                                <x:String>Dec</x:String>
+                            </x:Array>
+                        </ur:PickerField.ItemsSource>
+                    </ur:PickerField>
+
+                    <!--  Year Picker  -->
+                    <ur:PickerField
+                        x:Name="YearPicker"
+                        Title="Year"
+                        TextColor="Black"
+                        VerticalOptions="CenterAndExpand">
+                        <ur:PickerField.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>2022</x:String>
+                                <x:String>2023</x:String>
+                                <x:String>2024</x:String>
+                                <x:String>2026</x:String>
+                                <x:String>2027</x:String>
+                                <x:String>2028</x:String>
+                                <x:String>2029</x:String>
+                            </x:Array>
+                        </ur:PickerField.ItemsSource>
+                    </ur:PickerField>
+                </StackLayout>
+            </VerticalStackLayout>
+
+
+            <VerticalStackLayout
+                Grid.Row="3"
+                Grid.Column="2"
+                Margin="0,0,30,0">
+
+                <StackLayout Orientation="Horizontal">
+                    <Image HeightRequest="25" Source="icon_cvv.png" />
+                    <ur:TextField
+                        Title="CVV"
+                        HorizontalOptions="FillAndExpand"
+                        Keyboard="Numeric"
+                        Text="{Binding CardCvv}"
+                        TextColor="{StaticResource Black}"
+                        Visual="Custom" />
+                </StackLayout>
+            </VerticalStackLayout>
+
+
+            <Button
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="30,5,30,30"
+                Padding="18"
+                BackgroundColor="{Binding CardNumber, Converter={StaticResource CardColorConverter}}"
+                Command="{Binding CmdPurchase}"
+                CornerRadius="26"
+                FontSize="18"
+                Text="Pay"
+                TextColor="White" />
+        </Grid>
+    </ScrollView>
+
+</ContentPage>

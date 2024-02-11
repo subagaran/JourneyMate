@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="JourneyMate.Helper.PopupMessages.ErrorMgs"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dt="clr-namespace:JourneyMate.MVVM.Models"
+    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:DataType="dt:PopUpMessagesLocalModel"
+    CanBeDismissedByTappingOutsideOfPopup="False"
+    Color="Transparent">
+    <Frame HeightRequest="300" WidthRequest="350">
+        <VerticalStackLayout
+            HorizontalOptions="Center"
+            Spacing="10"
+            VerticalOptions="Center">
+            <skia:SKLottieView
+                Grid.Row="0"
+                HeightRequest="100"
+                HorizontalOptions="Center"
+                RepeatCount="0"
+                Source="error_lottie.json"
+                VerticalOptions="Center"
+                WidthRequest="100" />
+            <Label
+                FontAttributes="Bold"
+                FontSize="Header"
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center"
+                Text="{Binding Tile}"
+                VerticalOptions="CenterAndExpand"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center"
+                Text="{Binding Mgs}"
+                VerticalOptions="CenterAndExpand"
+                VerticalTextAlignment="Center" />
+            <Button
+                BackgroundColor="{StaticResource ErrorBtnColor}"
+                Clicked="OnClickedClosebtn"
+                FontAttributes="Bold"
+                Text="Close"
+                TextColor="{StaticResource MainButtonTextColor}" />
+        </VerticalStackLayout>
+    </Frame>
+</toolkit:Popup>

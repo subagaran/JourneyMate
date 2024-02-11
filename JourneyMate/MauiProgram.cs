@@ -5,6 +5,12 @@ using JourneyMate.MVVM.Views.BRUS.Home;
 using JourneyMate.MVVM.Views.User;
 using JourneyMate.MVVM.ViewModels.User;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using UraniumUI;
+using JourneyMate.MVVM.Views.BRBO.Hotel;
+using JourneyMate.MVVM.Views.BRUS.Bookings;
+using JourneyMate.MVVM.Views.BRBO.Vehicle;
+using JourneyMate.MVVM.Views.BRBO.Home;
+using JourneyMate.MVVM.ViewModels.BRBO.Hotel;
 
 namespace JourneyMate
 {
@@ -15,6 +21,8 @@ namespace JourneyMate
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseUraniumUI()
+                .UseUraniumUIMaterial()
                 .UseSkiaSharp()
                 .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
@@ -36,9 +44,15 @@ namespace JourneyMate
             builder.Services.AddTransient<StartingPage>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<HomePage>();
+            builder.Services.AddTransient<RegistrationPage>();
+            builder.Services.AddTransient<AddHotelsPage>();
+            builder.Services.AddTransient<PaymentPage>();
+            builder.Services.AddTransient<VehiclePage>();
+            builder.Services.AddTransient<MerchantHomePage>();
 
             //viewModels
             builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<HotelViewModel>();
 
             return builder.Build();
         }

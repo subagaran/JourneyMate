@@ -3,6 +3,7 @@
     x:Class="JourneyMate.MVVM.Views.User.LoginPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.User"
     x:DataType="vm:LoginViewModel"
     NavigationPage.HasNavigationBar="False"
@@ -13,7 +14,7 @@
     <ScrollView>
         <Grid RowDefinitions="*,*">
 
-            <Frame
+            <!--<Frame
                 Grid.Row="0"
                 Margin="0,0,0,0"
                 Padding="0,0,0,0"
@@ -24,8 +25,13 @@
                     Aspect="AspectFill"
                     BackgroundColor="WhiteSmoke"
                     MaximumHeightRequest="510"
-                    Source="loginbackground.png" />
-            </Frame>
+                    Source="journeymate.png" />
+            </Frame>-->
+            <Image
+                Grid.Row="0"
+                Aspect="AspectFill"
+                BackgroundColor="WhiteSmoke"
+                Source="journeymate.png" />
 
             <VerticalStackLayout
                 Grid.Row="1"
@@ -43,7 +49,28 @@
                         VerticalOptions="Start" />
 
 
-                    <Frame
+                    <!--<Frame
+                        Margin="1"
+                        Padding="1"
+                        BorderColor="Gray"
+                        VerticalOptions="Center">-->
+
+                    <ur:TextField
+                        Title="User name"
+                        StyleClass="LblBlackR3"
+                        Text="{Binding UserName}"
+                        TextColor="{StaticResource Black}"
+                        VerticalOptions="Start" />
+
+                    <!--<Entry
+                            HorizontalTextAlignment="Start"
+                            Placeholder="Username"
+                            StyleClass="LblBlackR3"
+                            Text="{Binding UserName}"
+                            VerticalOptions="Start" />-->
+                    <!--</Frame>-->
+
+                    <!--<Frame
                         Margin="1"
                         Padding="1"
                         BorderColor="Gray"
@@ -51,25 +78,17 @@
 
                         <Entry
                             HorizontalTextAlignment="Start"
-                            Placeholder="Username"
-                            StyleClass="LblBlackR3"
-                            Text="{Binding UserName}"
-                            VerticalOptions="Start" />
-                    </Frame>
-
-                    <Frame
-                        Margin="1"
-                        Padding="1"
-                        BorderColor="Gray"
-                        VerticalOptions="Center">
-
-                        <Entry
                             IsPassword="True"
                             Placeholder="Password"
-                            StyleClass="PrimaryEntry"
+                            StyleClass="LblBlackR3"
                             Text="{Binding Password}" />
-                    </Frame>
-
+                    </Frame>-->
+                    <ur:TextField
+                        Title="Password"
+                        IsPassword="True"
+                        StyleClass="LblBlackR3"
+                        Text="{Binding Password}"
+                        TextColor="{StaticResource Black}" />
 
                     <Label
                         Grid.Row="2"
@@ -89,7 +108,13 @@
                     StyleClass="PrimaryLgButton"
                     Text="Log In"
                     TextColor="{StaticResource MainButtonTextColor}" />
-
+                <Button
+                    BackgroundColor="{StaticResource MainButtonColor}"
+                    Command="{Binding SignUpCommand}"
+                    FontAttributes="Bold"
+                    StyleClass="PrimaryLgButton"
+                    Text="Sign up"
+                    TextColor="{StaticResource MainButtonTextColor}" />
 
 
 

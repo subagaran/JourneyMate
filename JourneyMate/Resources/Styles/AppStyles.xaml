@@ -13,10 +13,10 @@
 
     <Color x:Key="MainLblColor">#fff</Color>
 
-    <Color x:Key="SuccesBtnColor">#2cda94</Color>
+    <Color x:Key="SuccesBtnColor">#0E2954</Color>
     <Color x:Key="ErrorBtnColor">#ff6347</Color>
     <Color x:Key="WarningBtnColor">#fcaa18</Color>
-    <Color x:Key="ActionBtnColor">#800060</Color>
+    <Color x:Key="ActionBtnColor">#fff</Color>
     <Color x:Key="SecondaryBtnColor">#0E2954</Color>
 
     <Color x:Key="TopRectangleColor">#1d3557</Color>

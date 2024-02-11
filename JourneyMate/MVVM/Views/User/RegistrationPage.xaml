@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="JourneyMate.MVVM.Views.User.RegistrationPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+    xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.User"
+    Title="Sign up"
+    x:DataType="vm:LoginViewModel">
+
+    <StackLayout Padding="20">
+        <ur:TextField
+            Title="First Name"
+            Grid.Row="0"
+            Text="{Binding FirstName}"
+            TextColor="{StaticResource Black}" />
+
+        <ur:TextField
+            Title="Last Name"
+            Grid.Row="0"
+            Grid.Column="1"
+            Text="{Binding LastName}"
+            TextColor="{StaticResource Black}" />
+        <ur:TextField
+            Title="City"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Text="{Binding City}"
+            TextColor="{StaticResource Black}" />
+
+        <ur:TextField
+            Title="Email"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Text="{Binding Email}"
+            TextColor="{StaticResource Black}" />
+
+        <ur:TextField
+            Title="Phone number"
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Text="{Binding PhoneNumber}"
+            TextColor="{StaticResource Black}" />
+
+        <ur:TextField
+            Title="User name"
+            Grid.Row="4"
+            Grid.ColumnSpan="2"
+            Text="{Binding UserName}"
+            TextColor="{StaticResource Black}" />
+
+        <ur:TextField
+            Title="Password"
+            Grid.Row="5"
+            Grid.ColumnSpan="2"
+            IsPassword="True"
+            Text="{Binding Password}"
+            TextColor="{StaticResource Black}" />
+        <ur:TextField
+            Title="Confirm Password"
+            Grid.Row="6"
+            Grid.ColumnSpan="2"
+            IsPassword="True"
+            Text="{Binding ConfirmPassword}"
+            TextColor="{StaticResource Black}" />
+
+        <Button
+            Grid.Row="7"
+            Grid.Column="0"
+            Margin="0,20,0,0"
+            Command="{Binding RegisterCommand}"
+            Text="Register" />
+        <Button
+            Grid.Row="7"
+            Grid.Column="1"
+            Margin="0,20,0,0"
+            BackgroundColor="Gray"
+            Command="{Binding GotoBackCommand}"
+            Text="Back" />
+    </StackLayout>
+</ContentPage>

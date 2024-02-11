@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="JourneyMate.Helper.NoInternetConnectionIndicator.NoInternetConnectionIndicatorView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    CanBeDismissedByTappingOutsideOfPopup="False"
+    HorizontalOptions="Center"
+    VerticalOptions="Center"
+    Color="Transparent">
+
+    <VerticalStackLayout Spacing="5">
+        <skia:SKLottieView
+            HeightRequest="150"
+            HorizontalOptions="Center"
+            RepeatCount="-1"
+            Source="no_internet_lottie.json"
+            VerticalOptions="Center"
+            WidthRequest="200" />
+        <Label
+            HorizontalOptions="Center"
+            Text="No Internet Connection"
+            TextColor="White" />
+        <Button
+            BackgroundColor="{StaticResource SecondaryColor}"
+            Clicked="OnClickedClosebtn"
+            Text="Close"
+            TextColor="{StaticResource MainButtonTextColor}" />
+    </VerticalStackLayout>
+
+</toolkit:Popup>

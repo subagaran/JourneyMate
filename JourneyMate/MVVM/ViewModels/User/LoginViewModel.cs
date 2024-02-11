@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using JourneyMate.MVVM.Views.BRUS.Home;
 using JourneyMate.Database;
 using JourneyMate.Helper.NoInternetConnectionIndicator;
 using JourneyMate.Helpers;

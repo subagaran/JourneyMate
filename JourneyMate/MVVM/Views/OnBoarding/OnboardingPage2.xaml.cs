@@ -12,6 +12,6 @@ public partial class OnboardingPage2 : ContentPage
 
     private void OnNextPageClicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new HomePage());
+        Shell.Current.GoToAsync($"{nameof(LoginPage)}");
     }
 }

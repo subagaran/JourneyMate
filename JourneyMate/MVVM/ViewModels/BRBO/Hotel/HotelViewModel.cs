@@ -78,7 +78,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
                     HeaderName = "",
                     SubHeaderName = "",
                     Price = Price,
-                    HasMoreInfo = ""
+                    HasMoreInfo = "Y"
                 };
 
                 var json = JsonSerializer.Serialize(registrationModel);

@@ -99,7 +99,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
             catch (Exception ex)
             {
                 // Handle exceptions
-                Console.WriteLine($"Error creating hotel: {ex.Message}");
+                Console.WriteLine($"Error creating while creating hotel: {ex.Message}");
                 return false; // Hotel creation failed
             }
         }

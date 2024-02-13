@@ -9,14 +9,17 @@
     Title="Vehicle">
 
     <VerticalStackLayout Padding="20">
-        <ur:TextField Title="Vehicle Name" />
+        <ur:TextField Title="Vehicle Name" Text="{Binding VehicleName}"/>
 
-        <ur:TextField Title="Vehicle No" />
+        <ur:TextField Title="Vehicle No" Text="{Binding VehicleNo}" />
 
-        <ur:TextField Title="Brand" />
+        <ur:TextField Title="Brand" Text="{Binding Brand}"/>
 
-        <ur:TextField Title="Driver Name " />
-        <ur:TextField Title="Make " />
+        <ur:TextField Title="Driver Name" Text="{Binding DriverName}"/>
+        <ur:TextField Title="Make " Text="{Binding Make}" />
+        <ur:TextField Title="Model " Text="{Binding Model}"/>
+        <ur:TextField Title="Year " Text="{Binding Year}" />
+        <ur:TextField Title="Color " Text="{Binding Color}"/> 
 
         <VerticalStackLayout
             Margin="10,10"

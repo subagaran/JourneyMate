@@ -4,6 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+     xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.BRBO.Vehicle"
+     x:DataType="vm:VehicleViewModel"
     Title="Vehicle">
 
     <VerticalStackLayout Padding="20">
@@ -14,6 +16,7 @@
         <ur:TextField Title="Brand" />
 
         <ur:TextField Title="Driver Name " />
+        <ur:TextField Title="Make " />
 
         <VerticalStackLayout
             Margin="10,10"

@@ -22,7 +22,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
         [ObservableProperty]
         string price;
         [ObservableProperty]
-        string isActive;
+        string isActive = "N";
         [ObservableProperty]
         string vehcicleName;
         [ObservableProperty]
@@ -31,5 +31,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
         string brand;
         [ObservableProperty]
         string driverName;
+
+
     }
 }

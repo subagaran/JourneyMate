@@ -76,7 +76,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
                     Reason = "-",
                     ImageURl = "",
                     Description = "",
-                    HeaderName = "-",
+                    HeaderName = "--",
                     SubHeaderName = "",
                     Price = Price,
                     HasMoreInfo = "Y"

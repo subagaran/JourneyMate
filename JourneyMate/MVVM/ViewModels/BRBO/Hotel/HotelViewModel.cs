@@ -76,10 +76,10 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
                     Reason = "-",
                     ImageURl = "",
                     Description = "",
-                    HeaderName = "",
+                    HeaderName = "-",
                     SubHeaderName = "",
                     Price = Price,
-                    HasMoreInfo = ""
+                    HasMoreInfo = "Y"
                 };
 
                 var json = JsonSerializer.Serialize(model);
@@ -100,7 +100,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
             catch (Exception ex)
             {
                 // Handle exceptions
-                Console.WriteLine($"Error creating hotel: {ex.Message}");
+                Console.WriteLine($"Error creating while creating hotel: {ex.Message}");
                 return false; // Hotel creation failed
             }
         }

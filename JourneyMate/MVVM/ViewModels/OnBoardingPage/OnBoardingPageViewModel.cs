@@ -1,4 +1,9 @@
-﻿using JourneyMate.MVVM.LocalModels;
+﻿using CommunityToolkit.Mvvm.Input;
+using JourneyMate.Database;
+using JourneyMate.MVVM.LocalModels;
+using JourneyMate.MVVM.ViewModels.User;
+using JourneyMate.MVVM.Views.OnBoarding;
+using JourneyMate.MVVM.Views.User;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,10 +13,15 @@ using System.Threading.Tasks;
 
 namespace JourneyMate.MVVM.ViewModels.OnBoardingPage
 {
-    public class OnBoardingPageViewModel
+    public partial class OnBoardingPageViewModel
     {
+        private readonly DatabaseContext _databaseContext;
         public ObservableCollection<OnBoarding> OnBoardings { get; set; }
 
+        public OnBoardingPageViewModel()
+        {
+                _databaseContext = new DatabaseContext();
+        }
         public void InitializeOnBoardings()
         {
             OnBoardings = new ObservableCollection<OnBoarding>
@@ -31,6 +41,19 @@ namespace JourneyMate.MVVM.ViewModels.OnBoardingPage
                 },
                 // Add more OnBoarding instances for additional slides if needed
             };
+        }
+
+        [RelayCommand]
+        public async Task GotoOnboardingNextPage()
+        {
+            await Shell.Current.GoToAsync($"{nameof(OnboardingPage2)}");
+        }
+
+        [RelayCommand]
+        public async Task GotoLoginPage()
+        {
+            LoginViewModel loginViewModel = new LoginViewModel(_databaseContext);
+            await Application.Current.MainPage.Navigation.PushAsync(new LoginPage(loginViewModel));
         }
     }
 

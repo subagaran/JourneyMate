@@ -3,30 +3,64 @@
     x:Class="JourneyMate.MVVM.Views.BRBO.Home.MerchantHomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Merchant Home Page">
+    Title="Merchant Home Page"
+    NavigationPage.HasNavigationBar="False"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.FlyoutItemIsVisible="False"
+    Shell.NavBarIsVisible="False">
 
     <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,*,Auto,*">
 
-        <Image
+        <RoundRectangle Grid.RowSpan="1" StyleClass="TopRectangle" />
+
+        <Grid
             Grid.Row="0"
             Grid.ColumnSpan="2"
-            Aspect="AspectFit"
-            Source="homebackgroundimage.png" />
-        <VerticalStackLayout
-            Grid.Row="0"
-            Grid.ColumnSpan="2"
-            VerticalOptions="Center">
-            <Label
+            Padding="5"
+            ColumnDefinitions="*,*"
+            RowDefinitions="*,*,*"
+            VerticalOptions="Start">
+
+            <Grid Grid.Row="0" Grid.Column="2">
+                <Button
+                    BackgroundColor="#2a3199"
+                    Command="{Binding LogoutCommand}"
+                    HorizontalOptions="EndAndExpand"
+                    StyleClass="LblWhiteR5"
+                    Text="Logout"
+                    VerticalOptions="EndAndExpand" />
+            </Grid>
+
+
+
+            <HorizontalStackLayout
+                Grid.Row="2"
+                Grid.Column="0"
                 HorizontalOptions="Start"
-                StyleClass="LblWhiteR7"
-                Text="WELCOME"
-                VerticalOptions="Center" />
-            <Label
-                HorizontalOptions="Center"
-                StyleClass="LblWhiteR7"
-                Text="MR.ALAN"
-                VerticalOptions="Center" />
-        </VerticalStackLayout>
+                VerticalOptions="Start">
+                <Label
+                    Grid.Row="2"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Start"
+                    StyleClass="LblBlackR5"
+                    Text="WELCOME " />
+                <Label
+                    FontAttributes="Bold"
+                    HorizontalOptions="Start"
+                    StyleClass="LblBlackR5"
+                    Text="MR. "
+                    VerticalOptions="Start" />
+                <Label
+                    FontAttributes="Bold"
+                    HorizontalOptions="Start"
+                    StyleClass="LblBlackR5"
+                    Text="{Binding UserName}"
+                    VerticalOptions="Start" />
+            </HorizontalStackLayout>
+
+        </Grid>
 
 
         <Grid

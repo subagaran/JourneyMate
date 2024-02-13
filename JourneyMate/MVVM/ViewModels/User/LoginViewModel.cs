@@ -17,6 +17,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json;
+using JourneyMate.Helper;
 
 namespace JourneyMate.MVVM.ViewModels.User
 {
@@ -25,6 +27,9 @@ namespace JourneyMate.MVVM.ViewModels.User
         private readonly DatabaseContext _databaseContext;
         static NoInternetConnectionIndicatorView popup;
         public static bool IsLoadingActive = false;
+
+        private readonly HttpClient _httpClient;
+        private const string ApiBaseUrl = "https://guidtourism.azurewebsites.net/api/Users/";
 
         [ObservableProperty]
         string firstName;
@@ -53,24 +58,82 @@ namespace JourneyMate.MVVM.ViewModels.User
         public LoginViewModel(DatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
+            _httpClient = new HttpClient();
         }
 
         [RelayCommand]
         public async Task Login()
         {
-            bool Connection = await CheckInternetConnection();
-            if (!Connection)
+            try
             {
-                PopUpMessage.NoInternetMessage();
-                await Task.CompletedTask;
-                return;
+                IsBusy = true;
+                bool Connection = await CheckInternetConnection();
+                if (!Connection)
+                {
+                    PopUpMessage.NoInternetMessage();
+                    await Task.CompletedTask;
+                    IsBusy = false;
+                    return;
+                }
+
+                var model = new LoginModel
+                {
+                    Username = UserName,
+                    Password = Password
+                };
+
+                if (string.IsNullOrEmpty(UserName)|| string.IsNullOrEmpty(Password))
+                {
+                    PopUpMessage.WarningMessage("Username or password cannot be empty");
+                    IsBusy = false;
+                    return;
+                }
+
+                var json = JsonSerializer.Serialize(model);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(ApiBaseUrl + "login", content); 
+                 
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    var responseObject = JsonSerializer.Deserialize<ApiResponse>(responseBody);                     
+                    if (responseObject != null && responseObject.isSuccess)
+                    {
+                        // Extract user information from the response
+                        var user = responseObject.result.user;
+                        
+                        string username = user.userName;
+                        string roleName = responseObject.result.role;
+                        string token = responseObject.result.token;
+                        GlobalVariable.SetUserName(username);
+                        GlobalVariable.SetUserRole(roleName);  
+                    }
+
+                    GlobalVariable.SetUserLogedIn(true); 
+                    DateTime loginDate = DateTime.Now;
+                    await SecureStorage.SetAsync("LoginDate", loginDate.ToString());
+                    MenuBuilder.BuildMenu();
+
+                    // await Shell.Current.GoToAsync($"{nameof(HomePage)}"); 
+                }
+                else
+                {
+                    PopUpMessage.WarningMessage("Username or password is incorrect");
+                    IsBusy = false;
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                PopUpMessage.WarningMessage("Somethimg went wrong.");
+                throw;
+            }
+            finally
+            {
+                IsBusy = false;
+
             }
 
-            IsBusy = true;
-      await Shell.Current.GoToAsync($"{nameof(HomePage)}");
-                // await Shell.Current.GoToAsync($"{nameof(AddHotelsPage)}");
-             //await Shell.Current.GoToAsync($"{nameof(PaymentPage)}");
-            IsBusy = false;
         }
 
         [RelayCommand]
@@ -92,57 +155,31 @@ namespace JourneyMate.MVVM.ViewModels.User
         }
 
         [RelayCommand]
-        public async Task GotoHotelPage()
-        {
-            IsBusy = true; 
-            await Shell.Current.GoToAsync($"{nameof(AddHotelsPage)}"); 
-            IsBusy = false;
-        }
-
-        [RelayCommand]
-        public async Task GotoPlacesPage()
-        {
-            IsBusy = true;
-            await Shell.Current.GoToAsync($"{nameof(PaymentPage)}");
-            IsBusy = false;
-        }
-
-        [RelayCommand]
-        public async Task GotoBookForFriendPage()
-        {
-            IsBusy = true;
-            await Shell.Current.GoToAsync($"{nameof(MerchantHomePage)}");
-            IsBusy = false;
-        }
-
-        [RelayCommand]
-        public async Task GotoVehicleBookingPage()
-        {
-            IsBusy = true;
-            await Shell.Current.GoToAsync($"{nameof(VehiclePage)}");
-            IsBusy = false;
-        }
-        [RelayCommand]
         public async Task Register()
         {
             try
             {
-                var registrationModel = new RegistrationModel
+                var model = new RegistrationModel
                 {
-                    FirstName = FirstName,
-                    LastName = LastName,
-                    City = City,
-                    PhoneNumber = PhoneNumber,
-                    EmailAddress = Email,
-                    UserName = UserName,
-                    Password = Password,
-                    ConfirmPassword = ConfirmPassword
+                    UserName = "Demo",
+                    Password = "Demo@123",
+                    Role = "BZUS",
+                    Name = "Demo"
                 };
-                 
-                var registrationModels = new List<RegistrationModel> { registrationModel };                 
-                await _databaseContext.AddRangeAsync(registrationModels);
- 
 
+                var json = JsonSerializer.Serialize(model);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync(ApiBaseUrl + "register", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    
+                }
+                else
+                {
+                   
+                }
             }
             catch (Exception)
             {

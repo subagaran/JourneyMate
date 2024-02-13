@@ -40,6 +40,13 @@
         <Setter Property="FontSize" Value="Large" />
     </Style>
 
+
+    <Style Class="TopRectangle" TargetType="RoundRectangle">
+        <Setter Property="Margin" Value="-5" />
+        <Setter Property="CornerRadius" Value="0,0,25,25" />
+        <Setter Property="Fill" Value="{StaticResource SecondaryBrush}" />
+    </Style>
+
     <Style TargetType="Grid">
         <Setter Property="ColumnSpacing" Value="0" />
         <Setter Property="RowSpacing" Value="0" />

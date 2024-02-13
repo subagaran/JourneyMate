@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout
+    x:Class="JourneyMate.Controls.FlyOutHeader"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <!--<VerticalStackLayout>
+        <StackLayout>
+            <Label
+                x:Name="lblUserName"
+                FontAttributes="Bold"
+                FontSize="28" />
+            <Label
+                x:Name="lblRole"
+                FontAttributes="Bold"
+                FontSize="20" />
+        </StackLayout>
+    </VerticalStackLayout>-->
+
+    <Grid BackgroundColor="Black" HeightRequest="150">
+        <Image Aspect="AspectFill" Source="flyoutheader.png" />
+        <Label
+            FontFamily="KanitB"
+            FontSize="Large"
+            HorizontalOptions="Center"
+            TextColor="Black"
+            VerticalOptions="Center" />
+    </Grid>
+</StackLayout>

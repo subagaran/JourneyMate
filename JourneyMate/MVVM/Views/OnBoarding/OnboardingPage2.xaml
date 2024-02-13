@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="JourneyMate.MVVM.Views.OnBoarding.OnboardingPage2"
-             Title="OnboardingPage2"
-             NavigationPage.HasNavigationBar="False"
+<ContentPage
+    x:Class="JourneyMate.MVVM.Views.OnBoarding.OnboardingPage2"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.OnBoardingPage"
+    Title="On boarding Page"
+    x:DataType="vm:OnBoardingPageViewModel"
+    NavigationPage.HasNavigationBar="False"
     Shell.FlyoutBehavior="Disabled"
     Shell.FlyoutItemIsVisible="False"
     Shell.NavBarIsVisible="False">
     <ContentPage.Content>
         <Grid>
-            <!-- Background Image -->
-            <Image Source="boardingpage2.png" Aspect="AspectFill" 
-                   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            <!--  Background Image  -->
+            <Image
+                Aspect="AspectFill"
+                HorizontalOptions="FillAndExpand"
+                Source="boardingpage2.png"
+                VerticalOptions="FillAndExpand" />
 
-            <!-- Main Content StackLayout -->
-            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <!-- Your existing content goes here -->
+            <!--  Main Content StackLayout  -->
+            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <!--  Your existing content goes here  -->
             </StackLayout>
 
-            <!-- Next Page Button -->
-            <Button Text="Get Started" Clicked="OnNextPageClicked"
-                    VerticalOptions="End" HorizontalOptions="FillAndExpand" Padding="0,0,0,0" Margin="10,0,10,250"/>
+            <!--  Next Page Button  -->
+            <Button
+                Margin="10,0,10,250"
+                Padding="0,0,0,0"
+                Command="{Binding GotoLoginPageCommand}"
+                HorizontalOptions="FillAndExpand"
+                Text="Get Started"
+                VerticalOptions="End" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -3,8 +3,11 @@
     x:Class="JourneyMate.MVVM.Views.OnBoarding.OnBoardingPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-   BackgroundColor="White" 
-     NavigationPage.HasNavigationBar="False"
+    xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.OnBoardingPage"
+    Title="On boarding Page"
+    x:DataType="vm:OnBoardingPageViewModel"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False"
     Shell.FlyoutBehavior="Disabled"
     Shell.FlyoutItemIsVisible="False"
     Shell.NavBarIsVisible="False">
@@ -12,21 +15,27 @@
 
     <ContentPage.Content>
         <Grid>
-            <!-- Background Image -->
-            <Image Source="boardingpage1.png" Aspect="AspectFill" 
-                   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            <!--  Background Image  -->
+            <Image
+                Aspect="AspectFill"
+                HorizontalOptions="FillAndExpand"
+                Source="boardingpage1.png"
+                VerticalOptions="FillAndExpand" />
 
-            <!-- Main Content StackLayout -->
-            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <!-- Your existing content goes here -->
+            <!--  Main Content StackLayout  -->
+            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <!--  Your existing content goes here  -->
             </StackLayout>
 
-            <!-- Next Page Button -->
-            <Button Text="Next Page" Clicked="OnNextPageClicked"
-                    VerticalOptions="End" HorizontalOptions="Center"/>
+            <!--  Next Page Button  -->
+            <Button
+                Command="{Binding GotoOnboardingNextPageCommand}"
+                HorizontalOptions="Center"
+                Text="Next Page"
+                VerticalOptions="End" />
         </Grid>
     </ContentPage.Content>
-  
+
 
     <!--<CarouselView ItemsSource="{Binding OnBoardings}" BackgroundColor="White">
         <CarouselView.ItemTemplate>
@@ -49,7 +58,7 @@
                            VerticalOptions="CenterAndExpand">
 
                             <StackLayout>
-                                <Image Source="{Binding ImageUrl}" 
+                                <Image Source="{Binding ImageUrl}"
                                    Aspect="AspectFill"
                                    HeightRequest="200"
                                    WidthRequest="200"

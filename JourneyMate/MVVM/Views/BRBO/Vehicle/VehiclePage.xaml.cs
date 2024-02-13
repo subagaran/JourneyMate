@@ -42,4 +42,11 @@ public partial class VehiclePage : ContentPage
 
         myImageCollection.ItemsSource = imageSources;
     }
+
+
+    protected override bool OnBackButtonPressed()
+    {
+        Shell.Current.Navigation.PopAsync();
+        return true;
+    }
 }

@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using JourneyMate.Database;
 using JourneyMate.MVVM.Models;
+using JourneyMate.MVVM.Views.BRUS.Home;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +64,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
         {
             try
             {
-                var registrationModel = new RestaurantModel
+                var model = new RestaurantModel
                 {
                     UserId = 1,
                     Longitude = 1.02586,
@@ -81,7 +82,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
                     HasMoreInfo = ""
                 };
 
-                var json = JsonSerializer.Serialize(registrationModel);
+                var json = JsonSerializer.Serialize(model);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await _httpClient.PostAsync(ApiBaseUrl + "CreateHotel", content);
@@ -102,6 +103,12 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
                 Console.WriteLine($"Error creating hotel: {ex.Message}");
                 return false; // Hotel creation failed
             }
+        }
+
+        [RelayCommand]
+        public async Task GotoBack()
+        {
+            await Shell.Current.Navigation.PopAsync();
         }
     }
 }

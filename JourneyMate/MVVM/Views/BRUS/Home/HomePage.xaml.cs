@@ -1,15 +1,16 @@
+using JourneyMate.MVVM.ViewModels.BRUS.Home;
 using JourneyMate.MVVM.ViewModels.User;
 
 namespace JourneyMate.MVVM.Views.BRUS.Home;
 
 public partial class HomePage : ContentPage
 {
-    private readonly LoginViewModel _loginViewModel;
+    private readonly MainHomeViewModel _mainHomeViewModel;
 
-    public HomePage(LoginViewModel loginViewModel)
+    public HomePage(MainHomeViewModel mainHomeViewModel)
 	{
 		InitializeComponent();
-        _loginViewModel = loginViewModel;
-        BindingContext = _loginViewModel;
+        _mainHomeViewModel = mainHomeViewModel;
+        BindingContext = _mainHomeViewModel;
     }
 }

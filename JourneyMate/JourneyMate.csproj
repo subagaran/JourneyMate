@@ -81,10 +81,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="MVVM\ViewModels\BRUS\" />
-	</ItemGroup>
-
-	<ItemGroup>
+	  <MauiXaml Update="Controls\FlyOutHeader.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Helper\LoadingIndicator\LoadingIndicatorView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

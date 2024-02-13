@@ -100,6 +100,6 @@ public partial class AddHotelsPage : ContentPage
             Console.WriteLine($"Error retrieving image from secure storage: {ex.Message}");
             return null;
         }
-    }
+    } 
 
 }

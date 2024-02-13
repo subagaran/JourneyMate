@@ -6,4 +6,12 @@ public partial class MerchantHomePage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+
+    protected override bool OnBackButtonPressed()
+    {
+        Shell.Current.Navigation.PopAsync();
+        return true;
+    }
+
 }

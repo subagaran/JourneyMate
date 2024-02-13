@@ -11,6 +11,10 @@ using JourneyMate.MVVM.Views.BRUS.Bookings;
 using JourneyMate.MVVM.Views.BRBO.Vehicle;
 using JourneyMate.MVVM.Views.BRBO.Home;
 using JourneyMate.MVVM.ViewModels.BRBO.Hotel;
+using JourneyMate.MVVM.Views.OnBoarding;
+using JourneyMate.MVVM.ViewModels.OnBoardingPage;
+using JourneyMate.MVVM.ViewModels;
+using JourneyMate.MVVM.ViewModels.BRUS.Home;
 
 namespace JourneyMate
 {
@@ -41,6 +45,9 @@ namespace JourneyMate
 
             //View           
             builder.Services.AddTransient<AppShell>();
+            builder.Services.AddTransient<AppShell>();
+            builder.Services.AddTransient<OnBoardingPage>();
+            builder.Services.AddTransient<OnboardingPage2>();
             builder.Services.AddTransient<StartingPage>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<HomePage>();
@@ -52,6 +59,9 @@ namespace JourneyMate
 
             //viewModels
             builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<MainHomeViewModel>();
+            builder.Services.AddTransient<OnBoardingPageViewModel>();
+            builder.Services.AddTransient<StartingVIewModel>();
             builder.Services.AddTransient<HotelViewModel>();
 
             return builder.Build();

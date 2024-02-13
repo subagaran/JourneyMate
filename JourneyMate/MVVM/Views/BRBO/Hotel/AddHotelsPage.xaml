@@ -8,8 +8,18 @@
     Title="Add Hotels"
     x:DataType="vm:HotelViewModel">
 
-    <VerticalStackLayout Padding="20">
 
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior />
+    </Shell.BackButtonBehavior>
+
+
+
+    <VerticalStackLayout Padding="20">
+        <Button
+            Padding="20"
+            Command="{Binding GotoBackCommand}"
+            Text="Back" />
         <ur:TextField Title="Hotel Name" Text="{Binding Name}" />
 
         <ur:TextField Title="Address" Text="{Binding Address}" />

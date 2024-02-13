@@ -11,5 +11,8 @@ namespace JourneyMate.Utilities
         public static string ImgUrl = "ImgUrl";
         public static string VehicleImgUrl = "VehicleImgUrl";
         public static string SureMgsVlaue = "SureMgsVlaue";
+        public static string UserLogedIn = "UserLogedIn";
+        public static string UserName = "UserName";
+        public static string UserRole = "UserRole";
     }
 }

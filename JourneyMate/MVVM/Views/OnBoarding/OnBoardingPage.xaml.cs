@@ -9,16 +9,9 @@ public partial class OnBoardingPage : ContentPage
 	{
 		InitializeComponent();
         viewModel = new OnBoardingPageViewModel();
-
-        // Call the InitializeOnBoardings method
-        viewModel.InitializeOnBoardings();
-
-        // Set the BindingContext to the view model
+         
         BindingContext = viewModel;
+        viewModel.InitializeOnBoardings(); 
     }
-
-    private void OnNextPageClicked(object sender, EventArgs e)
-    {
-        Navigation.PushAsync(new OnboardingPage2());
-    }
+     
 }

@@ -32,14 +32,13 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
         [ObservableProperty]
         string isActive = "N";
         [ObservableProperty]
-        string vehcicleName;
+        string vehicleName;
         [ObservableProperty]
-        string vehcileNo;
+        string vehicleNo;
         [ObservableProperty]
         string brand;
         [ObservableProperty]
-        string driverName;
-
+        string driverName; 
 
         public VehicleViewModel()
         {

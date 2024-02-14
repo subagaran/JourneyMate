@@ -32,7 +32,8 @@ namespace JourneyMate.MVVM.ViewModels
         [ObservableProperty]
         bool isInternet;
 
-        public ObservableCollection<Hotel> HotelList { get; set; } = new ObservableCollection<Hotel>();
+        protected static ObservableCollection<Hotel> HotelList { get; set; } = new ObservableCollection<Hotel>();
+        protected static ObservableCollection<GuideModel> GuideList { get; set; } = new ObservableCollection<GuideModel>();
 
         public BaseViewModel()
         {
@@ -40,6 +41,7 @@ namespace JourneyMate.MVVM.ViewModels
             _databaseContext = new DatabaseContext();
             _hotelListService = new();
             Task.Run(() => GetHotel()).Wait();
+            Task.Run(() => GetAllGuideFromApiToLocalAsync()).Wait();
         }
 
         public Task GetHotel()
@@ -80,43 +82,75 @@ namespace JourneyMate.MVVM.ViewModels
             }
         }
 
-        public async Task<bool> GetAllHotelsFromApiToLocalAsync()
+        //public async Task<bool> GetAllHotelsFromApiToLocalAsync()
+        //{
+        //    var response = await _httpClient.GetAsync(ApiBaseUrl + "GetAllHotels");
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        var jsonString = await response.Content.ReadAsStringAsync();
+        //        var apiResponse = JsonConvert.DeserializeObject<ApiResponse>(jsonString);
+        //        if (apiResponse.isSuccess)
+        //        {
+
+        //            using (JsonDocument document = JsonDocument.Parse(apiResponse.result.ToString()))
+        //            {
+        //                JsonElement root = document.RootElement;
+
+        //                foreach (JsonElement stockElement in root.EnumerateArray())
+        //                {
+        //                    var stock = System.Text.Json.JsonSerializer.Deserialize<Hotel>(stockElement.GetRawText());
+        //                    HotelList.Add(stock);
+        //                }
+
+        //            }
+
+        //            var Local_CDMStockDto = await _databaseContext.GetAllAsync<Hotel>();
+        //            if (Local_CDMStockDto.Any()) { await _databaseContext.DeleteAllAsync<Hotel>(); }
+        //            await _databaseContext.AddRangeAsync(HotelList); 
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false; 
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+             
+        //}
+
+
+        public async Task<bool> GetAllGuideFromApiToLocalAsync()
         {
-            var response = await _httpClient.GetAsync(ApiBaseUrl + "GetAllHotels");
+            var response = await _httpClient.GetAsync("https://guidtourism.azurewebsites.net/api/Guide/GetAllGuides");
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
-                var apiResponse = JsonConvert.DeserializeObject<ApiResponse>(jsonString);
+
+                var apiResponse = JsonConvert.DeserializeObject<ApiResponse<List<GuideModel>>>(jsonString);
+
                 if (apiResponse.isSuccess)
                 {
-
-                    using (JsonDocument document = JsonDocument.Parse(apiResponse.result.ToString()))
-                    {
-                        JsonElement root = document.RootElement;
-
-                        foreach (JsonElement stockElement in root.EnumerateArray())
-                        {
-                            var stock = System.Text.Json.JsonSerializer.Deserialize<Hotel>(stockElement.GetRawText());
-                            HotelList.Add(stock);
-                        }
-
-                    }
-
-                    var Local_CDMStockDto = await _databaseContext.GetAllAsync<Hotel>();
-                    if (Local_CDMStockDto.Any()) { await _databaseContext.DeleteAllAsync<Hotel>(); }
-                    await _databaseContext.AddRangeAsync(HotelList); 
+                    var guides = apiResponse.result;
+                     
+                    await _databaseContext.GetAllAsync<GuideModel>();
+                    await _databaseContext.DeleteAllAsync<GuideModel>();
+                    await _databaseContext.AddRangeAsync(guides);
                     return true;
                 }
                 else
                 {
-                    return false; 
+                    return false;
                 }
             }
             else
             {
                 return false;
             }
-             
         }
+         
+
     }
 }

@@ -58,6 +58,8 @@
 	  <None Remove="Resources\Images\bookforfriend.png" />
 	  <None Remove="Resources\Images\curvedrectangle.png" />
 	  <None Remove="Resources\Images\curvedrectangle1.png" />
+	  <None Remove="Resources\Images\delete.png" />
+	  <None Remove="Resources\Images\edit.png" />
 	  <None Remove="Resources\Images\homebackgroundimage.png" />
 	  <None Remove="Resources\Images\hotel.png" />
 	  <None Remove="Resources\Images\journeymate.png" />
@@ -65,6 +67,7 @@
 	  <None Remove="Resources\Images\onboaarding1.jpg" />
 	  <None Remove="Resources\Images\onboard.png" />
 	  <None Remove="Resources\Images\place.png" />
+	  <None Remove="Resources\Images\tourguide.png" />
 	  <None Remove="Resources\Images\vehiclebooking.png" />
 	  <None Remove="Resources\Raw\loading1.json" />
 	  <None Remove="Resources\Raw\no_internet_lottie.json" />
@@ -78,6 +81,12 @@
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.86" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.141-beta" />
 		<PackageReference Include="UraniumUI.Material" Version="2.5.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="MVVM\Views\BRBO\Guide\EditGuidePage .xaml.cs">
+	    <DependentUpon>EditGuidePage .xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -100,6 +109,15 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Helper\PopupMessages\WarningMgs.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\BRBO\Guide\EditGuidePage .xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\BRBO\Guide\GuidePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\BRBO\Guide\ViewUpdateAndDeleteGuidePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\BRBO\Home\MerchantHomePage.xaml">

@@ -3,7 +3,9 @@
     x:Class="JourneyMate.MVVM.Views.BRBO.Home.MerchantHomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.BRBO.Home"
     Title="Merchant Home Page"
+    x:DataType="vm:MerchantHomeViewModel"
     NavigationPage.HasNavigationBar="False"
     Shell.FlyoutBehavior="Disabled"
     Shell.FlyoutItemIsVisible="False"
@@ -252,7 +254,7 @@
 
 
                 <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GotoBookForFriendPageCommand}" />
+                    <TapGestureRecognizer Command="{Binding GotoGuidPageCommand}" />
                 </Grid.GestureRecognizers>
 
                 <RoundRectangle StyleClass="FrameRectangleForMenu" />
@@ -270,7 +272,7 @@
                         <VerticalStackLayout>
                             <ImageButton
                                 Grid.Row="0"
-                                Command="{Binding GotoBookForFriendPageCommand}"
+                                Command="{Binding GotoGuidPageCommand}"
                                 MaximumHeightRequest="50"
                                 Source="bookforfriend.png" />
 

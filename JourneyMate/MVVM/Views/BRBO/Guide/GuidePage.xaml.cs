@@ -1,19 +1,16 @@
-using JourneyMate.Helper;
-using JourneyMate.MVVM.ViewModels.BRBO.Hotel;
-using JourneyMate.Utilities;
-using Microsoft.Maui.Storage;
+using JourneyMate.MVVM.ViewModels.BRBO.Guide;
 using Newtonsoft.Json;
 
-namespace JourneyMate.MVVM.Views.BRBO.Hotel;
+namespace JourneyMate.MVVM.Views.BRBO.Guide;
 
-public partial class AddHotelsPage : ContentPage
+public partial class GuidePage : ContentPage
 {
-    private readonly HotelViewModel _hotelViewModel;
-	public AddHotelsPage(HotelViewModel hotelViewModel)
+    private readonly GuideViewModel _guideViewModel;
+	public GuidePage(GuideViewModel guideViewModel)
 	{
 		InitializeComponent();
-        _hotelViewModel = hotelViewModel;
-        BindingContext = _hotelViewModel;
+        _guideViewModel = guideViewModel;
+        BindingContext = _guideViewModel;
 	}
 
     private async void OnCounterClicked(object sender, EventArgs e)
@@ -49,10 +46,10 @@ public partial class AddHotelsPage : ContentPage
         }
 
         // Store the list of image keys after all images are stored
-        await SecureStorage.SetAsync("ImageKeys", JsonConvert.SerializeObject(imageKeys));
+        await SecureStorage.SetAsync("ImageVehicle", JsonConvert.SerializeObject(imageKeys));
 
         // Retrieve the list of image keys from SecureStorage
-        string imageKeysJson = await SecureStorage.GetAsync("ImageKeys");
+        string imageKeysJson = await SecureStorage.GetAsync("ImageVehicle");
 
 
         // Update your UI with the selected photos
@@ -61,7 +58,7 @@ public partial class AddHotelsPage : ContentPage
 
     private async Task<List<string>> GetImageKeys()
     {
-        string keysString = await SecureStorage.GetAsync("ImageKeys");
+        string keysString = await SecureStorage.GetAsync("ImageVehicle");
 
         if (keysString != null)
             return JsonConvert.DeserializeObject<List<string>>(keysString);
@@ -80,37 +77,8 @@ public partial class AddHotelsPage : ContentPage
             byte[] bytes = Convert.FromBase64String(base64String);
             imageSources.Add(ImageSource.FromStream(() => new MemoryStream(bytes)));
         }
-         
+
+
         myImageCollection.ItemsSource = imageSources;
     }
-     
-
-    public async Task Add()
-    {
-        var imageSource = await GetImageFromSecureStorage("Image_1"); 
-    }
-    private async Task<ImageSource> GetImageFromSecureStorage(string key)
-    {
-        try
-        {
-            // Retrieve the Base64-encoded string from secure storage
-            string base64String = await SecureStorage.GetAsync(SD.ImgUrl);
-
-            if (string.IsNullOrEmpty(base64String))
-                return null;
-
-            // Convert the Base64-encoded string back to a byte array
-            byte[] bytes = Convert.FromBase64String(base64String);
-
-            // Convert the byte array to an ImageSource
-            return ImageSource.FromStream(() => new MemoryStream(bytes));
-        }
-        catch (Exception ex)
-        {
-            // Handle any exceptions
-            Console.WriteLine($"Error retrieving image from secure storage: {ex.Message}");
-            return null;
-        }
-    } 
-
 }

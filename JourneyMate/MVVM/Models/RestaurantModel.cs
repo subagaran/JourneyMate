@@ -19,11 +19,18 @@ namespace JourneyMate.MVVM.Models
         public DateTime CreatedOn { get; set; }
         public string IsActive { get; set; }
         public string Reason { get; set; }
-        public string ImageURl { get; set; }
         public string Description { get; set; }
         public string HeaderName { get; set; }
         public string SubHeaderName { get; set; }
         public string Price { get; set; }
         public string HasMoreInfo { get; set; }
+        public string Area { get; set; }
+        public string ImageURl { get; set; }
+        public string Room1ImgUrl { get; set; }
+        public string Room2mgUrl { get; set; }
+        public string Room3mgUrl { get; set; }
+        public string Room4ImgUrl { get; set; }
+        public string Room5mgUrl { get; set; }
+        public string Room6mgUrl { get; set; }
     }
 }

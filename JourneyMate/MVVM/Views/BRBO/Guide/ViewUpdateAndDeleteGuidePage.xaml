@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="JourneyMate.MVVM.Views.BRBO.Guide.ViewUpdateAndDeleteGuidePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:JourneyMate.MVVM.Models"
+    xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.BRBO.Guide"
+    Title="View Guide"
+    x:DataType="vm:GuideViewModel">
+    <Grid RowDefinitions="*">
+
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center">
+            <Label Text="{Binding ShowMessage}" VerticalTextAlignment="Center" />
+        </HorizontalStackLayout>
+
+        <ScrollView Grid.Row="0">
+
+            <CollectionView
+                x:Name="NewsArticleCollection"
+                BackgroundColor="Transparent"
+                EmptyView="No Data Found"
+                HorizontalOptions="CenterAndExpand"
+                ItemsSource="{Binding Guide}"
+                VerticalOptions="Start">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:GuideModel">
+                        <StackLayout>
+                            <Frame
+                                Margin="5,2,5,2"
+                                Padding="10"
+                                BorderColor="Black">
+
+                                <StackLayout Orientation="Vertical">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*,*"
+                                        ColumnSpacing="10"
+                                        RowDefinitions="*,Auto,*,*">
+
+                                        <Label
+                                            Grid.Column="0"
+                                            FontAttributes="Bold"
+                                            FontSize="20"
+                                            PropertyChanged="Label_PropertyChanged"
+                                            Text="{Binding Name}"
+                                            TextColor="Black" />
+
+
+                                        <Grid Grid.Row="1" Grid.ColumnSpan="3">
+                                            <Image
+                                                HorizontalOptions="Center"
+                                                MaximumHeightRequest="150"
+                                                MaximumWidthRequest="250"
+                                                Source="https://img.freepik.com/premium-vector/travel-booking-app-screens_23-2148634496.jpg?w=740"
+                                                VerticalOptions="Start" />
+                                        </Grid>
+
+                                        <Label
+                                            Grid.Row="2"
+                                            Grid.Column="0"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="Start"
+                                            StyleClass="LblBlackR4"
+                                            Text="{Binding Descriptiohn}"
+                                            VerticalOptions="Start" />
+
+                                        <HorizontalStackLayout Grid.Row="3" Grid.Column="0">
+
+                                            <Label
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Start"
+                                                StyleClass="LblBlackR4"
+                                                Text="Language - " />
+                                            <Label
+                                                Grid.Row="3"
+                                                Grid.Column="0"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Start"
+                                                StyleClass="LblBlackR4"
+                                                Text="{Binding Language}" />
+                                        </HorizontalStackLayout>
+
+                                        <Label
+                                            Grid.Row="3"
+                                            Grid.Column="1"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="Center"
+                                            StyleClass="LblBlackR4"
+                                            Text="{Binding TpNo}" />
+
+                                        <HorizontalStackLayout
+                                            Grid.Row="3"
+                                            Grid.Column="2"
+                                            Grid.ColumnSpan="2"
+                                            Spacing="10">
+
+                                            <Button
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Start"
+                                                ImageSource="edit.png"
+                                                StyleClass="LblBlackR4"
+                                                Text="Edit" />
+
+                                            <Button
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                ImageSource="delete.png"
+                                                StyleClass="LblBlackR2"
+                                                Text="Del" />
+
+                                        </HorizontalStackLayout>
+
+                                    </Grid>
+
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </ScrollView>
+
+
+    </Grid>
+</ContentPage>

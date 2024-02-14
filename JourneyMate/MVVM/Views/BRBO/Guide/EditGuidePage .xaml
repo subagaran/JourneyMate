@@ -6,7 +6,7 @@
     xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.BRBO.Guide"
     Title="Edit Guide"
-    x:DataType="vm:GuideViewModel">
+    x:DataType="vm:EditGuideViewModel">
 
     <VerticalStackLayout Padding="20">
         <ur:TextField
@@ -74,13 +74,8 @@
             <Button
                 Grid.Column="0"
                 Margin="0,5,0,0"
-                Command="{Binding CreateGuideCommand}"
+                Command="{Binding UpdateGuideCommand}"
                 Text="Add" />
-            <Button
-                Grid.Column="1"
-                Margin="0,5,0,0"
-                BackgroundColor="Gray"
-                Text="Back" />
         </Grid>
     </VerticalStackLayout>
 </ContentPage>

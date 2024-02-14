@@ -27,6 +27,7 @@ namespace JourneyMate
             Routing.RegisterRoute(nameof(ViewUpdateAndDeleteGuidePage), typeof(ViewUpdateAndDeleteGuidePage));
             Routing.RegisterRoute(nameof(MerchantHomePage), typeof(MerchantHomePage));
             Routing.RegisterRoute(nameof(GuidePage), typeof(GuidePage));
+            Routing.RegisterRoute(nameof(EditGuidePage), typeof(EditGuidePage));
 
         }
 

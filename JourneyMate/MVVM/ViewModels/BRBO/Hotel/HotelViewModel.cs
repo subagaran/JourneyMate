@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using JourneyMate.Database;
 using JourneyMate.Helper;
+using JourneyMate.Helpers;
 using JourneyMate.MVVM.Models;
 using JourneyMate.MVVM.Views.BRUS.Home;
 using Newtonsoft.Json;
@@ -60,7 +61,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
             _httpClient = new HttpClient();  
             _databaseContext = databaseContext;
 
-            Task.Run(() => GetCurrentLocation()).Wait();
+            //Task.Run(() => GetCurrentLocation()).Wait();
 
         }
 
@@ -68,37 +69,45 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
         [RelayCommand]
         public async Task CreateHotel()
         {
-            var response =  await CreateHotelAsync();
+            bool answer = await PopUpMessage.SureMessage("Confirmation", "Do you want to save?");
+            if (!answer)
+            {
+                return;
+            } 
+
+            await CreateHotelAsync();
+
+            PopUpMessage.SuccessMessage("Hotel Created Successfully");
         }
 
-        public async Task<bool> GetCurrentLocation()
-        {
-            try
-            { 
-                GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
-                _isCheckingLocation = true;
-                _cancelTokenSource = new CancellationTokenSource();
-                Location location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
+        //public async Task<bool> GetCurrentLocation()
+        //{
+        //    try
+        //    { 
+        //        GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
+        //        _isCheckingLocation = true;
+        //        _cancelTokenSource = new CancellationTokenSource();
+        //        Location location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
 
 
-                if (location != null)
-                {
-                    _lat = location.Latitude;
-                    _lng = location.Longitude;
-                    return true;
-                }
-                return false;
-            }
+        //        if (location != null)
+        //        {
+        //            _lat = location.Latitude;
+        //            _lng = location.Longitude;
+        //            return true;
+        //        }
+        //        return false;
+        //    }
 
-            catch (Exception ex)
-            {
-                return false;
-            }
-            finally
-            {
-                _isCheckingLocation = false;
-            }
-        }
+        //    catch (Exception ex)
+        //    {
+        //        return false;
+        //    }
+        //    finally
+        //    {
+        //        _isCheckingLocation = false;
+        //    }
+        //}
 
         public async Task<bool> CreateHotelAsync()
         {

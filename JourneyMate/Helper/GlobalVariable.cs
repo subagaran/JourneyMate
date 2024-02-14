@@ -22,12 +22,12 @@ namespace JourneyMate.Helper
         {
             return SecureStorage.GetAsync(SD.ImgUrl1.ToString()).GetAwaiter().GetResult();
         }
-        public static void SetHotelImage1(string imgUrl1)
+        public static void SetGuideId(string imgUrl1)
         {
             SecureStorage.SetAsync(SD.ImgUrl1.ToString(), imgUrl1.ToString());
         }
 
-        public static string GetHotelImage2()
+        public static string GetGuideId()
         {
             return SecureStorage.GetAsync(SD.ImgUrl2.ToString()).GetAwaiter().GetResult();
         }

@@ -16,7 +16,7 @@
         <ScrollView Grid.Row="0">
 
             <CollectionView
-                x:Name="NewsArticleCollection"
+                x:Name="GuideCollection"
                 BackgroundColor="Transparent"
                 EmptyView="No Data Found"
                 HorizontalOptions="CenterAndExpand"
@@ -35,7 +35,7 @@
                                     <Grid
                                         ColumnDefinitions="Auto,*,*"
                                         ColumnSpacing="10"
-                                        RowDefinitions="*,Auto,*,*">
+                                        RowDefinitions="*,Auto,*,*,*">
 
                                         <Label
                                             Grid.Column="0"
@@ -88,27 +88,31 @@
                                             StyleClass="LblBlackR4"
                                             Text="{Binding TpNo}" />
 
-                                        <HorizontalStackLayout
-                                            Grid.Row="3"
-                                            Grid.Column="2"
-                                            Grid.ColumnSpan="2"
-                                            Spacing="10">
+                                        <Grid
+                                            Grid.Row="4"
+                                            Grid.Column="1"
+                                            ColumnDefinitions="Auto,Auto"
+                                            ColumnSpacing="2">
 
                                             <Button
-                                                FontAttributes="Bold"
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                Command="{Binding Source={x:Reference GuideCollection}, Path=BindingContext.GoToEarlySalesOrderBillCommand}"
+                                                CommandParameter="{Binding .}"
                                                 HorizontalOptions="Start"
                                                 ImageSource="edit.png"
                                                 StyleClass="LblBlackR4"
-                                                Text="Edit" />
+                                                VerticalOptions="Start" />
 
                                             <Button
+                                                Grid.Row="1"
+                                                Grid.Column="1"
                                                 FontAttributes="Bold"
                                                 HorizontalOptions="Center"
                                                 ImageSource="delete.png"
-                                                StyleClass="LblBlackR2"
-                                                Text="Del" />
+                                                StyleClass="LblBlackR2" />
 
-                                        </HorizontalStackLayout>
+                                        </Grid>
 
                                     </Grid>
 

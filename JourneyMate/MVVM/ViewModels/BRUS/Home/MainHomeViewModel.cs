@@ -26,13 +26,13 @@ namespace JourneyMate.MVVM.ViewModels.BRUS.Home
         [ObservableProperty]
         string userName;
 
+        public ObservableCollection<Hotel> Hotels { get; set; } = new();
 
-        public ObservableCollection<Hotel> hotels = new();
         public MainHomeViewModel()
         {
             _databaseContext = new DatabaseContext();
             UserName = GlobalVariable.GetUserName();
-            GetHotelAsync().Wait();
+            Task.Run(() => GetHotelAsync()).Wait();
         }
 
         public async Task GetHotelAsync()
@@ -40,7 +40,7 @@ namespace JourneyMate.MVVM.ViewModels.BRUS.Home
             var LocalHotel = await _databaseContext.GetAllAsync<Hotel>();
             foreach (var item in LocalHotel)
             {
-                hotels.Add(item);
+                Hotels.Add(item);
             }
         }
 

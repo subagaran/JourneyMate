@@ -111,7 +111,7 @@
                                 Grid.Row="1"
                                 HorizontalTextAlignment="Center"
                                 StyleClass="LblWhiteR3"
-                                Text="Hotels" />
+                                Text="Add Hotels" />
                         </VerticalStackLayout>
                     </Grid>
 
@@ -154,7 +154,7 @@
                                 Grid.Row="1"
                                 HorizontalTextAlignment="Center"
                                 StyleClass="LblWhiteR3"
-                                Text="Vehicles" />
+                                Text="Add Vehicles" />
                         </VerticalStackLayout>
                     </Grid>
 
@@ -274,13 +274,13 @@
                                 Grid.Row="0"
                                 Command="{Binding GotoGuidPageCommand}"
                                 MaximumHeightRequest="50"
-                                Source="bookforfriend.png" />
+                                Source="tourguide.png" />
 
                             <Label
                                 Grid.Row="1"
                                 HorizontalTextAlignment="Center"
                                 StyleClass="LblWhiteR3"
-                                Text="Guides" />
+                                Text="View Guides" />
                         </VerticalStackLayout>
                     </Grid>
 

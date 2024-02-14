@@ -3,12 +3,12 @@
     x:Class="JourneyMate.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:JourneyMate.MVVM.Views.BRUS.Hotel"
+    xmlns:local="clr-namespace:JourneyMate.MVVM.Views.BRUS.Home"
     Shell.FlyoutBehavior="Disabled">
 
     <ShellContent
         Title="Loading"
-        ContentTemplate="{DataTemplate local:ViewHotelPage}"
+        ContentTemplate="{DataTemplate local:StartingPage}"
         Route="StartingPage" />
 
 </Shell>

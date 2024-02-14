@@ -67,6 +67,14 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Home
             IsBusy = false;
         }
 
+        [RelayCommand]
+        public async Task GotoAddGuidPage()
+        {
+            IsBusy = true;
+            await Shell.Current.GoToAsync($"{nameof(GuidePage)}");
+            IsBusy = false;
+        }
+
 
         [RelayCommand]
         public async Task Logout()

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="JourneyMate.MVVM.Views.BRBO.Hotel.ViewHotelPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:JourneyMate.MVVM.Models"
+    xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.BRBO.Hotel"
+    Title="View Hotel"
+    x:DataType="vm:HotelViewModel">
+
+    <Grid RowDefinitions="*">
+
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center">
+            <Label Text="{Binding ShowMessage}" VerticalTextAlignment="Center" />
+        </HorizontalStackLayout>
+
+        <ScrollView Grid.Row="0">
+
+            <CollectionView
+                x:Name="GuideCollection"
+                BackgroundColor="Transparent"
+                EmptyView="No Data Found"
+                HorizontalOptions="CenterAndExpand"
+                ItemsSource="{Binding Hotels}"
+                VerticalOptions="Start">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Hotel">
+                        <StackLayout>
+                            <Frame
+                                Margin="5,2,5,2"
+                                Padding="10"
+                                BorderColor="Black">
+
+                                <StackLayout Orientation="Vertical">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*,*"
+                                        ColumnSpacing="10"
+                                        RowDefinitions="*,Auto,*,*,*">
+
+                                        <Label
+                                            Grid.Column="0"
+                                            FontAttributes="Bold"
+                                            FontSize="20"
+                                            PropertyChanged="Label_PropertyChanged"
+                                            Text="{Binding Name}"
+                                            TextColor="Black" />
+
+
+                                        <Grid Grid.Row="1" Grid.ColumnSpan="3">
+                                            <Image
+                                                HorizontalOptions="Center"
+                                                MaximumHeightRequest="150"
+                                                MaximumWidthRequest="250"
+                                                Source="https://img.freepik.com/premium-vector/travel-booking-app-screens_23-2148634496.jpg?w=740"
+                                                VerticalOptions="Start" />
+                                        </Grid>
+
+                                        <Label
+                                            Grid.Row="2"
+                                            Grid.Column="0"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="Start"
+                                            StyleClass="LblBlackR4"
+                                            Text="{Binding Descriptiohn}"
+                                            VerticalOptions="Start" />
+
+                                        <HorizontalStackLayout Grid.Row="3" Grid.Column="0">
+
+                                            <Label
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Start"
+                                                StyleClass="LblBlackR4"
+                                                Text="Language - " />
+                                            <Label
+                                                Grid.Row="3"
+                                                Grid.Column="0"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Start"
+                                                StyleClass="LblBlackR4"
+                                                Text="{Binding Language}" />
+                                        </HorizontalStackLayout>
+                                    </Grid>
+
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </ScrollView>
+
+
+    </Grid>
+
+</ContentPage>

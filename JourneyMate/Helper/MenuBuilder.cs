@@ -1,5 +1,6 @@
 ﻿
 using JourneyMate.Controls;
+using JourneyMate.MVVM.Views.BRBO.Home;
 using JourneyMate.MVVM.Views.BRUS.Home;
 
 namespace JourneyMate.Helpers
@@ -27,7 +28,7 @@ namespace JourneyMate.Helpers
                         {
                             Icon = "home.png",
                             Title = "Home",
-                            ContentTemplate = new DataTemplate(typeof(HomePage))
+                            ContentTemplate = new DataTemplate(typeof(MerchantHomePage))
                         },
                     },
                 };

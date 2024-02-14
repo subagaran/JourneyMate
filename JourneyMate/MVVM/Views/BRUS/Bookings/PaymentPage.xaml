@@ -31,10 +31,22 @@
                 StyleClass="LblWhiteR7"
                 Text="Payment"
                 VerticalOptions="Center" />
-
+            <VerticalStackLayout
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="30,0,30,10">
+                        <ur:TextField
+                        Title="AMount to be Paid"
+                        HorizontalOptions="FillAndExpand"
+                        Keyboard="Chat"
+                        Text="{Binding Amount}"
+                        TextColor="{StaticResource Black}"
+                        Visual="Custom" />         
+            </VerticalStackLayout>
 
             <VerticalStackLayout
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
                 Margin="30,0,30,10">
@@ -42,13 +54,13 @@
                     Title="Name"
                     HorizontalOptions="FillAndExpand"
                     Keyboard="Chat"
-                    Text="{Binding Name}"
+                    Text="{Binding NameOnCard}"
                     TextColor="{StaticResource Black}"
                     Visual="Custom" />
             </VerticalStackLayout>
 
             <VerticalStackLayout
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
                 Margin="30,0,30,10">
@@ -58,14 +70,14 @@
                         Title="Card Number"
                         HorizontalOptions="FillAndExpand"
                         Keyboard="Numeric"
-                        Text="{Binding CardNumber, Mode=TwoWay}"
+                        Text="{Binding cardNo, Mode=TwoWay}"
                         TextColor="{StaticResource Black}"
                         Visual="Custom" />
                 </StackLayout>
             </VerticalStackLayout>
 
             <VerticalStackLayout
-                Grid.Row="3"
+                Grid.Row="4"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Margin="30,0,0,0">
@@ -128,7 +140,7 @@
                         Title="CVV"
                         HorizontalOptions="FillAndExpand"
                         Keyboard="Numeric"
-                        Text="{Binding CardCvv}"
+                        Text="{Binding CvcNo}"
                         TextColor="{StaticResource Black}"
                         Visual="Custom" />
                 </StackLayout>
@@ -136,13 +148,13 @@
 
 
             <Button
-                Grid.Row="4"
+                Grid.Row="5"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
                 Margin="30,5,30,30"
                 Padding="18"
                 BackgroundColor="{Binding CardNumber, Converter={StaticResource CardColorConverter}}"
-                Command="{Binding CmdPurchase}"
+                Command="{Binding CreatePaymentCommand}"
                 CornerRadius="26"
                 FontSize="18"
                 Text="Pay"

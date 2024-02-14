@@ -38,8 +38,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
         [ObservableProperty]
         string brand;
         [ObservableProperty]
-        string driverName;
-
+        string driverName; 
 
         public VehicleViewModel()
         {

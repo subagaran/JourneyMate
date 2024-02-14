@@ -1,12 +1,16 @@
+using JourneyMate.MVVM.ViewModels.BRBO.Vehicle;
 using JourneyMate.Utilities;
 
 namespace JourneyMate.MVVM.Views.BRBO.Vehicle;
 
 public partial class VehiclePage : ContentPage
 {
-	public VehiclePage()
+    private readonly VehicleViewModel _viewModel;
+	public VehiclePage(VehicleViewModel vehicleViewModel)
 	{
 		InitializeComponent();
+        _viewModel = vehicleViewModel;
+        BindingContext = _viewModel;
 	}
 
     private async void OnCounterClicked(object sender, EventArgs e)

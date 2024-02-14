@@ -2,16 +2,17 @@
 using CommunityToolkit.Mvvm.Input;
 using JourneyMate.Database;
 using JourneyMate.Helper;
-using JourneyMate.Helpers;
 using JourneyMate.MVVM.Models;
 using JourneyMate.MVVM.Views.BRUS.Home;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static JourneyMate.MVVM.Models.HotelModel;
 
 namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
 {
@@ -19,7 +20,9 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
     {
         private readonly HttpClient _httpClient;
         private const string ApiBaseUrl = "https://guidtourism.azurewebsites.net/api/Hotel/";
+        private const string ApiURL = "https://guidtourism.azurewebsites.net/api/Hotel/GetAllHotels";
         public readonly DatabaseContext _databaseContext;
+        public ObservableCollection<HotelModel> Hotels { get; set; }
 
         private CancellationTokenSource _cancelTokenSource;
         private bool _isCheckingLocation;
@@ -60,54 +63,45 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
         {
             _httpClient = new HttpClient();  
             _databaseContext = databaseContext;
-
-            //Task.Run(() => GetCurrentLocation()).Wait();
-
+            Hotels = new ObservableCollection<HotelModel>();
+            LoadHotelsAsync();
         }
 
 
         [RelayCommand]
         public async Task CreateHotel()
         {
-            bool answer = await PopUpMessage.SureMessage("Confirmation", "Do you want to save?");
-            if (!answer)
-            {
-                return;
-            } 
-
-            await CreateHotelAsync();
-
-            PopUpMessage.SuccessMessage("Hotel Created Successfully");
+            var response =  await CreateHotelAsync();
         }
 
-        //public async Task<bool> GetCurrentLocation()
-        //{
-        //    try
-        //    { 
-        //        GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
-        //        _isCheckingLocation = true;
-        //        _cancelTokenSource = new CancellationTokenSource();
-        //        Location location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
+        public async Task<bool> GetCurrentLocation()
+        {
+            try
+            { 
+                GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
+                _isCheckingLocation = true;
+                _cancelTokenSource = new CancellationTokenSource();
+                Location location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
 
 
-        //        if (location != null)
-        //        {
-        //            _lat = location.Latitude;
-        //            _lng = location.Longitude;
-        //            return true;
-        //        }
-        //        return false;
-        //    }
+                if (location != null)
+                {
+                    _lat = location.Latitude;
+                    _lng = location.Longitude;
+                    return true;
+                }
+                return false;
+            }
 
-        //    catch (Exception ex)
-        //    {
-        //        return false;
-        //    }
-        //    finally
-        //    {
-        //        _isCheckingLocation = false;
-        //    }
-        //}
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                _isCheckingLocation = false;
+            }
+        }
 
         public async Task<bool> CreateHotelAsync()
         {
@@ -188,5 +182,53 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
         {
             await Shell.Current.Navigation.PopAsync();
         }
+
+        public async Task LoadHotelsAsync()
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiURL);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string json = await response.Content.ReadAsStringAsync();
+                        var responseObject = JsonConvert.DeserializeObject<ApiResponseModel>(json);
+
+                        var hotels = responseObject.Result; // Assuming ApiResponseModel has a property 'Result' of type List<HotelModel>
+
+                        Hotels.Clear(); // Clear the existing collection
+
+                        foreach (var hotel in hotels)
+                        {
+                            Hotels.Add(hotel);
+                        }
+                    }
+                    else
+                    {
+                        // Handle non-success status code, e.g., log or display an error message
+                    }
+                }
+            }
+            catch (HttpRequestException httpEx)
+            {
+                // Handle HTTP request exceptions
+                Console.WriteLine($"HTTP request error: {httpEx.Message}");
+            }
+            //catch (JsonException jsonEx)
+            //{
+            //    // Handle JSON deserialization exceptions
+            //    Console.WriteLine($"JSON deserialization error: {jsonEx.Message}");
+            //}
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
+
+
     }
 }

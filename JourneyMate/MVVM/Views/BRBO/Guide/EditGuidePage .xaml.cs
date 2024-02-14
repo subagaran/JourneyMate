@@ -5,8 +5,8 @@ namespace JourneyMate.MVVM.Views.BRBO.Guide;
 
 public partial class EditGuidePage : ContentPage
 {
-    private readonly GuideViewModel _guideViewModel;
-	public EditGuidePage(GuideViewModel guideViewModel)
+    private readonly EditGuideViewModel _guideViewModel;
+	public EditGuidePage(EditGuideViewModel guideViewModel)
 	{
 		InitializeComponent();
         _guideViewModel = guideViewModel;

@@ -20,9 +20,7 @@ namespace JourneyMate.MVVM.ViewModels
         public async Task CheckUserStatus()
         {
             try
-            {
-                IsBusy = true;
-
+            { 
                 string loginDateStr = await SecureStorage.GetAsync("LoginDate");
                 if (!string.IsNullOrEmpty(loginDateStr))
                 {
@@ -48,7 +46,7 @@ namespace JourneyMate.MVVM.ViewModels
             }
             finally
             {
-                IsBusy = false;
+                
             }
            
 
@@ -60,11 +58,11 @@ namespace JourneyMate.MVVM.ViewModels
             await Shell.Current.GoToAsync($"{nameof(OnBoardingPage)}");
         }
 
-        private static async Task GoToMainPage()
+        private async Task GoToMainPage()
         {
-            MenuBuilder.BuildMenu();
+           MenuBuilder.BuildMenu();
 
-            //await Shell.Current.GoToAsync($"{nameof(HomePage)}");
+            // await Shell.Current.GoToAsync($"{nameof(HomePage)}");
         }
 
     }

@@ -2,20 +2,16 @@
 using CommunityToolkit.Mvvm.Input;
 using JourneyMate.Database;
 using JourneyMate.Helper;
-using JourneyMate.MVVM.LocalModels;
 using JourneyMate.MVVM.Models;
-using JourneyMate.MVVM.Views.BRBO.Guide;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
 {
-    public partial class GuideViewModel : BaseViewModel
+    public partial class EditGuideViewModel : BaseViewModel
     {
         private readonly HttpClient _httpClient;
         private readonly DatabaseContext _databaseContext;
@@ -36,49 +32,34 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
         [ObservableProperty]
         string email;
 
-        public ObservableCollection<GuideModel> Guide { get; set; } = new();
-
-        public GuideViewModel()
+        public EditGuideViewModel()
         {
-             _httpClient = new HttpClient();
+            _httpClient = new HttpClient();
             _databaseContext = new DatabaseContext();
-            GetAllGuidessFromLocalDB();
         }
-
-       
 
         [RelayCommand]
-        public async Task CreateGuide()
+        public async Task UpdateGuide()
         {
-            var response = await CreateGuideAsync();
+            var response = await UpdateGuideAsync();
         }
 
-        public async void GetAllGuidessFromLocalDB()
-        {
-            var GuidList = await _databaseContext.GetAllAsync<GuideModel>();
-
-            foreach (var item in GuidList)
-            {
-                item.Image = "https://img.freepik.com/premium-vector/travel-booking-app-screens_23-2148634496.jpg?w=740";
-                Guide.Add(item);
-            }
-        }
-
-        public async Task<bool> CreateGuideAsync()
+        public async Task<bool> UpdateGuideAsync()
         {
             try
             {
                 // Retrieve the list of image keys from SecureStorage
                 string imageKeysJson = await SecureStorage.GetAsync("ImageKeys");
- 
-                
+                var userid = GlobalVariable.GetUserId();
+                var GuideId = GlobalVariable.GetGuideId();
                 var model = new GuideModel
                 {
-                    UserId = GlobalVariable.GetGuideId(),
+                    Id = Convert.ToInt32(GuideId),
+                    UserId = userid,
                     Name = Name,
-                    TpNo = TelephoneNo, 
+                    TpNo = TelephoneNo,
                     Image = imageKeysJson,
-                    Descriptiohn = Description, 
+                    Descriptiohn = Description,
                     IsActive = "Y",
                     Email = Email,
                     Language = Language,
@@ -89,7 +70,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
                 var json = System.Text.Json.JsonSerializer.Serialize(model);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync(ApiBaseUrl + "CreateGuide", content);
+                var response = await _httpClient.PostAsync(ApiBaseUrl + "UpdateGuide", content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -107,16 +88,6 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
                 Console.WriteLine($"Error creating while creating hotel: {ex.Message}");
                 return false; // Hotel creation failed
             }
-        }
-
-
-        [RelayCommand]
-        public async Task GotoEditGuidePage(GuideModel guideModel)
-        {
-            IsBusy = true;
-            GlobalVariable.SetGuideId(guideModel.Id.ToString());
-            await Shell.Current.GoToAsync($"{nameof(EditGuidePage)}");
-            IsBusy = false;
         }
 
     }

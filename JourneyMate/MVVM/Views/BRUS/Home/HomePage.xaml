@@ -118,8 +118,9 @@
 
 
             <Grid
-                Grid.Row="0"
+                Grid.Row="1"
                 Grid.Column="1"
+                IsVisible="FALSE"
                 Shadow="{StaticResource shadowItemFrame}"
                 StyleClass="CustomerGridcolor"
                 VerticalOptions="Center">
@@ -204,7 +205,7 @@
 
 
             <Grid
-                Grid.Row="1"
+                Grid.Row="0"
                 Grid.Column="1"
                 Shadow="{StaticResource shadowItemFrame}"
                 StyleClass="CustomerGridcolor"
@@ -232,13 +233,13 @@
                                 Grid.Row="0"
                                 Command="{Binding GotoBookForFriendPageCommand}"
                                 MaximumHeightRequest="50"
-                                Source="bookforfriend.png" />
+                                Source="tourguide.png" />
 
                             <Label
                                 Grid.Row="1"
                                 HorizontalTextAlignment="Center"
                                 StyleClass="LblWhiteR3"
-                                Text="Book for Friend" />
+                                Text="Guide Booking" />
                         </VerticalStackLayout>
                     </Grid>
 
@@ -259,15 +260,15 @@
         <ScrollView Grid.Row="3">
 
             <CollectionView
-                x:Name="NewsArticleCollection"
                 Grid.Row="3"
                 BackgroundColor="Transparent"
                 EmptyView="No Data Found"
                 HorizontalOptions="CenterAndExpand"
+                ItemsSource="{Binding Hotels}"
                 VerticalOptions="Start">
 
-                <CollectionView.ItemTemplate x:DataType="model:Hotel">
-                    <DataTemplate>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Hotel">
                         <StackLayout>
                             <Frame
                                 Margin="5,2,5,2"
@@ -278,33 +279,36 @@
                                     <Grid
                                         ColumnDefinitions="Auto,*,*"
                                         ColumnSpacing="10"
-                                        RowDefinitions="*,Auto,*,*">
+                                        RowDefinitions="*,Auto,*,*,*,*">
 
                                         <Label
                                             Grid.Column="0"
                                             FontAttributes="Bold"
                                             FontSize="20"
-                                            Text="Grand Kandyan"
+                                            Text="{Binding Name}"
                                             TextColor="Black" />
 
-
                                         <Image
+                                            Grid.Row="1"
                                             HorizontalOptions="Center"
-                                            MaximumHeightRequest="150"
+                                            MaximumHeightRequest="250"
                                             MaximumWidthRequest="250"
-                                            Source="hotel.png"
+                                            Source="grand.png"
                                             VerticalOptions="Start" />
 
                                         <Label
                                             Grid.Row="2"
+                                            Grid.RowSpan="2"
                                             Grid.Column="0"
+                                            Grid.ColumnSpan="2"
                                             FontAttributes="Bold"
                                             HorizontalOptions="Start"
+                                            LineBreakMode="CharacterWrap"
                                             StyleClass="LblBlackR4"
                                             Text="The Grand Kandyan Kandy — Choose From a Wide Range of Properties Which Booking.com Offers. Search Now! Book at The Grand Kandyan, Kandy. No Reservation Costs. Great Rates. "
                                             VerticalOptions="Start" />
 
-                                        <HorizontalStackLayout Grid.Row="3" Grid.Column="0">
+                                        <HorizontalStackLayout Grid.Row="4" Grid.Column="0">
 
                                             <Label
                                                 FontAttributes="Bold"
@@ -317,14 +321,14 @@
                                                 FontAttributes="Bold"
                                                 HorizontalOptions="Start"
                                                 StyleClass="LblBlackR4"
-                                                Text="Kandy" />
+                                                Text="{Binding Address}" />
                                         </HorizontalStackLayout>
 
                                         <Label
-                                            Grid.Row="3"
-                                            Grid.Column="1"
+                                            Grid.Row="6"
+                                            Grid.Column="0"
                                             FontAttributes="Bold"
-                                            HorizontalOptions="Center"
+                                            HorizontalOptions="Start"
                                             StyleClass="LblBlackR4"
                                             Text="0812478569" />
 

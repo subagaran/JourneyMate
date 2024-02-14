@@ -62,6 +62,7 @@ namespace JourneyMate
             builder.Services.AddTransient<MerchantHomePage>();
             builder.Services.AddTransient<GuidePage>();
             builder.Services.AddTransient<ViewUpdateAndDeleteGuidePage>();
+            builder.Services.AddTransient<EditGuidePage>();
 
             //viewModels
             builder.Services.AddTransient<LoginViewModel>();
@@ -72,6 +73,7 @@ namespace JourneyMate
             builder.Services.AddTransient<HotelViewModel>();
             builder.Services.AddTransient<GuideViewModel>();
             builder.Services.AddTransient<MerchantHomeViewModel>();
+            builder.Services.AddTransient<EditGuideViewModel>();
 
             return builder.Build();
         }

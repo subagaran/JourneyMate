@@ -1,9 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using JourneyMate.Database;
 using JourneyMate.Helper;
 using JourneyMate.Helpers;
-using JourneyMate.MVVM.Models;
+using JourneyMate.MVVM.Views.BRBO.Guide;
 using JourneyMate.MVVM.Views.BRBO.Home;
 using JourneyMate.MVVM.Views.BRBO.Hotel;
 using JourneyMate.MVVM.Views.BRBO.Vehicle;
@@ -12,36 +11,20 @@ using JourneyMate.MVVM.Views.User;
 using JourneyMate.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JourneyMate.MVVM.ViewModels.BRUS.Home
+namespace JourneyMate.MVVM.ViewModels.BRBO.Home
 {
-    public partial class MainHomeViewModel : BaseViewModel
+    public partial class MerchantHomeViewModel : BaseViewModel
     {
-        public readonly DatabaseContext _databaseContext;
-
         [ObservableProperty]
         string userName;
 
-
-        public ObservableCollection<Hotel> hotels = new();
-        public MainHomeViewModel()
+        public MerchantHomeViewModel()
         {
-            _databaseContext = new DatabaseContext();
             UserName = GlobalVariable.GetUserName();
-            GetHotelAsync().Wait();
-        }
-
-        public async Task GetHotelAsync()
-        {
-            var LocalHotel = await _databaseContext.GetAllAsync<Hotel>();
-            foreach (var item in LocalHotel)
-            {
-                hotels.Add(item);
-            }
         }
 
         [RelayCommand]
@@ -77,35 +60,44 @@ namespace JourneyMate.MVVM.ViewModels.BRUS.Home
         }
 
         [RelayCommand]
+        public async Task GotoGuidPage()
+        {
+            IsBusy = true;
+            await Shell.Current.GoToAsync($"{nameof(ViewUpdateAndDeleteGuidePage)}");
+            IsBusy = false;
+        }
+
+
+        [RelayCommand]
         public async Task Logout()
         {
-            await UserLogOut();             
+            await UserLogOut();
         }
 
         public static async Task UserLogOut()
         {
-                bool answer = await PopUpMessage.SureMessage(null, "Are you sure you want to exit?");
-                if (answer)
+            bool answer = await PopUpMessage.SureMessage(null, "Are you sure you want to exit?");
+            if (answer)
+            {
+                try
                 {
-                    try
-                    {
-                        GlobalVariable.SetUserLogedIn(false);
-                        SecureStorage.Default.Remove(SD.UserName);
-                        SecureStorage.Default.Remove(SD.UserRole);
-                        SecureStorage.Default.Remove(SD.UserLogedIn);
-                        await Shell.Current.GoToAsync($"{nameof(LoginPage)}");
-                    }
-                    catch (Exception)
-                    {
-                        await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
-                    }
-
-
+                    GlobalVariable.SetUserLogedIn(false);
+                    SecureStorage.Default.Remove(SD.UserName);
+                    SecureStorage.Default.Remove(SD.UserRole);
+                    SecureStorage.Default.Remove(SD.UserLogedIn);
+                    await Shell.Current.GoToAsync($"{nameof(LoginPage)}");
                 }
-                else
+                catch (Exception)
                 {
-                    return;
-                }        
+                    await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+                }
+
+
+            }
+            else
+            {
+                return;
+            }
         }
     }
 }

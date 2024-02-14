@@ -96,7 +96,7 @@ namespace JourneyMate.MVVM.ViewModels.User
                 if (response.IsSuccessStatusCode)
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    var responseObject = JsonSerializer.Deserialize<ApiResponse>(responseBody);                     
+                    var responseObject = JsonSerializer.Deserialize<LoginResponseDto>(responseBody);                     
                     if (responseObject != null && responseObject.isSuccess)
                     {
                         // Extract user information from the response
@@ -105,8 +105,10 @@ namespace JourneyMate.MVVM.ViewModels.User
                         string username = user.userName;
                         string roleName = responseObject.result.role;
                         string token = responseObject.result.token;
+                        string userId = responseObject.result.user.id;
                         GlobalVariable.SetUserName(username);
                         GlobalVariable.SetUserRole(roleName);  
+                        GlobalVariable.SetUserId(userId);  
                     }
 
                     GlobalVariable.SetUserLogedIn(true); 

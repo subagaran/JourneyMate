@@ -17,7 +17,33 @@ namespace JourneyMate.Helper
         {
             SecureStorage.SetAsync(SD.ImgUrl.ToString(), imgUrl.ToString());
         }
-         
+
+        public static string GetHotelImage1()
+        {
+            return SecureStorage.GetAsync(SD.ImgUrl1.ToString()).GetAwaiter().GetResult();
+        }
+        public static void SetHotelImage1(string imgUrl1)
+        {
+            SecureStorage.SetAsync(SD.ImgUrl1.ToString(), imgUrl1.ToString());
+        }
+
+        public static string GetHotelImage2()
+        {
+            return SecureStorage.GetAsync(SD.ImgUrl2.ToString()).GetAwaiter().GetResult();
+        }
+        public static void SetHotelImage2(string imgUrl2)
+        {
+            SecureStorage.SetAsync(SD.ImgUrl2.ToString(), imgUrl2.ToString());
+        }
+
+        public static string GetHotelImage3()
+        {
+            return SecureStorage.GetAsync(SD.ImgUrl3.ToString()).GetAwaiter().GetResult();
+        }
+        public static void SetHotelImage3(string imgUrl3)
+        {
+            SecureStorage.SetAsync(SD.ImgUrl3.ToString(), imgUrl3.ToString());
+        }
         public static void SetSureMgsVlaue(bool SureMgsVlaue)
         {
             SecureStorage.Remove(SD.SureMgsVlaue);
@@ -58,6 +84,15 @@ namespace JourneyMate.Helper
         public static string GetUserRole()
         {
             return SecureStorage.GetAsync(SD.UserRole.ToString()).GetAwaiter().GetResult();
+        }
+        // SreMgs Yes No Vlaue GET & SET
+        public static void SetUserId(string UserID)
+        {
+            SecureStorage.SetAsync(SD.UserID, UserID.ToString());
+        }
+        public static string GetUserId()
+        {
+            return SecureStorage.GetAsync(SD.UserID.ToString()).GetAwaiter().GetResult();
         }
     }
 }

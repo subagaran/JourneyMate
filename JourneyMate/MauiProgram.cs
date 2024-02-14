@@ -16,6 +16,9 @@ using JourneyMate.MVVM.ViewModels.OnBoardingPage;
 using JourneyMate.MVVM.ViewModels;
 using JourneyMate.MVVM.ViewModels.BRUS.Home;
 using JourneyMate.MVVM.ViewModels.BRBO.Vehicle;
+using JourneyMate.MVVM.ViewModels.BRBO.Guide;
+using JourneyMate.MVVM.ViewModels.BRBO.Home;
+using JourneyMate.MVVM.Views.BRBO.Guide;
 
 namespace JourneyMate
 {
@@ -57,6 +60,8 @@ namespace JourneyMate
             builder.Services.AddTransient<PaymentPage>();
             builder.Services.AddTransient<VehiclePage>();
             builder.Services.AddTransient<MerchantHomePage>();
+            builder.Services.AddTransient<GuidePage>();
+            builder.Services.AddTransient<ViewUpdateAndDeleteGuidePage>();
 
             //viewModels
             builder.Services.AddTransient<LoginViewModel>();
@@ -65,6 +70,8 @@ namespace JourneyMate
             builder.Services.AddTransient<StartingVIewModel>();
             builder.Services.AddTransient<VehicleViewModel>();
             builder.Services.AddTransient<HotelViewModel>();
+            builder.Services.AddTransient<GuideViewModel>();
+            builder.Services.AddTransient<MerchantHomeViewModel>();
 
             return builder.Build();
         }

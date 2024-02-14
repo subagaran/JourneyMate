@@ -24,7 +24,7 @@ namespace JourneyMate.Helper.Services
             _httpClient = new HttpClient();
             _databaseContext = new DatabaseContext();
 
-            Task.Run(() => GetAllHotelsFromApiToLocalAsync()).Wait();
+           //Task.Run(() => GetAllHotelsFromApiToLocalAsync()).Wait();
         }
 
         public async Task<bool> GetAllHotelsFromApiToLocalAsync()
@@ -41,8 +41,8 @@ namespace JourneyMate.Helper.Services
                             HotelList.Add(stockElement);
                         }
  
-                    var Local_CDMStockDto = await _databaseContext.GetAllAsync<Hotel>();
-                    if (Local_CDMStockDto.Any()) { await _databaseContext.DeleteAllAsync<Hotel>(); }
+                    var LocalHotel = await _databaseContext.GetAllAsync<Hotel>();
+                    if (LocalHotel.Any()) { await _databaseContext.DeleteAllAsync<Hotel>(); }
                     await _databaseContext.AddRangeAsync(HotelList);
                     return true;
                 }

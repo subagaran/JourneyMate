@@ -150,7 +150,35 @@ namespace JourneyMate.MVVM.ViewModels
                 return false;
             }
         }
-         
+
+        public async Task<bool> GetAllPaymentsFromApiToLocalAsync()
+        {
+            var response = await _httpClient.GetAsync("https://guidtourism.azurewebsites.net/api/Payment/GetAllPayments");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+
+                var apiResponse = JsonConvert.DeserializeObject<ApiResponse<List<PaymentModel>>>(jsonString);
+
+                if (apiResponse.isSuccess)
+                {
+                    var guides = apiResponse.result;
+
+                    await _databaseContext.GetAllAsync<PaymentModel>();
+                    await _databaseContext.DeleteAllAsync<PaymentModel>();
+                    await _databaseContext.AddRangeAsync(guides);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
 
     }
 }

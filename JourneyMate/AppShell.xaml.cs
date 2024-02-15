@@ -1,4 +1,5 @@
-﻿using JourneyMate.MVVM.Views.BRBO.Guide;
+﻿using JourneyMate.MVVM.Views.BRBO.Booking;
+using JourneyMate.MVVM.Views.BRBO.Guide;
 using JourneyMate.MVVM.Views.BRBO.Home;
 using JourneyMate.MVVM.Views.BRBO.Hotel;
 using JourneyMate.MVVM.Views.BRBO.Vehicle;
@@ -28,7 +29,7 @@ namespace JourneyMate
             Routing.RegisterRoute(nameof(MerchantHomePage), typeof(MerchantHomePage));
             Routing.RegisterRoute(nameof(GuidePage), typeof(GuidePage));
             Routing.RegisterRoute(nameof(EditGuidePage), typeof(EditGuidePage));
-
+            Routing.RegisterRoute(nameof(ViewAllPayments), typeof(ViewAllPayments));
         }
 
         private void Button_Clicked(object sender, EventArgs e)

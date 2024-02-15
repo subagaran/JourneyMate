@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="JourneyMate.MVVM.Views.BRBO.Guide.ViewUpdateAndDeleteGuidePage"
+    x:Class="JourneyMate.MVVM.Views.BRBO.Hotel.ViewHotelPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:JourneyMate.MVVM.Models"
-    xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.BRBO.Guide"
-    Title="View Guide"
-    x:DataType="vm:GuideViewModel">
+    xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.BRBO.Hotel"
+    Title="View Hotel"
+    x:DataType="vm:HotelViewModel">
+
     <Grid RowDefinitions="*">
 
         <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center">
@@ -20,11 +21,11 @@
                 BackgroundColor="Transparent"
                 EmptyView="No Data Found"
                 HorizontalOptions="CenterAndExpand"
-                ItemsSource="{Binding Guide}"
+                ItemsSource="{Binding Hotels}"
                 VerticalOptions="Start">
 
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:GuideModel">
+                    <DataTemplate x:DataType="model:Hotel">
                         <StackLayout>
                             <Frame
                                 Margin="5,2,5,2"
@@ -79,35 +80,6 @@
                                                 StyleClass="LblBlackR4"
                                                 Text="{Binding Language}" />
                                         </HorizontalStackLayout>
-
-                                        <Grid
-                                            Grid.Row="4"
-                                            Grid.Column="0"
-                                            ColumnDefinitions="Auto,Auto"
-                                            ColumnSpacing="2">
-
-                                            <Button
-                                                Grid.Row="0"
-                                                Grid.Column="0"
-                                                Command="{Binding Source={x:Reference GuideCollection}, Path=BindingContext.GotoEditGuidePageCommand}"
-                                                CommandParameter="{Binding .}"
-                                                HorizontalOptions="Start"
-                                                ImageSource="edit.png"
-                                                StyleClass="LblBlackR4"
-                                                VerticalOptions="Start" />
-
-                                            <Button
-                                                Grid.Row="1"
-                                                Grid.Column="1"
-                                                Command="{Binding Source={x:Reference GuideCollection}, Path=BindingContext.DeleteGuideCommand}"
-                                                CommandParameter="{Binding .}"
-                                                FontAttributes="Bold"
-                                                HorizontalOptions="Start"
-                                                ImageSource="delete.png"
-                                                StyleClass="LblBlackR2" />
-
-                                        </Grid>
-
                                     </Grid>
 
                                 </StackLayout>
@@ -122,4 +94,5 @@
 
 
     </Grid>
+
 </ContentPage>

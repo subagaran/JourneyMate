@@ -146,7 +146,7 @@
                         <VerticalStackLayout>
                             <ImageButton
                                 Grid.Row="0"
-                                Command="{Binding GotoPlacesPageCommand}"
+                                Command="{Binding GotoVehicleBookingPageCommand}"
                                 MaximumHeightRequest="50"
                                 Source="place.png" />
 
@@ -230,7 +230,7 @@
                         <VerticalStackLayout>
                             <ImageButton
                                 Grid.Row="0"
-                                Command="{Binding GotoBookForFriendPageCommand}"
+                                Command="{Binding GotoAddGuidPageCommand}"
                                 MaximumHeightRequest="50"
                                 Source="bookforfriend.png" />
 
@@ -238,7 +238,7 @@
                                 Grid.Row="1"
                                 HorizontalTextAlignment="Center"
                                 StyleClass="LblWhiteR3"
-                                Text="View Vehicles" />
+                                Text="Add Guides" />
                         </VerticalStackLayout>
                     </Grid>
 

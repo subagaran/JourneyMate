@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using JourneyMate.Database;
 using JourneyMate.Helper;
+using JourneyMate.Helpers;
 using JourneyMate.MVVM.LocalModels;
 using JourneyMate.MVVM.Models;
 using JourneyMate.MVVM.Views.BRBO.Guide;
@@ -50,7 +51,16 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
         [RelayCommand]
         public async Task CreateGuide()
         {
+            bool answer = await PopUpMessage.SureMessage("Confirmation", "Do you want to save?");
+            if (!answer)
+            {
+                return;
+            }
+
             var response = await CreateGuideAsync();
+
+            PopUpMessage.SuccessMessage("Guide Created Successfully");
+            
         }
 
         public async void GetAllGuidessFromLocalDB()
@@ -59,7 +69,6 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
 
             foreach (var item in GuidList)
             {
-                item.Image = "https://img.freepik.com/premium-vector/travel-booking-app-screens_23-2148634496.jpg?w=740";
                 Guide.Add(item);
             }
         }
@@ -103,12 +112,39 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
             }
             catch (Exception ex)
             {
-                // Handle exceptions
-                Console.WriteLine($"Error creating while creating hotel: {ex.Message}");
-                return false; // Hotel creation failed
+                return false;
             }
         }
 
+        public async Task<bool> DeleteGuideAsync()
+        {
+            try
+            {                 
+                var model = new GuideModel
+                {
+                    Id = Convert.ToInt32(GlobalVariable.GetGuideId)
+                };
+
+                var json = System.Text.Json.JsonSerializer.Serialize(model);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync(ApiBaseUrl + "DeleteGuide", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return false;  
+            }
+        }
 
         [RelayCommand]
         public async Task GotoEditGuidePage(GuideModel guideModel)
@@ -119,5 +155,13 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
             IsBusy = false;
         }
 
+        [RelayCommand]
+        public async Task DeleteGuide()
+        { 
+            bool answer = await PopUpMessage.SureMessage("Confirmation", "Do you want to Delete?");
+            if (!answer)
+            {
+                return;
+            }         }
     }
 }

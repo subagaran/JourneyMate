@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using JourneyMate.Database;
+using JourneyMate.Helper;
 using JourneyMate.MVVM.Models;
 using JourneyMate.MVVM.Views.BRUS.Home;
 using System;
@@ -62,7 +63,7 @@ namespace JourneyMate.MVVM.ViewModels.BRUS.Booking
             {
                 var model = new PaymentModel
                 {
-                    UserId = "1",
+                    UserId = GlobalVariable.GetGuideId(),
                     BookingId = 1,
                     Amount = amount,
                     NameOnCard = nameOnCard,

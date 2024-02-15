@@ -207,7 +207,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
                     }
                     else
                     {
-                        // Handle non-success status code, e.g., log or display an error message
+                        
                     }
                 }
             }

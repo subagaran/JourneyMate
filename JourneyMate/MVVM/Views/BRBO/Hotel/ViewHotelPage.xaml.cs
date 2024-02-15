@@ -1,7 +1,6 @@
-using JourneyMate.Database;
 using JourneyMate.MVVM.ViewModels.BRBO.Hotel;
 
-namespace JourneyMate.MVVM.Views.BRUS.Hotel;
+namespace JourneyMate.MVVM.Views.BRBO.Hotel;
 
 public partial class ViewHotelPage : ContentPage
 {
@@ -11,7 +10,5 @@ public partial class ViewHotelPage : ContentPage
 		InitializeComponent();
         _hotelViewModel = hotelViewModel;
         BindingContext = _hotelViewModel;
-
-
     }
 }

@@ -26,7 +26,7 @@ namespace JourneyMate.MVVM.ViewModels
                 {
                     DateTime loginDate = DateTime.Parse(loginDateStr);
 
-                    if (DateTime.Now <= loginDate.AddDays(1))
+                    if (DateTime.Now <= loginDate.AddDays(0))
                     {
                         await GoToMainPage();
                     }

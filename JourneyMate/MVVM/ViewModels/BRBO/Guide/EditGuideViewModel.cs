@@ -47,8 +47,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
         public async Task<bool> UpdateGuideAsync()
         {
             try
-            {
-                // Retrieve the list of image keys from SecureStorage
+            { 
                 string imageKeysJson = await SecureStorage.GetAsync("ImageKeys");
                 var userid = GlobalVariable.GetUserId();
                 var GuideId = GlobalVariable.GetGuideId();

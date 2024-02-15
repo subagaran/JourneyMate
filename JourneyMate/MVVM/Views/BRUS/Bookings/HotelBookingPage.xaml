@@ -1,29 +1,57 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="JourneyMate.MVVM.Views.BRUS.Bookings.HotelBookingPage"
-             Title="HotelBookingPage">
+<ContentPage
+    x:Class="JourneyMate.MVVM.Views.BRUS.Bookings.HotelBookingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="HotelBookingPage">
     <ContentPage.Content>
         <StackLayout>
-            <Image Source="loginbackground.png" Aspect="AspectFill" HeightRequest="200" />
+            <Image
+                Aspect="AspectFill"
+                HeightRequest="200"
+                Source="loginbackground.png" />
 
-            <Label Text="Booking Details" FontSize="Large" TextColor="Black" HorizontalOptions="CenterAndExpand" Margin="0,10,0,0"/>
+            <Label
+                Margin="0,10,0,0"
+                FontSize="Large"
+                HorizontalOptions="CenterAndExpand"
+                Text="Booking Details"
+                TextColor="Black" />
 
-            <!-- Add other details like Hotel Name, Price, etc. -->
-            <Label Text="Grand Kandyan  Hotel" FontSize="Medium" TextColor="Black" HorizontalOptions="CenterAndExpand" Margin="0,10,0,0"/>
-            <Label Text="$5000" FontSize="Medium" TextColor="Green" HorizontalOptions="CenterAndExpand" Margin="0,5,0,0"/>
-            <Label Text="No 45 Cross Street Kandy" FontSize="Medium" TextColor="Green" HorizontalOptions="CenterAndExpand" Margin="0,5,0,0"/>
-            <Entry Placeholder="Enter Number of Rooms" Keyboard="Numeric" Margin="20,10,20,0" x:Name="RoomsEntry"/>
-            <!-- Add more details based on your requirements -->
+            <!--  Add other details like Hotel Name, Price, etc.  -->
+            <Label
+                Margin="0,10,0,0"
+                FontSize="Medium"
+                HorizontalOptions="CenterAndExpand"
+                Text="Grand Kandyan  Hotel"
+                TextColor="Black" />
+            <Label
+                Margin="0,5,0,0"
+                FontSize="Medium"
+                HorizontalOptions="CenterAndExpand"
+                Text="$5000"
+                TextColor="Green" />
+            <Label
+                Margin="0,5,0,0"
+                FontSize="Medium"
+                HorizontalOptions="CenterAndExpand"
+                Text="No 45 Cross Street Kandy"
+                TextColor="Green" />
+            <Entry
+                x:Name="RoomsEntry"
+                Margin="20,10,20,0"
+                Keyboard="Numeric"
+                Placeholder="Enter Number of Rooms" />
+            <!--  Add more details based on your requirements  -->
 
-            <Button Text="Confirm Booking"
-                    FontSize="Medium"
-                    FontAttributes="Bold"
-                    TextColor="White"
-                    BackgroundColor="#4CAF50"
-                    CornerRadius="10"
-                    Margin="0,20,0,0"
-                    Clicked="OnConfirmBookingClicked"/>
+            <Button
+                Margin="0,20,0,0"
+                BackgroundColor="#4CAF50"
+                CornerRadius="10"
+                FontAttributes="Bold"
+                FontSize="Medium"
+                Text="Pay"
+                TextColor="White" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

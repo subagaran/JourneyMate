@@ -37,7 +37,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Home
         }
 
         [RelayCommand]
-        public async Task GotoPlacesPage()
+        public async Task GotoPaymentPage()
         {
             IsBusy = true;
             await Shell.Current.GoToAsync($"{nameof(PaymentPage)}");
@@ -57,6 +57,14 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Home
         {
             IsBusy = true;
             await Shell.Current.GoToAsync($"{nameof(VehiclePage)}");
+            IsBusy = false;
+        }
+
+        [RelayCommand]
+        public async Task GotoBookingPage()
+        {
+            IsBusy = true;
+            await Shell.Current.GoToAsync($"{nameof(HotelBookingPage)}");
             IsBusy = false;
         }
 

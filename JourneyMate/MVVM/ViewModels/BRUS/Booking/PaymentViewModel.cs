@@ -80,7 +80,6 @@ namespace JourneyMate.MVVM.ViewModels.BRUS.Booking
                 var model = new PaymentModel
                 {
                     UserId = GlobalVariable.GetGuideId(),
-                    BookingId = 1,
                     Amount = amount,
                     NameOnCard = nameOnCard,
                     BankName = bankName,

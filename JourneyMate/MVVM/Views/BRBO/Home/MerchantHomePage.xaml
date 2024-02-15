@@ -127,7 +127,7 @@
 
 
                 <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GotoPlacesPageCommand}" />
+                    <TapGestureRecognizer Command="{Binding GotoVehicleBookingPageCommand}" />
                 </Grid.GestureRecognizers>
 
                 <RoundRectangle StyleClass="FrameRectangleForMenu" />
@@ -170,7 +170,7 @@
 
 
                 <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GotoVehicleBookingPageCommand}" />
+                    <TapGestureRecognizer Command="{Binding GotoBookingPageCommand}" />
                 </Grid.GestureRecognizers>
 
                 <RoundRectangle StyleClass="FrameRectangleForMenu" />
@@ -188,7 +188,7 @@
                         <VerticalStackLayout>
                             <ImageButton
                                 Grid.Row="0"
-                                Command="{Binding GotoVehicleBookingPageCommand}"
+                                Command="{Binding GotoBookingPageCommand}"
                                 MaximumHeightRequest="50"
                                 Source="vehiclebooking.png" />
 
@@ -196,7 +196,7 @@
                                 Grid.Row="1"
                                 HorizontalTextAlignment="Center"
                                 StyleClass="LblWhiteR3"
-                                Text="View Booking" />
+                                Text="Booking" />
                         </VerticalStackLayout>
                     </Grid>
 

@@ -32,17 +32,17 @@
                 Text="Payment"
                 VerticalOptions="Center" />
             <VerticalStackLayout
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Margin="30,0,30,10">
-                        <ur:TextField
-                        Title="AMount to be Paid"
-                        HorizontalOptions="FillAndExpand"
-                        Keyboard="Chat"
-                        Text="{Binding Amount}"
-                        TextColor="{StaticResource Black}"
-                        Visual="Custom" />         
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="30,0,30,10">
+                <ur:TextField
+                    Title="Amount to be Paid"
+                    HorizontalOptions="FillAndExpand"
+                    Keyboard="Chat"
+                    Text="{Binding Amount}"
+                    TextColor="{StaticResource Black}"
+                    Visual="Custom" />
             </VerticalStackLayout>
 
             <VerticalStackLayout

@@ -6,4 +6,9 @@ public partial class HotelBookingPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void OnConfirmBookingClicked(object sender, EventArgs e)
+    {
+
+    }
 }

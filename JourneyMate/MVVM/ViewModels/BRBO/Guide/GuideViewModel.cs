@@ -2,8 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using JourneyMate.Database;
 using JourneyMate.Helper;
-using JourneyMate.Helpers;
-using JourneyMate.MVVM.LocalModels;
+using JourneyMate.Helpers; 
 using JourneyMate.MVVM.Models;
 using JourneyMate.MVVM.Views.BRBO.Guide;
 using Newtonsoft.Json;

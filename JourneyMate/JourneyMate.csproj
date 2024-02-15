@@ -112,6 +112,9 @@
 	  <MauiXaml Update="Helper\PopupMessages\WarningMgs.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\BRBO\Booking\ViewAllPayments.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\BRBO\Guide\DeleteGuide.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

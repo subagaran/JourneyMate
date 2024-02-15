@@ -6,6 +6,7 @@ using JourneyMate.MVVM.Models;
 using JourneyMate.MVVM.Views.BRUS.Home;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -45,10 +46,25 @@ namespace JourneyMate.MVVM.ViewModels.BRUS.Booking
 
         [ObservableProperty]
         string cvcNo;
+
+        public ObservableCollection<PaymentModel> Payments { get; set; }
+
         public PaymentViewModel(DatabaseContext databaseContext)
         {
             _httpClient = new HttpClient();
             _databaseContext = databaseContext;
+
+            Task.Run(() => GetAllPaymentsFromApiToLocalAsync()).Wait();
+        }
+
+        public async void GetAllPaymentFromLocalDB()
+        {
+            var PaymentsList = await _databaseContext.GetAllAsync<PaymentModel>();
+
+            foreach (var item in PaymentsList)
+            {
+                Payments.Add(item);
+            }
         }
 
         [RelayCommand]

@@ -54,10 +54,19 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
         string phoneNumber;
 
         [ObservableProperty]
-        string noOfRooms;
+        string noOfRooms;   
+        
+        [ObservableProperty]
+        string noOfToitents;      
+        
+        [ObservableProperty]
+        string starRating;
+              
+        [ObservableProperty]
+        string descriptiohn;
 
         [ObservableProperty]
-        string noOfToitents;
+        string language;
 
         public HotelViewModel(DatabaseContext databaseContext)
         {
@@ -196,9 +205,9 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
                         string json = await response.Content.ReadAsStringAsync();
                         var responseObject = JsonConvert.DeserializeObject<ApiResponseModel>(json);
 
-                        var hotels = responseObject.Result; // Assuming ApiResponseModel has a property 'Result' of type List<HotelModel>
+                        var hotels = responseObject.Result;  
 
-                        Hotels.Clear(); // Clear the existing collection
+                        Hotels.Clear(); 
 
                         foreach (var hotel in hotels)
                         {

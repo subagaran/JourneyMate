@@ -1,62 +1,70 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="JourneyMate.MVVM.Views.BRUS.Hotel.ViewHotelPage"
-             xmlns:local="clr-namespace:JourneyMate.MVVM.ViewModels.BRBO.Hotel"
-             Title="ViewHotelPage"
-             x:DataType="local:HotelViewModel">
+<ContentPage
+    x:Class="JourneyMate.MVVM.Views.BRUS.Hotel.ViewHotelPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:JourneyMate.MVVM.ViewModels.BRBO.Hotel"
+    Title="ViewHotelPage"
+    x:DataType="local:HotelViewModel">
     <CollectionView ItemsSource="{Binding Hotels}">
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <Frame Margin="15,10,15,0"
-                   Padding="10"
-                   CornerRadius="15"
-                   HasShadow="True"
-                   BackgroundColor="White">
+                <Frame
+                    Margin="15,10,15,0"
+                    Padding="10"
+                    BackgroundColor="White"
+                    CornerRadius="15"
+                    HasShadow="True">
 
                     <StackLayout>
-                        <Image HeightRequest="150"
-                           Aspect="AspectFill"
-                           Source="loginbackground.png"
-                           HorizontalOptions="FillAndExpand"/>
+                        <Image
+                            Aspect="AspectFill"
+                            HeightRequest="150"
+                            HorizontalOptions="FillAndExpand"
+                            Source="loginbackground.png" />
 
                         <StackLayout Margin="0,10,0,0">
-                            <Label FontSize="Large"
-                               Text="{Binding Name}"
-                               TextColor="Black"
-                               FontAttributes="Bold"
-                               HorizontalOptions="StartAndExpand"/>
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="Large"
+                                HorizontalOptions="StartAndExpand"
+                                Text="{Binding Name}"
+                                TextColor="Black" />
 
-                            <Label FontSize="Medium"
-                               Text="{Binding Price, StringFormat='{0:C}'}"
-                               TextColor="Green"
-                               FontAttributes="Bold"
-                               HorizontalOptions="StartAndExpand"/>
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="Medium"
+                                HorizontalOptions="StartAndExpand"
+                                Text="{Binding Price, StringFormat='{0:C}'}"
+                                TextColor="Green" />
 
-                            <Label FontSize="Small"
-                               Text="{Binding Address}"
-                               TextColor="Gray"
-                               HorizontalOptions="StartAndExpand"/>
+                            <Label
+                                FontSize="Small"
+                                HorizontalOptions="StartAndExpand"
+                                Text="{Binding Address}"
+                                TextColor="Gray" />
 
-                            <Label FontSize="Small"
-                               Text="{Binding StarRating, StringFormat='Star Rating: {0:F1}'}"
-                               TextColor="Gray"
-                               HorizontalOptions="StartAndExpand"/>
+                            <Label
+                                FontSize="Small"
+                                HorizontalOptions="StartAndExpand"
+                                Text="{Binding StarRating, StringFormat='Star Rating: {0:F1}'}"
+                                TextColor="Gray" />
 
-                            <Label FontSize="Small"
-                               Text="{Binding Description}"
-                               TextColor="Gray"
-                               HorizontalOptions="StartAndExpand"/>
+                            <Label
+                                FontSize="Small"
+                                HorizontalOptions="StartAndExpand"
+                                Text="{Binding Descriptiohn}"
+                                TextColor="Gray" />
                         </StackLayout>
 
-                        <Button Text="Book Now"
-                            FontSize="Medium"
-                            FontAttributes="Bold"
-                            TextColor="White"
+                        <Button
+                            Margin="0,10,0,0"
                             BackgroundColor="#4CAF50"
                             CornerRadius="10"
-                            Margin="0,10,0,0"
-                            />
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="Book Now"
+                            TextColor="White" />
                     </StackLayout>
                 </Frame>
             </DataTemplate>

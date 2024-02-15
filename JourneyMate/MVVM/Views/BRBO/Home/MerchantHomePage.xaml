@@ -212,7 +212,7 @@
 
 
                 <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GotoBookForFriendPageCommand}" />
+                    <TapGestureRecognizer Command="{Binding GotoAddGuidPageCommand}" />
                 </Grid.GestureRecognizers>
 
                 <RoundRectangle StyleClass="FrameRectangleForMenu" />
@@ -286,7 +286,6 @@
 
                 </Frame>
             </Grid>
-
 
 
         </Grid>

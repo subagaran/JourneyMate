@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using JourneyMate.Helper;
 using JourneyMate.Helpers;
+using JourneyMate.MVVM.Views.BRBO.Booking;
 using JourneyMate.MVVM.Views.BRBO.Guide;
 using JourneyMate.MVVM.Views.BRBO.Home;
 using JourneyMate.MVVM.Views.BRBO.Hotel;
@@ -64,6 +65,14 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Home
         {
             IsBusy = true;
             await Shell.Current.GoToAsync($"{nameof(ViewUpdateAndDeleteGuidePage)}");
+            IsBusy = false;
+        }
+
+        [RelayCommand]
+        public async Task GotoAllPayment()
+        {
+            IsBusy = true;
+            await Shell.Current.GoToAsync($"{nameof(ViewAllPayments)}");
             IsBusy = false;
         }
 

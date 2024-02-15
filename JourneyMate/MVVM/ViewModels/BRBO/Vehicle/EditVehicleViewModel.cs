@@ -9,82 +9,88 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
+namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
 {
-    public partial class EditGuideViewModel : BaseViewModel
+    public partial class EditVehicleViewModel : BaseViewModel
     {
         private readonly HttpClient _httpClient;
         private readonly DatabaseContext _databaseContext;
-        private const string ApiBaseUrl = "https://guidtourism.azurewebsites.net/api/Guide/";
+        private const string ApiBaseUrl = "https://guidtourism.azurewebsites.net/api/Vehicle/";
         private int _Id;
-        [ObservableProperty]
-        string name;
 
         [ObservableProperty]
-        string telephoneNo;
-
+        string make;
         [ObservableProperty]
-        string description;
-
+        string model;
         [ObservableProperty]
-        string language;
-
+        int year;
         [ObservableProperty]
-        string email;
+        string color;
+        [ObservableProperty]
+        double price;
+        [ObservableProperty]
+        string isActive = "N";
+        [ObservableProperty]
+        string vehicleName;
+        [ObservableProperty]
+        string vehicleNo;
+        [ObservableProperty]
+        string brand;
+        [ObservableProperty]
+        string driverName;
 
-        public EditGuideViewModel()
+        public EditVehicleViewModel()
         {
             _httpClient = new HttpClient();
             _databaseContext = new DatabaseContext();
             _Id = GlobalVariable.GetGuideId();
+
             Task.Run(() => PageLoad()).Wait();
 
         }
 
         public async Task PageLoad()
         {
-            var Vehicles = await _databaseContext.GetAllAsync<GuideModel>();
+            var Vehicles = await _databaseContext.GetAllAsync<VehicleModelcs>();
 
             var List = Vehicles.Where(a => a.Id == _Id);
-            Name = List.FirstOrDefault().Name;
-                    TelephoneNo = List.FirstOrDefault().TpNo;
-                    Description = List.FirstOrDefault().Descriptiohn; 
-                    Email = List.FirstOrDefault().Email;
-            Language = List.FirstOrDefault().Language;
+            Make = List.FirstOrDefault().Make;
+;           Year = List.FirstOrDefault().Year;
+            Color = List.FirstOrDefault().Color;
+            Price = List.FirstOrDefault().Price; 
         }
 
         [RelayCommand]
-        public async Task UpdateGuide()
+        public async Task Update()
         {
-            var response = await UpdateGuideAsync();
+            var response = await UpdateVehicleAsync();
+
+          
         }
 
-        public async Task<bool> UpdateGuideAsync()
+        public async Task<bool> UpdateVehicleAsync()
         {
             try
             { 
                 string imageKeysJson = await SecureStorage.GetAsync("ImageKeys");
                 var userid = GlobalVariable.GetUserId();
                 var GuideId = GlobalVariable.GetGuideId();
-                var model = new GuideModel
+                var model = new VehicleModelcs
                 {
-                    Id = Convert.ToInt32(GuideId),
-                    UserId = userid,
-                    Name = Name,
-                    TpNo = TelephoneNo,
-                    Image = imageKeysJson,
-                    Descriptiohn = Description,
+                    Id = _Id,
+                    Make = Make,
+                    Model = Model,
+                    Year = Year,
+                    Color = Color,
+                    Price = Price,
                     IsActive = "Y",
-                    Email = Email,
-                    Language = Language,
-                    Password = "",
-                    Username = "-"
+
                 };
 
                 var json = System.Text.Json.JsonSerializer.Serialize(model);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync(ApiBaseUrl + "UpdateGuide", content);
+                var response = await _httpClient.PostAsync(ApiBaseUrl + "UpdateVehicle", content);
 
                 if (response.IsSuccessStatusCode)
                 {

@@ -1,9 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using JourneyMate.Database;
+using JourneyMate.Helper;
+using JourneyMate.Helpers;
 using JourneyMate.MVVM.Models;
+using JourneyMate.MVVM.Views.BRBO.Vehicle;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -16,7 +20,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
     public partial class VehicleViewModel : BaseViewModel
     {
         private readonly HttpClient _httpClient;
-
+        private readonly DatabaseContext _databaseContext;
         private const string ApiBaseUrl = "https://guidtourism.azurewebsites.net/api/Vehicle/";
 
         [ObservableProperty]
@@ -24,11 +28,11 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
         [ObservableProperty]
         string model;
         [ObservableProperty]
-        string year;
+        int year;
         [ObservableProperty]
         string color;
         [ObservableProperty]
-        string price;
+        double price;
         [ObservableProperty]
         string isActive = "N";
         [ObservableProperty]
@@ -38,11 +42,17 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
         [ObservableProperty]
         string brand;
         [ObservableProperty]
-        string driverName; 
+        string driverName;
+
+        public ObservableCollection<VehicleModelcs> Vehicle { get; set; } = new();
+
 
         public VehicleViewModel()
         {
-            _httpClient = new HttpClient(); 
+            _httpClient = new HttpClient();
+            _databaseContext = new DatabaseContext();
+            Task.Run(() => GetAllVehicleFromApiToLocalAsync()).Wait();
+
         }
 
         [RelayCommand]
@@ -58,11 +68,11 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
                 var model = new VehicleModelcs
                 {
                     Id = 1,
-                    Make = "Toyota",
-                    Model= "Car",
-                    Year = 2023,
-                    Color = "Green",
-                    Price = 20000.00,
+                    Make = Make,
+                    Model= Model,
+                    Year = Year,
+                    Color = Color,
+                    Price = Price,
                     IsActive = "Y",
                   
                 };
@@ -86,6 +96,69 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
             { 
                 return false;  
             }
+        }
+
+        public async void GetAllVehicleFromLocalDB()
+        {
+            var List = await _databaseContext.GetAllAsync<VehicleModelcs>();
+
+            foreach (var item in List)
+            {
+                Vehicle.Add(item);
+            }
+        }
+
+        public async Task<bool> DeleteAsync()
+        {
+            try
+            {
+                var guideId = GlobalVariable.GetGuideId();
+                using (HttpClient client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("https://guidtourism.azurewebsites.net/api/Vehicle/");
+
+
+                    client.DefaultRequestHeaders.Add("Id", guideId.ToString());
+
+                    HttpResponseMessage response = await client.PostAsync("DeleteVehicle", null);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                } 
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        [RelayCommand]
+        public async Task GotoEditPage(GuideModel guideModel)
+        {
+            IsBusy = true;
+            GlobalVariable.SetGuideId(guideModel.Id);
+            await Shell.Current.GoToAsync($"{nameof(EditVehiclePage)}");
+            IsBusy = false;
+        }
+
+        [RelayCommand]
+        public async Task Delete(GuideModel guideModel)
+        {
+            GlobalVariable.SetGuideId(guideModel.Id);
+
+            bool answer = await PopUpMessage.SureMessage("Confirmation", "Do you want to Delete?");
+            if (!answer)
+            {
+                return;
+            }
+            await DeleteAsync();
         }
     }
 }

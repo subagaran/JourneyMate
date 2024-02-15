@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="JourneyMate.MVVM.Views.BRBO.Vehicle.VehiclePage"
+    x:Class="JourneyMate.MVVM.Views.BRBO.Hotel.EditHotel"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-    xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.BRBO.Vehicle"
-    Title="Vehicle"
-    x:DataType="vm:VehicleViewModel">
+    xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.BRBO.Hotel"
+    Title="Edit Hotels"
+    x:DataType="vm:EditHotelViewModel">
+
 
     <VerticalStackLayout Padding="20">
-        <ur:TextField Title="Vehicle Name" Text="{Binding VehicleName}" />
 
-        <ur:TextField Title="Vehicle No" Text="{Binding VehicleNo}" />
+        <ur:TextField Title="Hotel Name" Text="{Binding Name}" />
 
-        <ur:TextField Title="Brand" Text="{Binding Brand}" />
+        <ur:TextField Title="Address" Text="{Binding Address}" />
 
-        <ur:TextField Title="Driver Name" Text="{Binding DriverName}" />
-        <ur:TextField Title="Make " Text="{Binding Make}" />
-        <ur:TextField Title="Model " Text="{Binding Model}" />
-        <ur:TextField Title="Year " Text="{Binding Year}" />
-        <ur:TextField Title="Color " Text="{Binding Color}" />
+        <ur:TextField Title="City" Text="{Binding City}" />
+
+        <ur:TextField Title="Email" Text="{Binding Email}" />
+
+        <ur:TextField Title="Phone number" Text="{Binding PhoneNumber}" />
+
+        <ur:TextField Title="No of rooms" Text="{Binding NoOfRooms}" />
+
+        <ur:TextField Title="Toilets" Text="{Binding NoOfToitents}" />
 
         <VerticalStackLayout
             Margin="10,10"
@@ -40,7 +44,6 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-
             <Button
                 x:Name="PickImage"
                 BackgroundColor="{StaticResource Blue300Accent}"
@@ -52,18 +55,22 @@
 
         </VerticalStackLayout>
 
+        <ur:TextField Title="Per day Price" Text="{Binding Price}" />
+
         <Grid
             Grid.Row="1"
             Padding="10,0,10,10"
-            ColumnDefinitions="*,*"
             ColumnSpacing="5"
             VerticalOptions="Start">
             <Button
                 Grid.Column="0"
                 Margin="0,5,0,0"
+                Command="{Binding UpdateCommand}"
                 Text="Add" />
         </Grid>
+
     </VerticalStackLayout>
+
 
 
 </ContentPage>

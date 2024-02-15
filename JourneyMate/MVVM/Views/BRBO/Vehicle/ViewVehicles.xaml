@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="JourneyMate.MVVM.Views.BRBO.Vehicle.ViewVehicles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:JourneyMate.MVVM.Models"
+    xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.BRBO.Vehicle"
+    Title="View Vehicles"
+    x:DataType="vm:VehicleViewModel">
+    <Grid RowDefinitions="*">
+
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center">
+            <Label Text="{Binding ShowMessage}" VerticalTextAlignment="Center" />
+        </HorizontalStackLayout>
+
+        <ScrollView Grid.Row="0">
+
+            <CollectionView
+                x:Name="GuideCollection"
+                BackgroundColor="Transparent"
+                EmptyView="No Data Found"
+                HorizontalOptions="CenterAndExpand"
+                ItemsSource="{Binding Vehicle}"
+                VerticalOptions="Start">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:VehicleModelcs">
+                        <StackLayout>
+                            <Frame
+                                Margin="5,2,5,2"
+                                Padding="10"
+                                BorderColor="Black">
+
+                                <StackLayout Orientation="Vertical">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*,*"
+                                        ColumnSpacing="10"
+                                        RowDefinitions="*,Auto,*,*,*">
+
+                                        <Label
+                                            Grid.Column="0"
+                                            FontAttributes="Bold"
+                                            FontSize="20"
+                                            PropertyChanged="Label_PropertyChanged"
+                                            Text="{Binding vehicleName}"
+                                            TextColor="Black" />
+
+                                        <Label
+                                            Grid.Row="2"
+                                            Grid.Column="0"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="Start"
+                                            StyleClass="LblBlackR4"
+                                            Text="{Binding vehicleNo}"
+                                            VerticalOptions="Start" />
+
+                                        <HorizontalStackLayout Grid.Row="3" Grid.Column="0">
+
+                                            <Label
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Start"
+                                                StyleClass="LblBlackR4"
+                                                Text="Language - " />
+                                            <Label
+                                                Grid.Row="3"
+                                                Grid.Column="0"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Start"
+                                                StyleClass="LblBlackR4"
+                                                Text="{Binding Brand}" />
+                                        </HorizontalStackLayout>
+
+                                        <Grid
+                                            Grid.Row="4"
+                                            Grid.Column="0"
+                                            ColumnDefinitions="Auto,Auto"
+                                            ColumnSpacing="2">
+
+                                            <Button
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                Command="{Binding Source={x:Reference GuideCollection}, Path=BindingContext.GotoEditPageCommand}"
+                                                CommandParameter="{Binding .}"
+                                                HorizontalOptions="Start"
+                                                ImageSource="edit.png"
+                                                StyleClass="LblBlackR4"
+                                                VerticalOptions="Start" />
+
+                                            <Button
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Command="{Binding Source={x:Reference GuideCollection}, Path=BindingContext.DeleteCommand}"
+                                                CommandParameter="{Binding .}"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Start"
+                                                ImageSource="delete.png"
+                                                StyleClass="LblBlackR2" />
+
+                                        </Grid>
+
+                                    </Grid>
+
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </ScrollView>
+
+
+    </Grid>
+</ContentPage>

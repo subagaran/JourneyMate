@@ -64,21 +64,6 @@
                                             Text="{Binding Description}"
                                             VerticalOptions="Start" />
 
-                                        <HorizontalStackLayout Grid.Row="3" Grid.Column="0">
-
-                                            <Label
-                                                FontAttributes="Bold"
-                                                HorizontalOptions="Start"
-                                                StyleClass="LblBlackR4"
-                                                Text="Language - " />
-                                            <Label
-                                                Grid.Row="3"
-                                                Grid.Column="0"
-                                                FontAttributes="Bold"
-                                                HorizontalOptions="Start"
-                                                StyleClass="LblBlackR4"
-                                                Text="{Binding Language}" />
-                                        </HorizontalStackLayout>
                                     </Grid>
 
                                 </StackLayout>
@@ -95,4 +80,4 @@
     </Grid>
 
 </ContentPage>
-<!--Text="{Binding Language}"--> 
+<!--  Text="{Binding Language}"  --> 

@@ -58,6 +58,14 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
 
         [ObservableProperty]
         string noOfToitents;
+        [ObservableProperty]
+        string starRating;
+
+        [ObservableProperty]
+        string description;
+
+        [ObservableProperty]
+        string language;
 
         public HotelViewModel(DatabaseContext databaseContext)
         {

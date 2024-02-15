@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JourneyMate.MVVM.LocalModels
+namespace JourneyMate.MVVM.Models.LocalModels
 {
     public class OnBoarding
     {
@@ -12,6 +12,6 @@ namespace JourneyMate.MVVM.LocalModels
         public string ImageUrl { get; set; }
         public string Location { get; set; }
         public string Details { get; set; }
-      
+
     }
 }

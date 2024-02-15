@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using JourneyMate.Database;
-using JourneyMate.MVVM.LocalModels;
+using JourneyMate.MVVM.Models.LocalModels;
 using JourneyMate.MVVM.ViewModels.User;
 using JourneyMate.MVVM.Views.OnBoarding;
 using JourneyMate.MVVM.Views.User;

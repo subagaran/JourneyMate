@@ -146,7 +146,7 @@
                         <VerticalStackLayout>
                             <ImageButton
                                 Grid.Row="0"
-                                Command="{Binding GotoVehicleBookingPageCommand}"
+                                Command="{Binding GotoPaymentPageCommand}"
                                 MaximumHeightRequest="50"
                                 Source="place.png" />
 

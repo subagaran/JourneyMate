@@ -19,6 +19,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using JourneyMate.Helper;
+using System.Data;
 
 namespace JourneyMate.MVVM.ViewModels.User
 {
@@ -114,9 +115,11 @@ namespace JourneyMate.MVVM.ViewModels.User
                     GlobalVariable.SetUserLogedIn(true); 
                     DateTime loginDate = DateTime.Now;
                     await SecureStorage.SetAsync("LoginDate", loginDate.ToString());
+                   
+                    var AppRole = GlobalVariable.GetUserRole();
+                   
                     MenuBuilder.BuildMenu();
 
-                    // await Shell.Current.GoToAsync($"{nameof(HomePage)}"); 
                 }
                 else
                 {

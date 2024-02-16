@@ -16,32 +16,9 @@ namespace JourneyMate.Helpers
 
             var AppRole = GlobalVariable.GetUserRole();
 
-            var role = AppRole; //App.UserInfo.Role;
+            var role = "SO"; //App.UserInfo.Role;
 
-            if (role.Equals("Admin"))
-            {
-                var flyOutItem = new FlyoutItem()
-                {
-                    Title = "Home",
-                    Route = nameof(MainPage),
-                    FlyoutDisplayOptions = FlyoutDisplayOptions.AsMultipleItems,
-                    Items =
-                    {
-                        new ShellContent
-                        {
-                            Icon = "home.png",
-                            Title = "Home",
-                            ContentTemplate = new DataTemplate(typeof(MerchantHomePage))
-                        },
-                    },
-                };
-                 
-                if (!Shell.Current.Items.Contains(flyOutItem))
-                {
-                    Shell.Current.Items.Add(flyOutItem); 
-                }
-            }
-            else
+            if (role.Equals("SO"))
             {
                 var flyOutItem = new FlyoutItem()
                 {
@@ -58,10 +35,10 @@ namespace JourneyMate.Helpers
                         },
                     },
                 };
-
+                 
                 if (!Shell.Current.Items.Contains(flyOutItem))
                 {
-                    Shell.Current.Items.Add(flyOutItem);
+                    Shell.Current.Items.Add(flyOutItem); 
                 }
             }
         }

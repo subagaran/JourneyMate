@@ -21,13 +21,24 @@
             RowDefinitions="*,*,*"
             VerticalOptions="Start">
 
-            <Grid Grid.Row="0" Grid.Column="2">
+            <Grid
+                Grid.Row="0"
+                Grid.Column="2"
+                ColumnDefinitions="*,*">
                 <Button
                     BackgroundColor="#2a3199"
                     Command="{Binding LogoutCommand}"
                     HorizontalOptions="EndAndExpand"
                     StyleClass="LblWhiteR5"
                     Text="Logout"
+                    VerticalOptions="EndAndExpand" />
+                <Button
+                    Grid.Column="1"
+                    BackgroundColor="#2a3199"
+                    Command="{Binding GotoBookForFriendPageCommand}"
+                    HorizontalOptions="EndAndExpand"
+                    StyleClass="LblWhiteR5"
+                    Text="Admin"
                     VerticalOptions="EndAndExpand" />
             </Grid>
 

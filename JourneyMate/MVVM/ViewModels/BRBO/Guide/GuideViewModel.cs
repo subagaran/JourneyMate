@@ -4,13 +4,13 @@ using JourneyMate.Database;
 using JourneyMate.Helper;
 using JourneyMate.Helpers; 
 using JourneyMate.MVVM.Models;
-using JourneyMate.MVVM.Views.BRBO.Guide;
-using Newtonsoft.Json;
+using JourneyMate.MVVM.Views.BRBO.Guide; 
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
@@ -19,7 +19,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
     {
         private readonly HttpClient _httpClient;
         private readonly DatabaseContext _databaseContext;
-        private const string ApiBaseUrl = "https://guidtourism.azurewebsites.net/api/Guide/";
+        private const string ApiBaseUrl = "https://guidtourism.azurewebsites.net/api/Guide/DeleteGuide/";
 
         [ObservableProperty]
         string name;
@@ -82,7 +82,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
                 
                 var model = new GuideModel
                 {
-                    UserId = GlobalVariable.GetGuideId(),
+                    UserId = GlobalVariable.GetUserId(),
                     Name = Name,
                     TpNo = TelephoneNo, 
                     Image = imageKeysJson,
@@ -118,24 +118,26 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
         public async Task<bool> DeleteGuideAsync()
         {
             try
-            {                 
-                var model = new GuideModel
-                {
-                    Id = Convert.ToInt32(GlobalVariable.GetGuideId)
-                };
+            {
+                var guideId = GlobalVariable.GetGuideId();
 
-                var json = System.Text.Json.JsonSerializer.Serialize(model);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                var response = await _httpClient.PostAsync(ApiBaseUrl + "DeleteGuide", content);
-
-                if (response.IsSuccessStatusCode)
+                using (HttpClient client = new HttpClient())
                 {
-                    return true;
-                }
-                else
-                {
-                    return false;
+                    client.BaseAddress = new Uri("https://guidtourism.azurewebsites.net/api/Guide/");
+
+
+                    client.DefaultRequestHeaders.Add("Id", guideId.ToString());
+
+                    HttpResponseMessage response = await client.PostAsync("DeleteGuide", null);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
 
             }
@@ -149,18 +151,22 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
         public async Task GotoEditGuidePage(GuideModel guideModel)
         {
             IsBusy = true;
-            GlobalVariable.SetGuideId(guideModel.Id.ToString());
+            GlobalVariable.SetGuideId(guideModel.Id);
             await Shell.Current.GoToAsync($"{nameof(EditGuidePage)}");
             IsBusy = false;
         }
 
         [RelayCommand]
-        public async Task DeleteGuide()
-        { 
+        public async Task DeleteGuide(GuideModel guideModel)
+        {
+            GlobalVariable.SetGuideId(guideModel.Id);
+
             bool answer = await PopUpMessage.SureMessage("Confirmation", "Do you want to Delete?");
             if (!answer)
             {
                 return;
-            }         }
+            }
+           await DeleteGuideAsync();
+        }
     }
 }

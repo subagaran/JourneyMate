@@ -32,6 +32,8 @@ namespace JourneyMate
             Routing.RegisterRoute(nameof(ViewAllPayments), typeof(ViewAllPayments));
             Routing.RegisterRoute(nameof(HotelBookingPage), typeof(HotelBookingPage));
             Routing.RegisterRoute(nameof(ViewHotelPage), typeof(ViewHotelPage));
+            Routing.RegisterRoute(nameof(ViewVehicles), typeof(ViewVehicles));
+            Routing.RegisterRoute(nameof(EditVehiclePage), typeof(EditVehiclePage));
         }
 
         private void Button_Clicked(object sender, EventArgs e)

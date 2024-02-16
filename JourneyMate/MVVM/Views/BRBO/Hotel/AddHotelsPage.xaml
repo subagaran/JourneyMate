@@ -9,12 +9,6 @@
     x:DataType="vm:HotelViewModel">
 
 
-    <Shell.BackButtonBehavior>
-        <BackButtonBehavior />
-    </Shell.BackButtonBehavior>
-
-
-
     <VerticalStackLayout Padding="20">
 
         <ur:TextField Title="Hotel Name" Text="{Binding Name}" />

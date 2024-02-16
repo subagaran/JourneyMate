@@ -48,7 +48,7 @@ namespace JourneyMate.MVVM.ViewModels
         {
             HotelList = _hotelListService.HotelList;
             return Task.CompletedTask;
-        }
+        }      
 
 
         partial void OnIsBusyChanged(bool value)
@@ -138,6 +138,65 @@ namespace JourneyMate.MVVM.ViewModels
                     await _databaseContext.GetAllAsync<GuideModel>();
                     await _databaseContext.DeleteAllAsync<GuideModel>();
                     await _databaseContext.AddRangeAsync(guides);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> GetAllHotelFromApiToLocalAsync()
+        {
+            var response = await _httpClient.GetAsync("https://guidtourism.azurewebsites.net/api/Hotel/GetAllHotels");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+
+                var apiResponse = JsonConvert.DeserializeObject<ApiResponse<List<HotelModel>>>(jsonString);
+
+                if (apiResponse.isSuccess)
+                {
+                    var list = apiResponse.result;
+
+                    await _databaseContext.GetAllAsync<HotelModel>();
+                    await _databaseContext.DeleteAllAsync<HotelModel>();
+                    await _databaseContext.AddRangeAsync(list);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        public async Task<bool> GetAllVehicleFromApiToLocalAsync()
+        {
+            var response = await _httpClient.GetAsync("https://guidtourism.azurewebsites.net/api/Vehicle/GetAllVehicle");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+
+                var apiResponse = JsonConvert.DeserializeObject<ApiResponse<List<VehicleModelcs>>>(jsonString);
+
+                if (apiResponse.isSuccess)
+                {
+                    var vehicle = apiResponse.result;
+
+                    await _databaseContext.GetAllAsync<VehicleModelcs>();
+                    await _databaseContext.DeleteAllAsync<VehicleModelcs>();
+                    await _databaseContext.AddRangeAsync(vehicle);
                     return true;
                 }
                 else

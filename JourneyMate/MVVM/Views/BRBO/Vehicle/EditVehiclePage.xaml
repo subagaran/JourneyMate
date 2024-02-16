@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="JourneyMate.MVVM.Views.BRBO.Vehicle.VehiclePage"
+    x:Class="JourneyMate.MVVM.Views.BRBO.Vehicle.EditVehiclePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.BRBO.Vehicle"
-    Title="Vehicle"
-    x:DataType="vm:VehicleViewModel">
+    Title="EditVehiclePage"
+    x:DataType="vm:EditVehicleViewModel">
 
     <VerticalStackLayout Padding="20">
         <ur:TextField Title="Vehicle Name" Text="{Binding VehicleName}" />
@@ -61,7 +61,8 @@
             <Button
                 Grid.Column="0"
                 Margin="0,5,0,0"
-                Text="Add" />
+                Command="{Binding UpdateCommand}"
+                Text="Edit" />
         </Grid>
     </VerticalStackLayout>
 

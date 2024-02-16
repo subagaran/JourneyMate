@@ -1,4 +1,5 @@
 ﻿using JourneyMate.Database;
+using JourneyMate.Helper;
 using JourneyMate.MVVM.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Payment
         private const string ApiBaseUrl = "https://guidtourism.azurewebsites.net/api/Payment/";
         public readonly DatabaseContext _databaseContext;
         public ObservableCollection<PaymentModel> Payments { get; set; }
+        public ObservableCollection<PaymentModel> UserWisePayments { get; set; }
 
         public AllPaymentViewModel(DatabaseContext databaseContext)
         {
@@ -32,6 +34,16 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Payment
             foreach (var item in PaymentsList)
             {
                 Payments.Add(item);
+            }
+        }
+
+        public async void GetPaymentsBasedOnuser()
+        {
+            var PaymentsList = await _databaseContext.GetAllAsync<PaymentModel>();
+            Payments.Clear();
+            foreach (var item in PaymentsList.Where(a=>a.UserId == GlobalVariable.GetUserId()))
+            {
+                UserWisePayments.Add(item);
             }
         }
 

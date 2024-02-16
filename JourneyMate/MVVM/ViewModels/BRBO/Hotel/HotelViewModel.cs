@@ -2,9 +2,10 @@
 using CommunityToolkit.Mvvm.Input;
 using JourneyMate.Database;
 using JourneyMate.Helper;
+using JourneyMate.Helpers;
 using JourneyMate.MVVM.Models;
-using JourneyMate.MVVM.Views.BRUS.Home;
-using Newtonsoft.Json;
+using JourneyMate.MVVM.Views.BRBO.Hotel;
+using JourneyMate.MVVM.Views.BRUS.Home; 
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -51,8 +52,8 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
         string city;
 
         [ObservableProperty]
-        string phoneNumber;
-
+        string phoneNumber;      
+        
         [ObservableProperty]
         string noOfRooms;   
         
@@ -70,9 +71,19 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
             _httpClient = new HttpClient();  
             _databaseContext = databaseContext;
             Hotels = new ObservableCollection<HotelModel>();
-            LoadHotelsAsync();
+            Task.Run(() => GetAllHotelFromApiToLocalAsync()).Wait();
+            Task.Run(() => GetAllHotelFromLocal()).Wait();
         }
 
+        public async Task GetAllHotelFromLocal()
+        {
+            var db = await _databaseContext.GetAllAsync<HotelModel>();
+
+            foreach (var item in db)
+            {
+                Hotels.Add(item);
+            }
+        }
 
         [RelayCommand]
         public async Task CreateHotel()
@@ -189,51 +200,58 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
             await Shell.Current.Navigation.PopAsync();
         }
 
-        public async Task LoadHotelsAsync()
+        public async Task<bool> DeleteAsync()
         {
             try
             {
+                var guideId = GlobalVariable.GetGuideId();
+
                 using (HttpClient client = new HttpClient())
                 {
-                    HttpResponseMessage response = await client.GetAsync(ApiURL);
+                    client.BaseAddress = new Uri("https://guidtourism.azurewebsites.net/api/Hotel/");
+
+
+                    client.DefaultRequestHeaders.Add("Id", guideId.ToString());
+
+                    HttpResponseMessage response = await client.PostAsync("DeleteHotel", null);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        string json = await response.Content.ReadAsStringAsync();
-                        var responseObject = JsonConvert.DeserializeObject<ApiResponseModel>(json);
-
-                        var hotels = responseObject.Result;  
-
-                        Hotels.Clear(); 
-
-                        foreach (var hotel in hotels)
-                        {
-                            Hotels.Add(hotel);
-                        }
+                        return true;
                     }
                     else
                     {
-                        
+                        return false;
                     }
-                }
+                }                 
             }
-            catch (HttpRequestException httpEx)
-            {
-                // Handle HTTP request exceptions
-                Console.WriteLine($"HTTP request error: {httpEx.Message}");
-            }
-            //catch (JsonException jsonEx)
-            //{
-            //    // Handle JSON deserialization exceptions
-            //    Console.WriteLine($"JSON deserialization error: {jsonEx.Message}");
-            //}
             catch (Exception ex)
             {
-                // Handle other exceptions
-                Console.WriteLine($"Error: {ex.Message}");
+                return false;
             }
         }
 
+        [RelayCommand]
+        public async Task GotoEditPage(HotelModel hotelModel)
+        {
+            IsBusy = true;
+            GlobalVariable.SetGuideId(hotelModel.Id);
+            await Shell.Current.GoToAsync($"{nameof(EditHotel)}");
+            IsBusy = false;
+        }
+
+        [RelayCommand]
+        public async Task Delete(HotelModel model)
+        {
+            GlobalVariable.SetGuideId(model.Id);
+
+            bool answer = await PopUpMessage.SureMessage("Confirmation", "Do you want to Delete?");
+            if (!answer)
+            {
+                return;
+            }
+            await DeleteAsync();
+        }
 
 
     }

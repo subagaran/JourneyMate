@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="JourneyMate.MVVM.Views.BRUS.Bookings.ViewPayments"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:JourneyMate.MVVM.Models"
+    xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.BRBO.Payment"
+    Title="View Payments"
+    x:DataType="vm:AllPaymentViewModel">
+    <Grid RowDefinitions="*">
+
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center">
+            <Label Text="{Binding ShowMessage}" VerticalTextAlignment="Center" />
+        </HorizontalStackLayout>
+
+        <ScrollView Grid.Row="0">
+
+            <CollectionView
+                x:Name="GuideCollection"
+                BackgroundColor="Transparent"
+                EmptyView="No Data Found"
+                HorizontalOptions="CenterAndExpand"
+                ItemsSource="{Binding Payments}"
+                VerticalOptions="Start">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:PaymentModel">
+                        <StackLayout>
+                            <Frame
+                                Margin="5,2,5,2"
+                                Padding="10"
+                                BorderColor="Black">
+
+                                <StackLayout Orientation="Vertical">
+                                    <Grid
+                                        ColumnDefinitions="Auto,*,*"
+                                        ColumnSpacing="10"
+                                        RowDefinitions="*,Auto,*,*,*">
+
+                                        <Label
+                                            Grid.Column="0"
+                                            FontAttributes="Bold"
+                                            FontSize="20"
+                                            Text="{Binding BookingId}"
+                                            TextColor="Black" />
+
+                                        <Label
+                                            Grid.Row="2"
+                                            Grid.Column="0"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="Start"
+                                            StyleClass="LblBlackR4"
+                                            Text="{Binding Amount}"
+                                            VerticalOptions="Start" />
+
+                                        <HorizontalStackLayout Grid.Row="3" Grid.Column="0">
+
+                                            <Label
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Start"
+                                                StyleClass="LblBlackR4"
+                                                Text="Language - " />
+                                            <Label
+                                                Grid.Row="3"
+                                                Grid.Column="0"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Start"
+                                                StyleClass="LblBlackR4"
+                                                Text="{Binding PaymentDate}" />
+                                        </HorizontalStackLayout>
+
+                                        <Label
+                                            Grid.Row="4"
+                                            Grid.Column="0"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="Start"
+                                            StyleClass="LblBlackR4"
+                                            Text="{Binding MOP}" />
+
+                                    </Grid>
+
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </ScrollView>
+
+
+    </Grid>
+
+
+</ContentPage>

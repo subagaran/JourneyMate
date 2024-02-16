@@ -98,6 +98,13 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Home
         {
             await UserLogOut();
         }
+        [RelayCommand]
+        public async Task GotoHotelViewPage()
+        {
+            IsBusy = true;
+            await Shell.Current.GoToAsync($"{nameof(ViewHotelPage)}");
+            IsBusy = false;
+        }
 
         public static async Task UserLogOut()
         {

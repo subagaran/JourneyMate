@@ -67,6 +67,7 @@ namespace JourneyMate
             builder.Services.AddTransient<ViewUpdateAndDeleteGuidePage>();
             builder.Services.AddTransient<EditGuidePage>();
             builder.Services.AddTransient<ViewAllPayments>();
+            builder.Services.AddTransient<ViewHotelPage>();
             builder.Services.AddTransient<EditVehiclePage>();
             builder.Services.AddTransient<HotelBookingPage>(); 
             builder.Services.AddTransient<ViewVehicles>();

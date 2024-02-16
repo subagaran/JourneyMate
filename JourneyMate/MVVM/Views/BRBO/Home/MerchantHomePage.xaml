@@ -287,6 +287,48 @@
                 </Frame>
             </Grid>
 
+            <Grid
+                Grid.Row="3"
+                Grid.Column="1"
+                Shadow="{StaticResource shadowItemFrame}"
+                StyleClass="CustomerGridcolor"
+                VerticalOptions="Center">
+
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GotoHotelViewPageCommand}" />
+                </Grid.GestureRecognizers>
+
+                <RoundRectangle StyleClass="FrameRectangleForMenu" />
+
+                <Frame
+                    BackgroundColor="{StaticResource Primary}"
+                    CornerRadius="10"
+                    Shadow="{StaticResource shadowfrm}">
+
+                    <Grid
+                        Grid.Row="0"
+                        Padding="0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Start">
+                        <VerticalStackLayout>
+                            <ImageButton
+                                Grid.Row="0"
+                                Command="{Binding GotoHotelViewPageCommand}"
+                                MaximumHeightRequest="50"
+                                Source="tourguide.png" />
+
+                            <Label
+                                Grid.Row="1"
+                                HorizontalTextAlignment="Center"
+                                StyleClass="LblWhiteR3"
+                                Text="View Hotels" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                </Frame>
+            </Grid>
+
 
         </Grid>
 

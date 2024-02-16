@@ -72,8 +72,17 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
             _httpClient = new HttpClient();  
             _databaseContext = databaseContext;
             Hotels = new ObservableCollection<HotelModel>();
-            Task.Run(() => GetAllHotelFromApiToLocalAsync()).Wait();
-            Task.Run(() => GetAllHotelFromLocal()).Wait();
+            var current = Connectivity.NetworkAccess;
+
+            if (current == NetworkAccess.Internet)
+            {
+                Task.Run(() => GetAllHotelFromApiToLocalAsync()).Wait();
+                Task.Run(() => GetAllHotelFromLocal()).Wait();
+            }
+            else
+            {
+                Task.Run(() => GetAllHotelFromLocal()).Wait();
+            }
         }
 
         public async Task GetAllHotelFromLocal()
@@ -160,7 +169,10 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
 
                 if (response.IsSuccessStatusCode)
                 {
+                    PopUpMessage.SuccessMessage("Created Successfully");
+                    await Shell.Current.Navigation.PopAsync();
                     return true;
+
                 }
                 else
                 {

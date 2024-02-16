@@ -69,6 +69,7 @@
 	  <None Remove="Resources\Images\onboard.png" />
 	  <None Remove="Resources\Images\place.png" />
 	  <None Remove="Resources\Images\tourguide.png" />
+	  <None Remove="Resources\Images\user.png" />
 	  <None Remove="Resources\Images\vehiclebooking.png" />
 	  <None Remove="Resources\Raw\loading1.json" />
 	  <None Remove="Resources\Raw\no_internet_lottie.json" />

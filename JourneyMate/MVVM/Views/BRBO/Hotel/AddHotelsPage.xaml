@@ -51,7 +51,7 @@
             Spacing="25"
             VerticalOptions="Start">
 
-            <CollectionView x:Name="myImageCollection">
+            <!--<CollectionView x:Name="myImageCollection">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal" />
                 </CollectionView.ItemsLayout>
@@ -63,7 +63,7 @@
                             WidthRequest="100" />
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>
+            </CollectionView>-->
 
             <Button
                 x:Name="PickImage"
@@ -89,11 +89,6 @@
                 Margin="0,5,0,0"
                 Command="{Binding CreateHotelCommand}"
                 Text="Add" />
-            <Button
-                Grid.Column="1"
-                Margin="0,5,0,0"
-                BackgroundColor="Gray"
-                Text="Back" />
         </Grid>
 
     </VerticalStackLayout>

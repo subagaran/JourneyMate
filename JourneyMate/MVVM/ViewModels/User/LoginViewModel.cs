@@ -166,10 +166,10 @@ namespace JourneyMate.MVVM.ViewModels.User
             {
                 var model = new RegistrationModel
                 {
-                    UserName = "Demo",
-                    Password = "Demo@123",
+                    UserName = UserName,
+                    Password = Password,
                     Role = "BZUS",
-                    Name = "Demo"
+                    Name = UserName,
                 };
 
                 var json = JsonSerializer.Serialize(model);
@@ -179,7 +179,14 @@ namespace JourneyMate.MVVM.ViewModels.User
 
                 if (response.IsSuccessStatusCode)
                 {
-                    
+                    PopUpMessage.SuccessMessage("Registered Successfully");
+                    UserName = "";
+                    FirstName = "";
+                    LastName = "";
+                    Password = "";
+                    City = "";
+                    Email = "";
+                    PhoneNumber = "";
                 }
                 else
                 {

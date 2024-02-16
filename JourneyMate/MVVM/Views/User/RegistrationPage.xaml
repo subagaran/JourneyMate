@@ -56,13 +56,13 @@
             IsPassword="True"
             Text="{Binding Password}"
             TextColor="{StaticResource Black}" />
-        <ur:TextField
+        <!--<ur:TextField
             Title="Confirm Password"
             Grid.Row="6"
             Grid.ColumnSpan="2"
             IsPassword="True"
             Text="{Binding ConfirmPassword}"
-            TextColor="{StaticResource Black}" />
+            TextColor="{StaticResource Black}" />-->
 
         <Button
             Grid.Row="7"

@@ -53,7 +53,18 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
             _httpClient = new HttpClient();
             _databaseContext = new DatabaseContext();
             Task.Run(() => GetAllVehicleFromApiToLocalAsync()).Wait();
+            Task.Run(() => GetAllVehicleFromLocal()).Wait();
 
+        }
+
+        public async Task GetAllVehicleFromLocal()
+        {
+            var db = await _databaseContext.GetAllAsync<VehicleModelcs>();
+            
+            foreach (var item in db)
+            {
+                Vehicle.Add(item);
+            }
         }
 
         [RelayCommand]
@@ -83,7 +94,8 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
                 var response = await _httpClient.PostAsync(ApiBaseUrl + "CreateVehicle", content);
 
                 if (response.IsSuccessStatusCode)
-                { 
+                {
+                    PopUpMessage.SuccessMessage("Created Successfully");
                     await Shell.Current.Navigation.PopAsync();
                     return true;
                 }

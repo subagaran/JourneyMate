@@ -112,7 +112,7 @@
                         <VerticalStackLayout>
                             <ImageButton
                                 Grid.Row="0"
-                                Command="{Binding GotoHotelPageCommand}"
+                                Command="{Binding GotoHotelViewPageCommand}"
                                 MaximumHeightRequest="50"
                                 Source="hotel.png" />
 
@@ -120,16 +120,15 @@
                                 Grid.Row="1"
                                 HorizontalTextAlignment="Center"
                                 StyleClass="LblWhiteR3"
-                                Text="Hotels" />
+                                Text="View Hotels" />
                         </VerticalStackLayout>
                     </Grid>
 
                 </Frame>
             </Grid>
 
-
-            <Grid
-                Grid.Row="1"
+            <!--<Grid
+                Grid.Row="0"
                 Grid.Column="1"
                 IsVisible="FALSE"
                 Shadow="{StaticResource shadowItemFrame}"
@@ -172,9 +171,8 @@
                 </Frame>
             </Grid>
 
-
             <Grid
-                Grid.Row="1"
+                Grid.Row="0"
                 Grid.Column="0"
                 Shadow="{StaticResource shadowItemFrame}"
                 StyleClass="CustomerGridcolor"
@@ -208,12 +206,12 @@
                                 Grid.Row="1"
                                 HorizontalTextAlignment="Center"
                                 StyleClass="LblWhiteR3"
-                                Text="View Hotels" />
+                                Text="View Guide" />
                         </VerticalStackLayout>
                     </Grid>
 
                 </Frame>
-            </Grid>
+            </Grid>-->
 
             <!--<Grid
                 Grid.Row="1"

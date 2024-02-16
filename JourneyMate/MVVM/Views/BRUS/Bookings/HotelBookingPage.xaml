@@ -15,7 +15,10 @@
             HeightRequest="250"
             Source="loginbackground.png" />
 
-        <Label Text="{Binding HotelName}" />
+        <Label
+            FontAttributes="Bold"
+            HorizontalTextAlignment="Center"
+            Text="{Binding HotelName}" />
         <ur:TextField
             Title="Name"
             Margin="20,10,20,0"

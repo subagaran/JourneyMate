@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using JourneyMate.Database;
 using JourneyMate.Helper;
+using JourneyMate.Helpers;
 using JourneyMate.MVVM.Models;
 using JourneyMate.MVVM.Views.BRUS.Home;
 using System;
@@ -90,10 +91,7 @@ namespace JourneyMate.MVVM.ViewModels.BRUS.Booking
                     BookingId = 1,
                     MOP = "-",
                     TransactionId = "0",
-                    Status = "-",
-                    CardNo = cardNo,
-                    CardExpiryNo = cardExpiryDate + "   " + cardExpiryMonth,
-                    CVCNo = cvcNo
+                    Status = "-", 
                 };
 
                 var json = JsonSerializer.Serialize(model);
@@ -103,6 +101,7 @@ namespace JourneyMate.MVVM.ViewModels.BRUS.Booking
 
                 if (response.IsSuccessStatusCode)
                 {
+                    PopUpMessage.SuccessMessage("Payment Successfully"); 
                     await Shell.Current.GoToAsync($"{nameof(HomePage)}");
                     return true;
                 }

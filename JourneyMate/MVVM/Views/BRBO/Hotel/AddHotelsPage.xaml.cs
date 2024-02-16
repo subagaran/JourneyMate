@@ -81,7 +81,7 @@ public partial class AddHotelsPage : ContentPage
             imageSources.Add(ImageSource.FromStream(() => new MemoryStream(bytes)));
         }
          
-        myImageCollection.ItemsSource = imageSources;
+      //  myImageCollection.ItemsSource = imageSources;
     }
      
 

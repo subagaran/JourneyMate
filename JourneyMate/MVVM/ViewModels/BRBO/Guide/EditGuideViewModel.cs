@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using JourneyMate.Database;
 using JourneyMate.Helper;
+using JourneyMate.Helpers;
 using JourneyMate.MVVM.Models;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,13 @@ using System.Threading.Tasks;
 
 namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
 {
-    public partial class EditGuideViewModel : BaseViewModel
+    public partial class EditGuideViewModel : ObservableObject
     {
         private readonly HttpClient _httpClient;
         private readonly DatabaseContext _databaseContext;
         private const string ApiBaseUrl = "https://guidtourism.azurewebsites.net/api/Guide/";
         private int _Id;
+
         [ObservableProperty]
         string name;
 
@@ -38,7 +40,6 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
             _databaseContext = new DatabaseContext();
             _Id = GlobalVariable.GetGuideId();
             Task.Run(() => PageLoad()).Wait();
-
         }
 
         public async Task PageLoad()
@@ -63,7 +64,6 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
         {
             try
             { 
-                string imageKeysJson = await SecureStorage.GetAsync("ImageKeys");
                 var userid = GlobalVariable.GetUserId();
                 var GuideId = GlobalVariable.GetGuideId();
                 var model = new GuideModel
@@ -72,13 +72,13 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
                     UserId = userid,
                     Name = Name,
                     TpNo = TelephoneNo,
-                    Image = imageKeysJson,
+                    Image = "",
                     Descriptiohn = Description,
                     IsActive = "Y",
                     Email = Email,
                     Language = Language,
                     Password = "",
-                    Username = "-"
+                    Username = "-",
                 };
 
                 var json = System.Text.Json.JsonSerializer.Serialize(model);
@@ -88,6 +88,8 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
 
                 if (response.IsSuccessStatusCode)
                 {
+                    PopUpMessage.SuccessMessage("Updated Successfully");
+                    await Shell.Current.Navigation.PopAsync();
                     return true;
                 }
                 else

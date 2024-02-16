@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using JourneyMate.Database;
 using JourneyMate.Helper;
+using JourneyMate.Helpers;
 using JourneyMate.MVVM.Models;
 using JourneyMate.MVVM.Views.BRUS.Bookings;
 using System;
@@ -68,8 +69,32 @@ namespace JourneyMate.MVVM.ViewModels.BRUS.Booking
             await Shell.Current.GoToAsync($"{nameof(PaymentPage)}");         
 
         }
+
+        public static Task<bool> CheckInternetConnection()
+        {
+            var current = Connectivity.NetworkAccess;
+
+            if (current == NetworkAccess.Internet)
+            {
+                // Internet connection is available
+                return Task.FromResult(true);
+            }
+            else
+            {
+                return Task.FromResult(false);
+
+            }
+        }
         public async Task<bool> BookHotel()
         {
+            bool Connection = await CheckInternetConnection();
+            if (!Connection)
+            {
+                PopUpMessage.NoInternetMessage();
+                await Task.CompletedTask; 
+                return false;
+            }
+
             var model = new BookingModel
             {
                 BookingTypeId = 1,

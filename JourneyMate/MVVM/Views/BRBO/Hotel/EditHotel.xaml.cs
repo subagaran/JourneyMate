@@ -1,11 +1,12 @@
+using JourneyMate.MVVM.ViewModels.BRBO.Hotel;
 using JourneyMate.MVVM.ViewModels.BRBO.Vehicle;
 
 namespace JourneyMate.MVVM.Views.BRBO.Hotel;
 
 public partial class EditHotel : ContentPage
 {
-	private readonly EditVehicleViewModel _viewModel;
-	public EditHotel(EditVehicleViewModel viewModel)
+	private readonly EditHotelViewModel _viewModel;
+	public EditHotel(EditHotelViewModel viewModel)
 	{
 		InitializeComponent();
 		_viewModel = viewModel;

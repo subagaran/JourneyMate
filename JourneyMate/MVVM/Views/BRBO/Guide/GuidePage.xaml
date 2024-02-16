@@ -53,16 +53,6 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-
-            <Button
-                x:Name="PickImage"
-                BackgroundColor="{StaticResource Blue300Accent}"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Start"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Text="Upload Image"
-                TextColor="Black" />
-
         </VerticalStackLayout>
 
         <Grid

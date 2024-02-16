@@ -20,6 +20,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
         private readonly HttpClient _httpClient;
         private readonly DatabaseContext _databaseContext;
         private const string ApiBaseUrl = "https://guidtourism.azurewebsites.net/api/Guide/DeleteGuide/";
+        private const string BaseUrl = "https://guidtourism.azurewebsites.net/api/Guide/";
 
         [ObservableProperty]
         string name;
@@ -58,8 +59,8 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
 
             var response = await CreateGuideAsync();
 
-            PopUpMessage.SuccessMessage("Guide Created Successfully");
-            
+            PopUpMessage.SuccessMessage("Created Successfully");
+            await Shell.Current.Navigation.PopAsync();
         }
 
         public async void GetAllGuidessFromLocalDB()
@@ -78,14 +79,15 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
             {
                 // Retrieve the list of image keys from SecureStorage
                 string imageKeysJson = await SecureStorage.GetAsync("ImageKeys");
- 
-                
+
+                var userid = GlobalVariable.GetUserId();
+
                 var model = new GuideModel
                 {
-                    UserId = GlobalVariable.GetUserId(),
+                    UserId = userid,
                     Name = Name,
                     TpNo = TelephoneNo, 
-                    Image = imageKeysJson,
+                    Image = "",
                     Descriptiohn = Description, 
                     IsActive = "Y",
                     Email = Email,
@@ -97,10 +99,12 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Guide
                 var json = System.Text.Json.JsonSerializer.Serialize(model);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync(ApiBaseUrl + "CreateGuide", content);
+                var response = await _httpClient.PostAsync(BaseUrl + "CreateGuide", content);
 
                 if (response.IsSuccessStatusCode)
                 {
+                    PopUpMessage.SuccessMessage("Created Successfully");
+                    await Shell.Current.Navigation.PopAsync();
                     return true;
                 }
                 else

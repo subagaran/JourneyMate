@@ -85,6 +85,14 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Home
         }
 
         [RelayCommand]
+        public async Task GotoVechicleView()
+        {
+            IsBusy = true;
+            await Shell.Current.GoToAsync($"{nameof(ViewVehicles)}");
+            IsBusy = false;
+        }
+
+        [RelayCommand]
         public async Task GotoAddGuidPage()
         {
             IsBusy = true;

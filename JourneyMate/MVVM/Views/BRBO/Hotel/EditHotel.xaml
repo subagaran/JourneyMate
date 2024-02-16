@@ -44,15 +44,6 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Button
-                x:Name="PickImage"
-                BackgroundColor="{StaticResource Blue300Accent}"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Start"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Text="Upload Image"
-                TextColor="Black" />
-
         </VerticalStackLayout>
 
         <ur:TextField Title="Per day Price" Text="{Binding Price}" />
@@ -66,7 +57,7 @@
                 Grid.Column="0"
                 Margin="0,5,0,0"
                 Command="{Binding UpdateCommand}"
-                Text="Add" />
+                Text="Update" />
         </Grid>
 
     </VerticalStackLayout>

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
 {
-    public partial class EditVehicleViewModel : BaseViewModel
+    public partial class EditVehicleViewModel : ObservableObject
     {
         private readonly HttpClient _httpClient;
         private readonly DatabaseContext _databaseContext;

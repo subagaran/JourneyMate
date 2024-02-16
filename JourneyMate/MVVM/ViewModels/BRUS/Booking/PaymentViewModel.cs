@@ -91,6 +91,9 @@ namespace JourneyMate.MVVM.ViewModels.BRUS.Booking
                     MOP = "-",
                     TransactionId = "0",
                     Status = "-",
+                    CardNo = cardNo,
+                    CardExpiryNo = cardExpiryDate + "   " + cardExpiryMonth,
+                    CVCNo = cvcNo
                 };
 
                 var json = JsonSerializer.Serialize(model);

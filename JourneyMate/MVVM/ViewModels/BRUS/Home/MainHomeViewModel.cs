@@ -77,6 +77,14 @@ namespace JourneyMate.MVVM.ViewModels.BRUS.Home
         }
 
         [RelayCommand]
+        public async Task GotoHotelViewPage()
+        {
+            IsBusy = true;
+            await Shell.Current.GoToAsync($"{nameof(ViewHotelPage)}");
+            IsBusy = false;
+        }
+
+        [RelayCommand]
         public async Task Logout()
         {
             await UserLogOut();             

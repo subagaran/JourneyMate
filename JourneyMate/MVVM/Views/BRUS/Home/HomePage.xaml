@@ -172,7 +172,50 @@
                 </Frame>
             </Grid>
 
+
             <Grid
+                Grid.Row="1"
+                Grid.Column="0"
+                Shadow="{StaticResource shadowItemFrame}"
+                StyleClass="CustomerGridcolor"
+                VerticalOptions="Center">
+
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GotoHotelViewPageCommand}" />
+                </Grid.GestureRecognizers>
+
+                <RoundRectangle StyleClass="FrameRectangleForMenu" />
+
+                <Frame
+                    BackgroundColor="{StaticResource Primary}"
+                    CornerRadius="10"
+                    Shadow="{StaticResource shadowfrm}">
+
+                    <Grid
+                        Grid.Row="0"
+                        Padding="0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Start">
+                        <VerticalStackLayout>
+                            <ImageButton
+                                Grid.Row="0"
+                                Command="{Binding GotoHotelViewPageCommand}"
+                                MaximumHeightRequest="50"
+                                Source="tourguide.png" />
+
+                            <Label
+                                Grid.Row="1"
+                                HorizontalTextAlignment="Center"
+                                StyleClass="LblWhiteR3"
+                                Text="View Hotels" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                </Frame>
+            </Grid>
+
+            <!--<Grid
                 Grid.Row="1"
                 Grid.Column="0"
                 Shadow="{StaticResource shadowItemFrame}"
@@ -212,10 +255,10 @@
                     </Grid>
 
                 </Frame>
-            </Grid>
+            </Grid>-->
 
 
-            <Grid
+            <!--<Grid
                 Grid.Row="0"
                 Grid.Column="1"
                 Shadow="{StaticResource shadowItemFrame}"
@@ -255,12 +298,12 @@
                     </Grid>
 
                 </Frame>
-            </Grid>
+            </Grid>-->
 
 
         </Grid>
 
-        <Label
+        <!--<Label
             Grid.Row="2"
             Margin="10"
             FontAttributes="Bold"
@@ -353,7 +396,7 @@
 
             </CollectionView>
 
-        </ScrollView>
+        </ScrollView>-->
 
     </Grid>
 

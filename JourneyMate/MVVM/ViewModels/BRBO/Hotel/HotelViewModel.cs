@@ -5,6 +5,7 @@ using JourneyMate.Helper;
 using JourneyMate.Helpers;
 using JourneyMate.MVVM.Models;
 using JourneyMate.MVVM.Views.BRBO.Hotel;
+using JourneyMate.MVVM.Views.BRUS.Bookings;
 using JourneyMate.MVVM.Views.BRUS.Home; 
 using System;
 using System.Collections.Generic;
@@ -27,8 +28,8 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
 
         private CancellationTokenSource _cancelTokenSource;
         private bool _isCheckingLocation;
-        private double _lat;
-        private double _lng;
+        private double _lat = 0.00;
+        private double _lng = 0.00;
 
         [ObservableProperty]
         string name;
@@ -78,10 +79,11 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
         public async Task GetAllHotelFromLocal()
         {
             var db = await _databaseContext.GetAllAsync<HotelModel>();
-
+            int i = 1;
             foreach (var item in db)
             {
                 Hotels.Add(item);
+            
             }
         }
 
@@ -124,36 +126,11 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
         {
             try
             {
-                // Retrieve the list of image keys from SecureStorage
                 string imageKeysJson = await SecureStorage.GetAsync("ImageKeys");
-
-                //if (imageKeysJson != null)
-                //{
-                //    List<string> imageKeys = JsonConvert.DeserializeObject<List<string>>(imageKeysJson);
-
-                //    // Create a list to store image data for each image
-                //    List<byte[]> images = new List<byte[]>();
-
-                //    // Iterate over each image key and retrieve the corresponding image data
-                //    foreach (string key in imageKeys)
-                //    {
-                //        // Retrieve image data from SecureStorage using the key
-                //        string imageDataBase64 = await SecureStorage.GetAsync(key);
-                //        if (imageDataBase64 != null)
-                //        {
-                //            // Convert Base64 string back to byte array and add it to the list of images
-                //            byte[] imageData = Convert.FromBase64String(imageDataBase64);
-                //            images.Add(imageData);
-                //        }
-                //    }
-
-                //    // Now you have each image data stored in separate lists (images)
-                //    // You can further process these lists as needed
-                //}
 
                 var model = new RestaurantModel
                 {
-                    UserId = Convert.ToInt32(GlobalVariable.GetUserId()),
+                    UserId = GlobalVariable.GetUserId(),
                     Longitude = _lng,
                     Latitude = _lat,
                     Name = Name,
@@ -162,13 +139,18 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
                     CreatedOn = DateTime.Now,
                     IsActive = "Y",
                     Reason = "-",
-                    ImageURl = "",
+                    ImageURl = "d.png",
                     Description = "",
                     HeaderName = "-",
                     SubHeaderName = "",
                     Price = Price,
                     HasMoreInfo = "Y",
-                    Room1ImgUrl = imageKeysJson
+                    Room1ImgUrl = "",
+                    Room2mgUrl = "",
+                    Room3mgUrl = "",
+                    Room4ImgUrl = "",
+                    Room6mgUrl = "",
+                    Room5mgUrl = ""                    
                 };
 
                 var json = System.Text.Json.JsonSerializer.Serialize(model);
@@ -253,6 +235,16 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
             await DeleteAsync();
         }
 
+
+        [RelayCommand]
+        public async Task GoToBooking(HotelModel model)
+        {
+            GlobalVariable.SetGuideId(model.Id);
+            IsBusy = true; 
+            await Shell.Current.GoToAsync($"{nameof(HotelBookingPage)}");
+            IsBusy = false;
+
+        }
 
     }
 }

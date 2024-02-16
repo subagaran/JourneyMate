@@ -5,7 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-    Title="PaymentPage">
+    xmlns:vm="clr-namespace:JourneyMate.MVVM.ViewModels.BRUS.Booking"
+    Title="PaymentPage"
+    x:DataType="vm:PaymentViewModel">
 
     <ScrollView>
         <Grid
@@ -70,7 +72,7 @@
                         Title="Card Number"
                         HorizontalOptions="FillAndExpand"
                         Keyboard="Numeric"
-                        Text="{Binding cardNo, Mode=TwoWay}"
+                        Text="{Binding CardNo}"
                         TextColor="{StaticResource Black}"
                         Visual="Custom" />
                 </StackLayout>
@@ -153,7 +155,6 @@
                 Grid.ColumnSpan="3"
                 Margin="30,5,30,30"
                 Padding="18"
-                BackgroundColor="{Binding CardNumber, Converter={StaticResource CardColorConverter}}"
                 Command="{Binding CreatePaymentCommand}"
                 CornerRadius="26"
                 FontSize="18"

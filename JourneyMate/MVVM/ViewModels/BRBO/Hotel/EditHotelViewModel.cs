@@ -91,7 +91,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Hotel
                 var GuideId = GlobalVariable.GetGuideId();
                 var model = new RestaurantModel
                 {
-                    UserId = Convert.ToInt32(GlobalVariable.GetUserId()),
+                    UserId = (GlobalVariable.GetUserId()),
                     Longitude = _lng,
                     Latitude = _lat,
                     Name = Name,

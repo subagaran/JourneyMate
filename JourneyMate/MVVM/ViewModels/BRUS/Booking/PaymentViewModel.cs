@@ -17,7 +17,7 @@ namespace JourneyMate.MVVM.ViewModels.BRUS.Booking
     public partial class PaymentViewModel : BaseViewModel
     {
         private readonly HttpClient _httpClient;
-        private const string ApiBaseUrl = "https://guidtourism.azurewebsites.net/api/Payment/";
+        private const string ApiBaseUrl = "https://guidtourism.azurewebsites.net/api/Payment/"; 
         public readonly DatabaseContext _databaseContext;
 
         [ObservableProperty]
@@ -79,14 +79,18 @@ namespace JourneyMate.MVVM.ViewModels.BRUS.Booking
             {
                 var model = new PaymentModel
                 {
-                    UserId = GlobalVariable.GetUserId(),
-                    Amount = amount,
-                    NameOnCard = nameOnCard,
-                    BankName = bankName,
+                    Amount = Amount,
+                    UserId = "1",
+                    NameOnCard = NameOnCard,
+                    BankName = "rt",
                     PaymentDate = DateTime.Now,
-                    CardNo = cardNo,
-                    CardExpiryNo = cardExpiryDate + " " + cardExpiryMonth,
-                    CVCNo = cvcNo
+                    CardNo = CardNo,
+                    CardExpiryNo = DateTime.Now.ToString(),
+                    CVCNo = CvcNo,
+                    BookingId = 1,
+                    MOP = "-",
+                    TransactionId = "0",
+                    Status = "-",
                 };
 
                 var json = JsonSerializer.Serialize(model);
@@ -96,6 +100,7 @@ namespace JourneyMate.MVVM.ViewModels.BRUS.Booking
 
                 if (response.IsSuccessStatusCode)
                 {
+                    await Shell.Current.GoToAsync($"{nameof(HomePage)}");
                     return true;
                 }
                 else

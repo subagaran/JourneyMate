@@ -9,17 +9,41 @@
     x:DataType="vm:VehicleViewModel">
 
     <VerticalStackLayout Padding="20">
-        <ur:TextField Title="Vehicle Name" Text="{Binding VehicleName}" />
+        <ur:TextField
+            Title="Vehicle Name"
+            Text="{Binding VehicleName}"
+            TextColor="Black" />
 
-        <ur:TextField Title="Vehicle No" Text="{Binding VehicleNo}" />
+        <ur:TextField
+            Title="Vehicle No"
+            Text="{Binding VehicleNo}"
+            TextColor="Black" />
 
-        <ur:TextField Title="Brand" Text="{Binding Brand}" />
+        <ur:TextField
+            Title="Brand"
+            Text="{Binding Brand}"
+            TextColor="Black" />
 
-        <ur:TextField Title="Driver Name" Text="{Binding DriverName}" />
-        <ur:TextField Title="Make " Text="{Binding Make}" />
-        <ur:TextField Title="Model " Text="{Binding Model}" />
-        <ur:TextField Title="Year " Text="{Binding Year}" />
-        <ur:TextField Title="Color " Text="{Binding Color}" />
+        <ur:TextField
+            Title="Driver Name"
+            Text="{Binding DriverName}"
+            TextColor="Black" />
+        <ur:TextField
+            Title="Make "
+            Text="{Binding Make}"
+            TextColor="Black" />
+        <ur:TextField
+            Title="Model "
+            Text="{Binding Model}"
+            TextColor="Black" />
+        <ur:TextField
+            Title="Year "
+            Text="{Binding Year}"
+            TextColor="Black" />
+        <ur:TextField
+            Title="Color "
+            Text="{Binding Color}"
+            TextColor="Black" />
 
         <VerticalStackLayout
             Margin="10,10"
@@ -40,16 +64,6 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-
-            <Button
-                x:Name="PickImage"
-                BackgroundColor="{StaticResource Blue300Accent}"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Start"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Text="Upload Image"
-                TextColor="Black" />
-
         </VerticalStackLayout>
 
         <Grid
@@ -61,6 +75,7 @@
             <Button
                 Grid.Column="0"
                 Margin="0,5,0,0"
+                Command="{Binding CreateVehicleCommand}"
                 Text="Add" />
         </Grid>
     </VerticalStackLayout>

@@ -11,7 +11,7 @@ namespace JourneyMate.MVVM.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
         public string Name { get; set; }

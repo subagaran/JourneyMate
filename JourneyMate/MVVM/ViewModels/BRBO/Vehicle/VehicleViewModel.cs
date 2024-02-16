@@ -25,6 +25,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
 
         [ObservableProperty]
         string make;
+
         [ObservableProperty]
         string model;
         [ObservableProperty]
@@ -58,10 +59,10 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
         [RelayCommand]
         public async Task CreateVehicle()
         {
-            var response = await CreateHotelAsync();
+            var response = await CreateVehicleAsync();
         }
 
-        public async Task<bool> CreateHotelAsync()
+        public async Task<bool> CreateVehicleAsync()
         {
             try
             {
@@ -73,8 +74,7 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
                     Year = Year,
                     Color = Color,
                     Price = Price,
-                    IsActive = "Y",
-                  
+                    IsActive = "Y",                  
                 };
 
                 var json = JsonSerializer.Serialize(model);
@@ -83,11 +83,13 @@ namespace JourneyMate.MVVM.ViewModels.BRBO.Vehicle
                 var response = await _httpClient.PostAsync(ApiBaseUrl + "CreateVehicle", content);
 
                 if (response.IsSuccessStatusCode)
-                {
+                { 
+                    await Shell.Current.Navigation.PopAsync();
                     return true;
                 }
                 else
                 {
+                    PopUpMessage.WarningMessage("Something went wrong.");
                     return false;
                 }
 

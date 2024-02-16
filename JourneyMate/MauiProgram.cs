@@ -85,6 +85,7 @@ namespace JourneyMate
             builder.Services.AddTransient<EditGuideViewModel>();
             builder.Services.AddTransient<AllPaymentViewModel>(); 
             builder.Services.AddTransient<PaymentViewModel>(); 
+            builder.Services.AddTransient<BookingViewModel>(); 
        
 
 

@@ -11,19 +11,40 @@
 
     <VerticalStackLayout Padding="20">
 
-        <ur:TextField Title="Hotel Name" Text="{Binding Name}" />
+        <ur:TextField
+            Title="Hotel Name"
+            Text="{Binding Name}"
+            TextColor="Black" />
 
-        <ur:TextField Title="Address" Text="{Binding Address}" />
+        <ur:TextField
+            Title="Address"
+            Text="{Binding Address}"
+            TextColor="Black" />
 
-        <ur:TextField Title="City" Text="{Binding City}" />
+        <ur:TextField
+            Title="City"
+            Text="{Binding City}"
+            TextColor="Black" />
 
-        <ur:TextField Title="Email" Text="{Binding Email}" />
+        <ur:TextField
+            Title="Email"
+            Text="{Binding Email}"
+            TextColor="Black" />
 
-        <ur:TextField Title="Phone number" Text="{Binding PhoneNumber}" />
+        <ur:TextField
+            Title="Phone number"
+            Text="{Binding PhoneNumber}"
+            TextColor="Black" />
 
-        <ur:TextField Title="No of rooms" Text="{Binding NoOfRooms}" />
+        <ur:TextField
+            Title="No of rooms"
+            Text="{Binding NoOfRooms}"
+            TextColor="Black" />
 
-        <ur:TextField Title="Toilets" Text="{Binding NoOfToitents}" />
+        <ur:TextField
+            Title="Toilets"
+            Text="{Binding NoOfToitents}"
+            TextColor="Black" />
 
         <VerticalStackLayout
             Margin="10,10"
@@ -55,7 +76,7 @@
 
         </VerticalStackLayout>
 
-        <ur:TextField Title="Per day Price" Text="{Binding Price}" />
+        <ur:TextField Title="Per day Price" Text="{Binding Price}" TextColor="Black" />
 
         <Grid
             Grid.Row="1"

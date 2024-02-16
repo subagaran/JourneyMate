@@ -8,9 +8,9 @@
     Title="View Hotel"
     x:DataType="vm:HotelViewModel">
 
-    <CollectionView ItemsSource="{Binding Hotels}">
+    <CollectionView x:Name="GuideCollection" ItemsSource="{Binding Hotels}">
         <CollectionView.ItemTemplate>
-            <DataTemplate>
+            <DataTemplate x:DataType="model:HotelModel">
                 <Frame
                     Margin="15,10,15,0"
                     Padding="10"
@@ -49,19 +49,16 @@
                             <Label
                                 FontSize="Small"
                                 HorizontalOptions="StartAndExpand"
-                                Text="{Binding StarRating, StringFormat='Star Rating: {0:F1}'}"
+                                Text="{Binding Description}"
                                 TextColor="Gray" />
 
-                            <Label
-                                FontSize="Small"
-                                HorizontalOptions="StartAndExpand"
-                                Text="{Binding Descriptiohn}"
-                                TextColor="Gray" />
                         </StackLayout>
 
                         <Button
                             Margin="0,10,0,0"
                             BackgroundColor="#4CAF50"
+                            Command="{Binding Source={x:Reference GuideCollection}, Path=BindingContext.GoToBookingCommand}"
+                            CommandParameter="{Binding .}"
                             CornerRadius="10"
                             FontAttributes="Bold"
                             FontSize="Medium"
@@ -72,7 +69,7 @@
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>
-    
+
     <!--<Grid RowDefinitions="*">
 
         <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center">

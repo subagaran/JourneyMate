@@ -85,7 +85,7 @@ namespace JourneyMate.MVVM.ViewModels.BRUS.Booking
                     BankName = bankName,
                     PaymentDate = DateTime.Now,
                     CardNo = cardNo,
-                    CardExpiryNo = cardExpiryDate + " " + cardExpiryMonth,
+                    CardExpiryNo = cardExpiryDate + "   " + cardExpiryMonth,
                     CVCNo = cvcNo
                 };
 

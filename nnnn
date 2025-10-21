@@ -1,0 +1,241 @@
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Maui.Controls;
+
+namespace MauiBarcodeSender
+{
+    public partial class MainPage : ContentPage
+    {
+        private const int DISCOVERY_PORT = 5051;
+        private const int BARCODE_PORT = 5050;
+        List<(string ip, string name)> foundPCs = new List<(string, string)>();
+
+        public MainPage()
+        {
+            InitializeComponent();
+        }
+
+        private async void OnDiscoverClicked(object sender, EventArgs e)
+        {
+            lblStatus.Text = "🔎 Discovering PCs...";
+            pcPicker.ItemsSource = null;
+            foundPCs.Clear();
+
+            using (UdpClient client = new UdpClient())
+            {
+                client.EnableBroadcast = true;
+                byte[] data = Encoding.UTF8.GetBytes("DISCOVER");
+                IPEndPoint broadcastEP = new IPEndPoint(IPAddress.Broadcast, DISCOVERY_PORT);
+
+                await client.SendAsync(data, data.Length, broadcastEP);
+
+                var start = DateTime.Now;
+                while ((DateTime.Now - start).TotalSeconds < 1)
+                {
+                    if (client.Available > 0)
+                    {
+                        var result = await client.ReceiveAsync();
+                        string pcName = Encoding.UTF8.GetString(result.Buffer);
+                        string ip = result.RemoteEndPoint.Address.ToString();
+                        if (!foundPCs.Exists(x => x.ip == ip))
+                            foundPCs.Add((ip, pcName));
+                    }
+                    await Task.Delay(50);
+                }
+            }
+
+            if (foundPCs.Count == 0)
+            {
+                lblStatus.Text = "❌ No PCs found.";
+            }
+            else
+            {
+                pcPicker.ItemsSource = foundPCs.Select(x => x.name).ToList();
+                lblStatus.Text = $"✅ Found {foundPCs.Count} PC(s).";
+            }
+        }
+
+        private async void OnSendClicked(object sender, EventArgs e)
+        {
+            string text = txtBarcode.Text ?? string.Empty;
+
+            var lines = text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                            .Select(x => x.Trim())
+                            .Where(x => !string.IsNullOrEmpty(x))
+                            .ToList();
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                if (i < lines.Count - 1 && !lines[i].EndsWith(","))
+                    lines[i] += ",";
+            }
+
+            txtBarcode.Text = string.Join(Environment.NewLine, lines);
+
+            if (pcPicker.SelectedItem == null)
+            {
+                await DisplayAlert("Error", "Please select a PC first.", "OK");
+                return;
+            }
+
+            string selectedName = pcPicker.SelectedItem.ToString();
+            var selectedPC = foundPCs.FirstOrDefault(x => x.name == selectedName);
+            string ip = selectedPC.ip;
+
+            string barcode = txtBarcode.Text?.Trim();
+            if (string.IsNullOrWhiteSpace(barcode))
+            {
+                await DisplayAlert("Error", "Please enter or scan a barcode.", "OK");
+                return;
+            }
+
+            try
+            {
+                using (TcpClient client = new TcpClient())
+                {
+                    await client.ConnectAsync(ip, BARCODE_PORT);
+                    byte[] data = Encoding.UTF8.GetBytes(barcode);
+                    await client.GetStream().WriteAsync(data, 0, data.Length);
+                }
+
+                lblStatus.Text = $"✅ Sent '{barcode}' to {selectedName}";
+                lblStatus.TextColor = Colors.Green;
+                txtBarcode.Text = "";
+            }
+            catch (Exception ex)
+            {
+                lblStatus.Text = $"❌ Error: {ex.Message}";
+                lblStatus.TextColor = Colors.Red;
+            }
+        }
+
+
+        //private async void OnDiscoverClicked(object sender, EventArgs e)
+        //{
+        //    lblStatus.Text = "🔎 Discovering PCs...";
+        //    pcPicker.Items.Clear();
+        //    List<(string ip, string name)> foundPCs = new List<(string, string)>();
+
+        //    using (UdpClient client = new UdpClient())
+        //    {
+        //        client.EnableBroadcast = true;
+        //        byte[] data = Encoding.UTF8.GetBytes("DISCOVER");
+        //        IPEndPoint broadcastEP = new IPEndPoint(IPAddress.Broadcast, DISCOVERY_PORT);
+
+        //        await client.SendAsync(data, data.Length, broadcastEP);
+
+        //        var start = DateTime.Now;
+        //        while ((DateTime.Now - start).TotalSeconds < 1) // wait 1 second
+        //        {
+        //            if (client.Available > 0)
+        //            {
+        //                var result = await client.ReceiveAsync();
+        //                string pcName = Encoding.UTF8.GetString(result.Buffer);
+        //                string ip = result.RemoteEndPoint.Address.ToString();
+        //                if (!foundPCs.Exists(x => x.ip == ip))
+        //                    foundPCs.Add((ip, pcName));
+        //            }
+        //            await Task.Delay(50);
+        //        }
+        //    }
+
+        //    if (foundPCs.Count == 0)
+        //    {
+        //        lblStatus.Text = "❌ No PCs found.";
+        //    }
+        //    else
+        //    {
+        //        foreach (var pc in foundPCs)
+        //            pcPicker.Items.Add($"{pc.name} ({pc.ip})");
+
+        //        lblStatus.Text = $"✅ Found {foundPCs.Count} PC(s).";
+        //    }
+        //}
+
+        //private async void OnSendClicked(object sender, EventArgs e)
+        //{
+        //    string text = txtBarcode.Text ?? string.Empty;
+
+        //    // Split all lines, trim spaces, remove empty ones
+        //    var lines = text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+        //                    .Select(x => x.Trim())
+        //                    .Where(x => !string.IsNullOrEmpty(x))
+        //                    .ToList();
+
+        //    // Add commas only between lines (not the last one)
+        //    for (int i = 0; i < lines.Count; i++)
+        //    {
+        //        if (i < lines.Count - 1 && !lines[i].EndsWith(","))
+        //            lines[i] += ",";
+        //    }
+
+        //    // Join lines back
+        //    txtBarcode.Text = string.Join(Environment.NewLine, lines);
+
+        //    string barcode = txtBarcode.Text?.Trim();
+        //    if (pcPicker.SelectedItem == null)
+        //    {
+        //        await DisplayAlert("Error", "Please select a PC first.", "OK");
+        //        return;
+        //    }
+        //    if (string.IsNullOrWhiteSpace(barcode))
+        //    {
+        //        await DisplayAlert("Error", "Please enter or scan a barcode.", "OK");
+        //        return;
+        //    }
+
+        //    string selected = pcPicker.SelectedItem.ToString();
+        //    string ip = selected.Substring(selected.LastIndexOf('(') + 1).Trim(')');
+
+        //    try
+        //    {
+        //        using (TcpClient client = new TcpClient())
+        //        {
+        //            await client.ConnectAsync(ip, BARCODE_PORT);
+        //            byte[] data = Encoding.UTF8.GetBytes(barcode);
+        //            await client.GetStream().WriteAsync(data, 0, data.Length);
+        //        }
+
+        //        lblStatus.Text = $"✅ Sent '{barcode}' to {selected}";
+        //        lblStatus.TextColor = Colors.Green;
+        //        txtBarcode.Text = "";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        lblStatus.Text = $"❌ Error: {ex.Message}";
+        //        lblStatus.TextColor = Colors.Red;
+        //    }
+        //}
+
+        private void txtBarcode_Completed(object sender, EventArgs e)
+        {
+            string text = txtBarcode.Text ?? string.Empty;
+
+            // Split all lines, trim spaces, remove empty ones
+            var lines = text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                            .Select(x => x.Trim())
+                            .Where(x => !string.IsNullOrEmpty(x))
+                            .ToList();
+
+            // Add commas only between lines (not the last one)
+            for (int i = 0; i < lines.Count; i++)
+            {
+                if (i < lines.Count - 1 && !lines[i].EndsWith(","))
+                    lines[i] += ",";
+            }
+
+            // Join lines back
+            txtBarcode.Text = string.Join(Environment.NewLine, lines);
+        
+        }
+
+        private void txtBarcode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+    }
+}

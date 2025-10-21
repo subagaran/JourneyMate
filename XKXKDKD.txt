@@ -1,3 +1,21 @@
+   string text = txtBarcode.Text ?? string.Empty;
+
+   // Split all lines, trim spaces, remove empty ones
+   var lines = text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                   .Select(x => x.Trim())
+                   .Where(x => !string.IsNullOrEmpty(x))
+                   .ToList();
+
+   // Add commas only between lines (not the last one)
+   for (int i = 0; i < lines.Count; i++)
+   {
+       if (i < lines.Count - 1 && !lines[i].EndsWith(","))
+           lines[i] += ",";
+   }
+
+   // Join lines back
+   txtBarcode.Text = string.Join(Environment.NewLine, lines);
+
 .net maui code
 
 <ContentPage
@@ -273,3 +291,4 @@ namespace BarcodeReceiver
         }
     }
 }
+

@@ -1,0 +1,177 @@
+   private void Form1_Load(object sender, EventArgs e)
+   {
+       tcpServer = new TcpJsonServer(5000);
+       Task.Run(() => tcpServer.Start());
+
+       lblStatus.Text = "TCP Server Running on port 5000...";
+   }
+
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient; 
+
+public static class Database
+{
+    private static string connString =
+        @"Server=192.168.1.100\SQL2022;Database=AuraMdQ;User Id=sa;Password=2025@speedup;";
+
+    public static List<Item> GetItems()
+    {
+        List<Item> list = new List<Item>();
+
+        try
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+
+                string query = @"SELECT ItemId, ItemName, Qty FROM tblItem";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataReader rd = cmd.ExecuteReader())
+                {
+                    while (rd.Read())
+                    {
+                        list.Add(new Item
+                        {
+                            ItemId = rd["ItemId"] != DBNull.Value ? Convert.ToInt32(rd["ItemId"]) : 0,
+                            ItemName = rd["ItemName"] != DBNull.Value ? rd["ItemName"].ToString() : "",
+                            Qty = rd["Qty"] != DBNull.Value ? Convert.ToInt32(rd["Qty"]) : 0
+                        });
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Optional: log error
+            Console.WriteLine("Error fetching items: " + ex.Message);
+        }
+
+        return list;
+    }
+
+
+    public static object UpdateQty(int itemId, int qty)
+    {
+        SqlConnection conn = new SqlConnection(connString);
+        conn.Open();
+
+        string query = "UPDATE tblItem SET Qty=@qty WHERE ItemId=@id";
+        SqlCommand cmd = new SqlCommand(query, conn);
+        cmd.Parameters.AddWithValue("@qty", qty);
+        cmd.Parameters.AddWithValue("@id", itemId);
+
+        int rows = cmd.ExecuteNonQuery();
+
+        return new { status = rows > 0 ? "success" : "failed" };
+    }
+}
+public class Request
+{
+    public string action { get; set; }
+    public int itemId { get; set; }
+    public int qty { get; set; }
+}
+
+public class Item
+{
+    public int ItemId { get; set; }
+    public string ItemName { get; set; }
+    public int Qty { get; set; }
+}
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace JsonWatcherSQLUpdater
+{
+    public static class RequestProcessor
+    {
+        public static string Handle(Request req)
+        {
+            switch (req.action)
+            {
+                case "get_items":
+                    return JsonConvert.SerializeObject(Database.GetItems());
+
+                case "update_qty":
+                    var output = Database.UpdateQty(req.itemId, req.qty);
+                    return JsonConvert.SerializeObject(output);
+
+                default:
+                    return JsonConvert.SerializeObject(new { error = "Invalid action" });
+            }
+        }
+    }
+}
+using Newtonsoft.Json;
+using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Text; 
+using System.Threading.Tasks;
+
+namespace JsonWatcherSQLUpdater
+{
+    public class TcpJsonServer
+    {
+        private readonly int port;
+
+        public TcpJsonServer(int port)
+        {
+            this.port = port;
+        }
+
+        public void Start()
+        {
+            TcpListener listener = new TcpListener(IPAddress.Any, port);
+            listener.Start();
+
+            Console.WriteLine("TCP Server Started...");
+
+            while (true)
+            {
+                TcpClient client = listener.AcceptTcpClient();
+                Task.Run(() => HandleClient(client));
+            }
+        } 
+
+private void HandleClient(TcpClient client)
+    {
+        try
+        {
+            NetworkStream ns = client.GetStream();
+
+            // Read data from client
+            byte[] buffer = new byte[4096];
+            int read = ns.Read(buffer, 0, buffer.Length);
+
+            string json = Encoding.UTF8.GetString(buffer, 0, read);
+
+            // Deserialize request using Newtonsoft.Json
+            var request = JsonConvert.DeserializeObject<Request>(json);
+
+            // Process the request
+            string response = RequestProcessor.Handle(request);
+
+            // Send response back to client
+            byte[] respBytes = Encoding.UTF8.GetBytes(response);
+            ns.Write(respBytes, 0, respBytes.Length);
+
+            client.Close();
+        }
+        catch (Exception ex)
+        {
+            // Optional: log the exception for debugging
+            Console.WriteLine("Error handling client: " + ex.Message);
+        }
+    }
+
+
+}
+
+}

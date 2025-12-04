@@ -1,0 +1,180 @@
+//CLASS FILES
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MauiTcpClient
+{
+    public class Item
+    {
+        public int ItemId { get; set; }
+        public string ItemName { get; set; }
+        public int Qty { get; set; }
+    }
+}
+
+//SYNC SERVICE
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MauiTcpClient
+{
+
+    public class SyncService
+    {
+        private readonly string serverIp = "192.168.1.100"; // Replace with your Windows server IP
+        private readonly int port = 5000;
+
+        public async Task<List<Item>> GetItemsAsync()
+        {
+            var request = JsonConvert.SerializeObject(new { action = "get_items" });
+            string response = await SendAsync(request);
+            return JsonConvert.DeserializeObject<List<Item>>(response);
+        }
+
+        public async Task<bool> UpdateQtyAsync(int itemId, int qty)
+        {
+            var request = JsonConvert.SerializeObject(new { action = "update_qty", itemId, qty });
+            string response = await SendAsync(request);
+            var result = JsonConvert.DeserializeObject<dynamic>(response);
+            return result.status == "success";
+        }
+
+        private async Task<string> SendAsync(string message)
+        {
+            using TcpClient client = new TcpClient();
+            await client.ConnectAsync(serverIp, port);
+
+            NetworkStream stream = client.GetStream();
+            byte[] buffer = Encoding.UTF8.GetBytes(message);
+            await stream.WriteAsync(buffer, 0, buffer.Length);
+
+            byte[] responseBuffer = new byte[4096];
+            int read = await stream.ReadAsync(responseBuffer, 0, responseBuffer.Length);
+
+            return Encoding.UTF8.GetString(responseBuffer, 0, read);
+        }
+    }
+}
+
+
+
+//VIEW 
+<? xml version = "1.0" encoding = "utf-8" ?>
+< ContentPage
+    x:Class = "MauiTcpClient.MainPage"
+    xmlns = "http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns: x = "http://schemas.microsoft.com/winfx/2009/xaml" >
+
+    < StackLayout Padding = "10" Spacing = "10" >
+
+        < Button Clicked = "OnRefreshClicked" Text = "Refresh Items" />
+
+        < CollectionView x: Name = "ItemsCollection" SelectionMode = "None" >
+            < CollectionView.ItemTemplate >
+                < DataTemplate >
+                    < Frame
+                        Margin = "5"
+                        Padding = "10"
+                        BorderColor = "LightGray"
+                        CornerRadius = "5" >
+                        < StackLayout Orientation = "Horizontal" VerticalOptions = "Center" >
+                            < Label
+                                Text = "{Binding ItemName}"
+                                VerticalOptions = "Center"
+                                WidthRequest = "200" />
+                            < Entry
+                                Completed = "OnQtyEdited"
+                                Keyboard = "Numeric"
+                                Text = "{Binding Qty}"
+                                WidthRequest = "80" />
+                        </ StackLayout >
+                    </ Frame >
+                </ DataTemplate >
+            </ CollectionView.ItemTemplate >
+        </ CollectionView >
+
+        < Label
+            x: Name = "lblStatus"
+            FontAttributes = "Bold"
+            HorizontalOptions = "Center"
+            TextColor = "Green" />
+
+    </ StackLayout >
+
+</ ContentPage >
+
+
+//BACKCODE
+
+namespace MauiTcpClient;
+
+public partial class MainPage : ContentPage
+{
+    private readonly SyncService syncService = new SyncService();
+    private List<Item> items = new List<Item>();
+
+    public MainPage()
+    {
+        InitializeComponent();
+        LoadItems();
+    }
+
+    private async void LoadItems()
+    {
+        try
+        {
+            lblStatus.Text = "Loading items...";
+            items = await syncService.GetItemsAsync();
+            ItemsCollection.ItemsSource = items;
+            lblStatus.Text = $"Loaded {items.Count} items.";
+        }
+        catch (Exception ex)
+        {
+            lblStatus.Text = "Error loading items: " + ex.Message;
+        }
+    }
+
+    private void OnRefreshClicked(object sender, EventArgs e)
+    {
+        LoadItems();
+    }
+
+    private async void OnQtyEdited(object sender, EventArgs e)
+    {
+        try
+        {
+            Entry entry = sender as Entry;
+            if (entry?.BindingContext is Item item)
+            {
+                int newQty = int.TryParse(entry.Text, out var q) ? q : item.Qty;
+                bool updated = await syncService.UpdateQtyAsync(item.ItemId, newQty);
+                if (updated)
+                {
+                    lblStatus.Text = $"Updated {item.ItemName} Qty to {newQty}.";
+                    // Optional: refresh items from server
+                    await Task.Delay(200);
+                    LoadItems();
+                }
+                else
+                {
+                    lblStatus.Text = $"Failed to update {item.ItemName}.";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            lblStatus.Text = "Error updating qty: " + ex.Message;
+        }
+    }
+}
+

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiTcpClient.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <StackLayout Padding="10" Spacing="10">
+
+        <Button Clicked="OnRefreshClicked" Text="Refresh Items" />
+
+        <CollectionView x:Name="ItemsCollection" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                        Margin="5"
+                        Padding="10"
+                        BorderColor="LightGray"
+                        CornerRadius="5">
+                        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                            <Label
+                                Text="{Binding ItemName}"
+                                VerticalOptions="Center"
+                                WidthRequest="200" />
+                            <Entry
+                                Completed="OnQtyEdited"
+                                Keyboard="Numeric"
+                                Text="{Binding Qty}"
+                                WidthRequest="80" />
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label
+            x:Name="lblStatus"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            TextColor="Green" />
+
+    </StackLayout>
+
+</ContentPage>

@@ -311,7 +311,8 @@ namespace HotelPOS
             this.tblKeyboard.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblKeyboard.Location = new System.Drawing.Point(5, 5);
             this.tblKeyboard.Name = "tblKeyboard";
-            this.tblKeyboard.RowCount = 5;
+            this.tblKeyboard.RowCount = 6;
+            this.tblKeyboard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tblKeyboard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tblKeyboard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tblKeyboard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));

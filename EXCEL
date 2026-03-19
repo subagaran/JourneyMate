@@ -1,0 +1,171 @@
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
+using System.Text;
+using System.Windows.Forms;
+using ExcelDataReader;
+
+namespace HotelPOS
+{
+    public partial class Form1 : Form
+    {
+        // CLOUD CONNECTION
+        private static readonly string _connectionStringCLD =
+            @"Data Source=SUBAGARAN\SQL2022;Initial Catalog=HotelDB;Integrated Security=True";
+
+        // BRANCH CONNECTION (not used here but kept)
+        private static readonly string _connectionStringBR =
+            @"Data Source=SUBAGARAN\SQL2019R1;Initial Catalog=HotelDBBR;Integrated Security=True";
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        // ============================
+        // BROWSE EXCEL FILE
+        // ============================
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Excel Files|*.xls;*.xlsx";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                txtFilePath.Text = ofd.FileName;
+            }
+        }
+
+        // ============================
+        // IMPORT BUTTON
+        // ============================
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtFilePath.Text))
+            {
+                MessageBox.Show("Please select Excel file");
+                return;
+            }
+
+            try
+            {
+                DataTable dt = ReadExcel(txtFilePath.Text);
+
+                ValidateAndFixData(dt);
+
+                BulkInsert(dt);
+
+                dataGridView1.DataSource = GetTempData();
+
+                MessageBox.Show("Import Completed Successfully");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        // ============================
+        // READ EXCEL
+        // ============================
+
+        //IF THE DATA IS FROM 2ND ROW
+        private DataTable ReadExcel(string filePath)
+        { 
+            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+            using (var reader = ExcelReaderFactory.CreateReader(stream))
+            {
+                var result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                {
+                    ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
+                    {
+                        UseHeaderRow = true
+                    }
+                });
+
+                return result.Tables[0];
+            }
+        }
+
+        // ============================
+        // VALIDATE & FIX DATA
+        // ============================
+        private void ValidateAndFixData(DataTable dt)
+        {
+            foreach (DataRow row in dt.Rows)
+            {
+                // FreeQty null fix
+                if (row["FREQTY"] == DBNull.Value || row["FREQTY"].ToString() == "")
+                    row["FREQTY"] = 0;
+
+                // Qty null fix
+                if (row["QTY"] == DBNull.Value || row["QTY"].ToString() == "")
+                    row["QTY"] = 0;
+
+                // Date fix
+                DateTime date;
+                if (!DateTime.TryParse(row["SALEDATE"].ToString(), out date))
+                    row["SALEDATE"] = DateTime.Now;
+                else
+                    row["SALEDATE"] = date;
+            }
+        }
+
+        // ============================
+        // BULK INSERT
+        // ============================
+        private void BulkInsert(DataTable dt)
+        {
+            // Rename columns
+            dt.Columns["SALEDATE"].ColumnName = "DateOn";
+            dt.Columns["DOCNO"].ColumnName = "InvoiceNo";
+            dt.Columns["ITEMCODE"].ColumnName = "ItemCode";
+            dt.Columns["QTY"].ColumnName = "Qty";
+            dt.Columns["FREQTY"].ColumnName = "FreeQty";
+            dt.Columns["UNITPRICE"].ColumnName = "UnitPrice";
+
+            using (SqlConnection con = new SqlConnection(_connectionStringCLD))
+            {
+                con.Open();
+
+                // Clear temp table before insert
+                SqlCommand cmd = new SqlCommand("TRUNCATE TABLE TempSalesImport", con);
+                cmd.ExecuteNonQuery();
+
+                using (SqlBulkCopy bulk = new SqlBulkCopy(con))
+                {
+                    bulk.DestinationTableName = "TempSalesImport";
+
+                    bulk.ColumnMappings.Add("DateOn", "DateOn");
+                    bulk.ColumnMappings.Add("InvoiceNo", "InvoiceNo");
+                    bulk.ColumnMappings.Add("ItemCode", "ItemCode");
+                    bulk.ColumnMappings.Add("Qty", "Qty");
+                    bulk.ColumnMappings.Add("FreeQty", "FreeQty");
+                    bulk.ColumnMappings.Add("UnitPrice", "UnitPrice");
+
+                    bulk.WriteToServer(dt);
+                }
+            }
+        }
+
+        // ============================
+        // LOAD GRID DATA
+        // ============================
+        private DataTable GetTempData()
+        {
+            using (SqlConnection con = new SqlConnection(_connectionStringCLD))
+            {
+                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM TempSalesImport", con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+        }
+    }
+}

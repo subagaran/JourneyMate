@@ -1,0 +1,243 @@
+ 
+        private DataTable GetPharmacyItems()
+        {
+            using (SqlConnection con = new SqlConnection(pharmacyConn))
+            {
+                con.Open();
+
+                string query = @"SELECT 
+                            ItemID,
+                            ItemCode,
+                            ItemName,
+                            UnitPrice,
+                            IsActive
+                         FROM PharmacyItems";
+
+                SqlDataAdapter da = new SqlDataAdapter(query, con);
+                da.SelectCommand.CommandTimeout = 300;
+
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                return dt;
+            }
+        }
+        public void TransferItemsFast()
+        {
+            try
+            {
+                DataTable sourceData = GetPharmacyItems();
+
+                int batchSize = 2000;
+                int totalRows = sourceData.Rows.Count;
+
+                for (int i = 0; i < totalRows; i += batchSize)
+                {
+                    DataTable batchTable = sourceData.AsEnumerable()
+                        .Skip(i)
+                        .Take(batchSize)
+                        .CopyToDataTable();
+
+                    ProcessBatch(batchTable);
+                }
+
+                MessageBox.Show("Transfer Completed Successfully");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private void ProcessBatch(DataTable dt)
+        {
+            using (SqlConnection con = new SqlConnection(inventoryConn))
+            {
+                con.Open();
+
+                using (SqlTransaction tran = con.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1. Create Temp Table
+                        string createTemp = @"
+                CREATE TABLE #TempItems (
+                    ItemID INT,
+                    ItemCode NVARCHAR(50),
+                    ItemName NVARCHAR(200),
+                    UnitPrice DECIMAL(18,2),
+                    IsActive BIT
+                )";
+
+                        SqlCommand cmdCreate = new SqlCommand(createTemp, con, tran);
+                        cmdCreate.CommandTimeout = 300;
+                        cmdCreate.ExecuteNonQuery();
+
+                        // 2. Bulk Copy
+                        using (SqlBulkCopy bulk = new SqlBulkCopy(con, SqlBulkCopyOptions.Default, tran))
+                        {
+                            bulk.BulkCopyTimeout = 300;
+                            bulk.BatchSize = 2000;
+                            bulk.DestinationTableName = "#TempItems";
+
+                            bulk.ColumnMappings.Add("ItemID", "ItemID");
+                            bulk.ColumnMappings.Add("ItemCode", "ItemCode");
+                            bulk.ColumnMappings.Add("ItemName", "ItemName");
+                            bulk.ColumnMappings.Add("UnitPrice", "UnitPrice");
+                            bulk.ColumnMappings.Add("IsActive", "IsActive");
+
+                            bulk.WriteToServer(dt);
+                        }
+
+                        // 3. MERGE
+                        string mergeQuery = @"
+                MERGE InventoryItems AS target
+                USING #TempItems AS source
+                ON target.PharmacyItemID = source.ItemID
+
+                WHEN MATCHED THEN
+                    UPDATE SET
+                        target.ItemCode = source.ItemCode,
+                        target.ItemName = source.ItemName,
+                        target.UnitPrice = source.UnitPrice,
+                        target.IsActive = source.IsActive
+
+                WHEN NOT MATCHED THEN
+                    INSERT (PharmacyItemID, ItemCode, ItemName, UnitPrice, IsActive)
+                    VALUES (source.ItemID, source.ItemCode, source.ItemName, source.UnitPrice, source.IsActive);";
+
+                        SqlCommand cmdMerge = new SqlCommand(mergeQuery, con, tran);
+                        cmdMerge.CommandTimeout = 300;
+                        cmdMerge.ExecuteNonQuery();
+
+                        tran.Commit();
+                    }
+                    catch
+                    {
+                        tran.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        private DataTable GetInventoryItems()
+        {
+            using (SqlConnection con = new SqlConnection(inventoryConn))
+            {
+                con.Open();
+
+                string query = @"SELECT 
+                            InventoryItemID,
+                            ItemName,
+                            UnitPrice
+                         FROM InventoryItems
+                         WHERE IsActive = 1";
+
+                SqlDataAdapter da = new SqlDataAdapter(query, con);
+                da.SelectCommand.CommandTimeout = 300;
+
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                return dt;
+            }
+        }
+
+        public void TransferToHospital()
+        {
+            try
+            {
+                DataTable sourceData = GetInventoryItems();
+
+                int batchSize = 2000;
+                int totalRows = sourceData.Rows.Count;
+
+                for (int i = 0; i < totalRows; i += batchSize)
+                {
+                    DataTable batch = sourceData.AsEnumerable()
+                        .Skip(i)
+                        .Take(batchSize)
+                        .CopyToDataTable();
+
+                    ProcessHospitalBatch(batch);
+                }
+
+                MessageBox.Show("Hospital Transfer Completed");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private void ProcessHospitalBatch(DataTable dt)
+        {
+            using (SqlConnection con = new SqlConnection(hospitalConn))
+            {
+                con.Open();
+
+                using (SqlTransaction tran = con.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1. Temp Table
+                        string createTemp = @"
+                CREATE TABLE #TempHospital (
+                    InventoryItemID INT,
+                    ItemName NVARCHAR(200),
+                    UnitPrice DECIMAL(18,2)
+                )";
+
+                        new SqlCommand(createTemp, con, tran).ExecuteNonQuery();
+
+                        // 2. Bulk Copy
+                        using (SqlBulkCopy bulk = new SqlBulkCopy(con, SqlBulkCopyOptions.Default, tran))
+                        {
+                            bulk.BulkCopyTimeout = 300;
+                            bulk.DestinationTableName = "#TempHospital";
+
+                            bulk.ColumnMappings.Add("InventoryItemID", "InventoryItemID");
+                            bulk.ColumnMappings.Add("ItemName", "ItemName");
+                            bulk.ColumnMappings.Add("UnitPrice", "UnitPrice");
+
+                            bulk.WriteToServer(dt);
+                        }
+
+                        // 3. MERGE
+                        string mergeQuery = @"
+                MERGE MedicineTable AS target
+                USING #TempHospital AS source
+                ON target.dstoreid = source.InventoryItemID
+
+                WHEN MATCHED THEN
+                    UPDATE SET
+                        target.nameof = source.ItemName,
+                        target.selling = source.UnitPrice
+
+                WHEN NOT MATCHED THEN
+                    INSERT (nameof, selling, dstoreid)
+                    VALUES (source.ItemName, source.UnitPrice, source.InventoryItemID);";
+
+                        SqlCommand cmd = new SqlCommand(mergeQuery, con, tran);
+                        cmd.CommandTimeout = 300;
+                        cmd.ExecuteNonQuery();
+
+                        tran.Commit();
+                    }
+                    catch
+                    {
+                        tran.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        private void btnUpload_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            TransferItemsFast();
+            TransferToHospital();
+            Cursor.Current = Cursors.Default;
+        }

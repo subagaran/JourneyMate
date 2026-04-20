@@ -1,0 +1,137 @@
+using System;
+using System.Data.SqlClient;
+using System.IO;
+
+namespace HotelPOS
+{
+    public static class DatabaseBackupService
+    {
+        // CHANGE THIS if needed
+        private static readonly string connectionString =
+            @"Data Source=SUBAGARAN\SQL2022;Initial Catalog=master;Integrated Security=True";
+
+        /// <summary>
+        /// Creates a .BAK file and returns full file path
+        /// </summary>
+        public static string CreateBackup(string databaseName, string backupFolder)
+        {
+            try
+            {
+                if (!Directory.Exists(backupFolder))
+                    Directory.CreateDirectory(backupFolder);
+
+                string fileName = $"{databaseName}_{DateTime.Now:yyyyMMdd_HHmmss}.bak";
+                string fullPath = Path.Combine(backupFolder, fileName);
+
+                string query = $@"
+                    BACKUP DATABASE [{databaseName}]
+                    TO DISK = @path
+                    WITH FORMAT, INIT, NAME = @name";
+
+                using (SqlConnection con = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@path", fullPath);
+                    cmd.Parameters.AddWithValue("@name", $"{databaseName} Full Backup");
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+
+                return fullPath;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Backup failed: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Copies backup file to OneDrive folder
+        /// </summary>
+        public static string CopyToOneDrive(string filePath)
+        {
+            try
+            {
+                string oneDriveRoot = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                    "OneDrive"
+                );
+
+                if (!Directory.Exists(oneDriveRoot))
+                    throw new Exception("OneDrive folder not found. Make sure OneDrive is installed.");
+
+                string backupFolder = Path.Combine(oneDriveRoot, "DBBackups");
+
+                if (!Directory.Exists(backupFolder))
+                    Directory.CreateDirectory(backupFolder);
+
+                string destFile = Path.Combine(backupFolder, Path.GetFileName(filePath));
+
+                File.Copy(filePath, destFile, true);
+
+                return destFile;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("OneDrive copy failed: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Full process: Backup + Upload
+        /// </summary>
+        public static string BackupAndUpload(string databaseName)
+        {
+            try
+            {
+                string localBackupFolder = @"C:\DBBackups";
+
+                // Step 1: Create Backup
+                string backupPath = CreateBackup(databaseName, localBackupFolder);
+
+                // Step 2: Copy to OneDrive
+                string oneDrivePath = CopyToOneDrive(backupPath);
+
+                return oneDrivePath;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Backup process failed: " + ex.Message);
+            }
+        }
+    }
+}
+
+
+
+
+        private void btnConfirm_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+
+                string result = DatabaseBackupService.BackupAndUpload("HotelDB");
+
+                Cursor = Cursors.Default;
+
+                MessageBox.Show(
+                    "Backup completed successfully!\n\nSaved to:\n" + result,
+                    "Success",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+            }
+            catch (Exception ex)
+            {
+                Cursor = Cursors.Default;
+
+                MessageBox.Show(
+                    ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+        }
